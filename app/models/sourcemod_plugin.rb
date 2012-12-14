@@ -4,7 +4,13 @@ class SourcemodPlugin < ActiveRecord::Base
 
   has_many      :phrases,   dependent: :destroy
   has_many      :translations,  through: :phrases
-  #has_many      :translations,  through: :phrases
+  has_many      :languages,  through: :translations, :uniq => true
+  
+  validates_presence_of   :user_id
+  validates_presence_of   :name
+  validates_presence_of   :filename
+
+  scope :has_phrases,    -> {where(phrases_count: 0)}
 
  
   def load_from_file(tmpfile)
@@ -20,6 +26,7 @@ class SourcemodPlugin < ActiveRecord::Base
     self.errors.add(:file, "is invalid format") unless valid_lines.shift.strip.eql?("{")
     self.errors.add(:file, "is invalid format") unless valid_lines.pop.strip.eql?("}")
 
+    # TODO: Need some error handling here
 
     phrase = nil
     in_phrase = false
@@ -51,7 +58,7 @@ class SourcemodPlugin < ActiveRecord::Base
         else
           translation = phrase.translations.new
           translation.user_id = self.user_id
-          translation.language = Language.where(iso_code: key).first_or_create(name: key)
+          translation.language = Language.where(iso_code: key.downcase).first_or_create(name: key.downcase)
           translation.text = value
           phrase.translations << translation
         end

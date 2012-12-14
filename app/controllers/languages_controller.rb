@@ -3,7 +3,7 @@ class LanguagesController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @languages = Language.order("name ASC")
+    @languages = Language.where("iso_code <> 'en'").order("LOWER(name) ASC")
 
 
 

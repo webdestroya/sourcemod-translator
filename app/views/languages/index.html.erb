@@ -7,7 +7,11 @@
 <% end %>
 
 
-<% unless current_user.user_languages.empty? %>
+<% if current_user.user_languages.empty? %>
+
+<p>See a language you know? Add it to your list to start translating!</p>
+
+<% else %>
 <p>Below are the languages that you have add to your list.</p>
 <table class="table table-bordered table-striped table-condensed">
   <thead>

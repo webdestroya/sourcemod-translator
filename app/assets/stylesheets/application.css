@@ -10,11 +10,13 @@
  *
  *= require bootstrap
  *= require_self
+ *= require sourcemod_plugins
+ *= require phrases
  */
 
 body {
 
-  padding-top:45px; 
+  padding-top:40px; 
   background-color:transparent;
 }
 .container > footer p {
@@ -27,6 +29,7 @@ body {
 .content {
   background-color: #fff;
   padding: 20px;
+  padding-top: 0;
   margin: 0 -20px; /* negative indent the amount of the padding to maintain the grid system */
   -webkit-border-radius: 0 0 6px 6px;
      -moz-border-radius: 0 0 6px 6px;

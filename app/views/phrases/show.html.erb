@@ -1,25 +1,37 @@
-<p id="notice"><%= notice %></p>
+<% title "View Phrase" %>
+<% content_for :page_heading do %>
+  <h1>View Phrase
+    <small><%= @phrase.name %></small>
+  </h1>
+<% end %>
 
-<p>
-  <strong>Sourcemod plugin:</strong>
-  <%= @phrase.sourcemod_plugin_id %>
-</p>
+<h3>Phrase Information</h3>
+<dl>
+  <dt>Plugin Name</dt>
+  <dd><%= link_to @phrase.sourcemod_plugin.name, @phrase.sourcemod_plugin %></dd>
 
-<p>
-  <strong>Name:</strong>
-  <%= @phrase.name %>
-</p>
+  <dt>Phrase Name</dt>
+  <dd><%= @phrase.name %></dd>
 
-<p>
-  <strong>Format:</strong>
-  <%= @phrase.format %>
-</p>
+  <% if @phrase.format %>
+  <dt>Format</dt>
+  <dd><code><%= @phrase.format %></code></dd>
+  <% end %>
 
-<p>
-  <strong>Translations count:</strong>
-  <%= @phrase.translations_count %>
-</p>
+  <% if @phrase.english %>
+  <dt>English</dt>
+  <dd><%= phrase_text @phrase.english.text %></dd>
+  <% end %>
+
+</dl>
 
 
-<%= link_to 'Edit', edit_phrase_path(@phrase) %> |
-<%= link_to 'Back', phrases_path %>
+<h3>Translations
+<small>(<%= link_to "add", new_phrase_translation_path(@phrase) %>)</small>
+</h3>
+<dl class="dl-horizontal">
+  <% @phrase.translations.each do |translation| %>
+  <dt><%= translation.language.name %> (<%= translation.language.iso_code %>)</dt>
+  <dd><%= phrase_text translation.text %></dd>
+  <% end %>
+</dl>

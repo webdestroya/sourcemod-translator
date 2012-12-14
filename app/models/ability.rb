@@ -11,6 +11,10 @@ class Ability
       can [:show, :create], SourcemodPlugin
       can :manage, SourcemodPlugin, user_id: user.id
       can [:index, :add, :remove], Language
+      can [:show, :index, :translate, :translate_submit], Phrase
+
+      can [:new, :create], Translation
+      can :manage, Translation, user_id: user.id
     end
 
     if user.admin?

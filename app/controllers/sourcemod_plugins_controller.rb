@@ -4,7 +4,7 @@ class SourcemodPluginsController < ApplicationController
 
   load_and_authorize_resource
 
-  before_action :set_sourcemod_plugin, only: [:show, :edit, :update, :destroy]
+  before_action :set_sourcemod_plugin, only: [:show, :edit, :update, :destroy, :upload, :upload_submit, :translate, :translate_submit]
 
   # GET /sourcemod_plugins
   # GET /sourcemod_plugins.json
@@ -48,7 +48,7 @@ class SourcemodPluginsController < ApplicationController
     @sourcemod_plugin = current_user.sourcemod_plugins.new(sourcemod_plugin_params)
     #@sourcemod_plugin.name = params[:sourcemod_plugin][:name]
     #@sourcemod_plugin.filename = params[:sourcemod_plugin][:filename]
-    @sourcemod_plugin.load_from_file(params[:sourcemod_plugin][:file].tempfile)
+    #@sourcemod_plugin.load_from_file(params[:sourcemod_plugin][:file].tempfile)
 
     respond_to do |format|
       if @sourcemod_plugin.save
@@ -85,6 +85,31 @@ class SourcemodPluginsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+
+
+  def upload
+    @sourcemod_plugin = SourcemodPlugin.new
+
+    respond_to do |format|
+      format.html # new.html.erb
+    end
+  end
+
+  def upload_submit
+
+    @sourcemod_plugin = current_user.sourcemod_plugins.find(params[:id])
+    @sourcemod_plugin.load_from_file(params[:sourcemod_plugin][:file].tempfile)
+
+    respond_to do |format|
+      if @sourcemod_plugin.save
+        format.html { redirect_to upload_sourcemod_plugin_path(@sourcemod_plugin), notice: 'Phrase file uploaded!' }
+      else
+        format.html { render action: "upload" }
+      end
+    end
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

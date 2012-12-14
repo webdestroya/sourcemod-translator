@@ -1,5 +1,7 @@
 class PhrasesController < ApplicationController
-  before_action :set_phrase, only: [:show, :edit, :update, :destroy]
+  load_and_authorize_resource
+
+  before_action :set_phrase, only: [:show, :edit, :update, :destroy, :translate, :translate_submit]
 
   # GET /phrases
   # GET /phrases.json
@@ -74,6 +76,38 @@ class PhrasesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to phrases_url }
       format.json { head :no_content }
+    end
+  end
+
+
+  def translate
+
+    # @phrases = @sourcemod_plugin.phrases
+    #           .joins(:translations)
+    #           .where(["translations.language_id NOT IN (?)", current_user.languages.pluck(:id)])
+    #           .order("LOWER(phrases.name) ASC")
+
+
+    # #@phrases = @sourcemod_plugin.phrases.where()
+
+    finished_lang_ids = @phrase.languages.pluck(:id)
+
+    @languages = current_user.languages.where(["id NOT IN (?)", finished_lang_ids]).order("LOWER(name) ASC")
+
+    respond_to do |format|
+      format.html # new.html.erb
+    end
+  end
+
+  def translate_submit
+
+    
+    respond_to do |format|
+      if @phrase.save
+        format.html { redirect_to @phrase.sourcemod_plugin, notice: 'Phrase file uploaded!' }
+      else
+        format.html { render action: "translate" }
+      end
     end
   end
 

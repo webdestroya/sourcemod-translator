@@ -1,4 +1,8 @@
-<%= form_for(@translation) do |f| %>
+
+<%= form_for(@translation, :html => {:class => "form-horizontal"}) do |f| %>
+
+  <%= f.hidden_field :phrase_id %>
+
   <% if @translation.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@translation.errors.count, "error") %> prohibited this translation from being saved:</h2>
@@ -11,31 +15,37 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :phrase_id %><br />
-    <%= f.number_field :phrase_id %>
+  
+  <div class="control-group">
+    <%= f.label :language_id, :class => "control-label" %>
+    <div class="controls">
+      <%= select(:translation, :language_id, @languages.collect{|l| [l.name, l.id]}) %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :language_id %><br />
-    <%= f.number_field :language_id %>
+
+  <div class="control-group">
+    <%= f.label "Format", :class => "control-label" %>
+    <div class="controls">
+      <span class="form-line"><code><%= @phrase.format %></code></span>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :user_id %><br />
-    <%= f.number_field :user_id %>
+
+
+  <div class="control-group">
+    <%= f.label "English", :class => "control-label" %>
+    <div class="controls">
+      <span class="form-line"><%= phrase_text @phrase.english.text %></span>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :text %><br />
-    <%= f.text_field :text %>
+
+  <div class="control-group">
+    <%= f.label :text, :class => "control-label" %>
+    <div class="controls">
+      <%= f.text_field :text, :class => "span8" %>
+      <span class="help-inline">Add your translation using the language you specified above</span>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :votes_count %><br />
-    <%= f.number_field :votes_count %>
-  </div>
-  <div class="field">
-    <%= f.label :translation_flags_count %><br />
-    <%= f.number_field :translation_flags_count %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
+  <div class="control-group">
+    <div class="controls"><%= f.submit %></div>
   </div>
 <% end %>

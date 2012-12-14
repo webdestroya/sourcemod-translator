@@ -1,4 +1,8 @@
 class TranslationsController < ApplicationController
+  before_filter :new_translation, :only => [:create]
+
+  load_and_authorize_resource
+
   before_action :set_translation, only: [:show, :edit, :update, :destroy]
 
   # GET /translations
@@ -24,11 +28,16 @@ class TranslationsController < ApplicationController
   # GET /translations/new
   # GET /translations/new.json
   def new
-    @translation = Translation.new
+    @phrase = Phrase.find params[:phrase_id]
+    @translation = @phrase.translations.new
+
+    finished_lang_ids = @phrase.languages.pluck(:id)
+
+    @languages = current_user.languages.where(["languages.id NOT IN (?)", finished_lang_ids]).order("LOWER(name) ASC")
+
 
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render json: @translation }
     end
   end
 
@@ -39,15 +48,13 @@ class TranslationsController < ApplicationController
   # POST /translations
   # POST /translations.json
   def create
-    @translation = Translation.new(translation_params)
+    @translation = current_user.translations.new(translation_params)
 
     respond_to do |format|
       if @translation.save
-        format.html { redirect_to @translation, notice: 'Translation was successfully created.' }
-        format.json { render json: @translation, status: :created, location: @translation }
+        format.html { redirect_to @translation.phrase, notice: 'Translation was successfully created.' }
       else
         format.html { render action: "new" }
-        format.json { render json: @translation.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -86,6 +93,10 @@ class TranslationsController < ApplicationController
     # Use this method to whitelist the permissible parameters. Example: params.require(:person).permit(:name, :age)
     # Also, you can specialize this method with per-user checking of permissible attributes.
     def translation_params
-      params.require(:translation).permit(:phrase_id, :language_id, :user_id, :text, :votes_count, :translation_flags_count)
+      params.require(:translation).permit(:phrase_id, :language_id, :text)
+    end
+
+    def new_translation
+      @translation = current_user.translations.new(translation_params)
     end
 end

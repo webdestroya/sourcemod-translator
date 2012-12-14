@@ -9,7 +9,7 @@ public/**/*.less
 imports/**/*
 README.md
 spec/**/*
-download_exports.sh
 .env
 .rspec
 Guardfile
+LICENSE.md

@@ -6,7 +6,7 @@
 <% end %>
 
 
-<% @sourcemod_plugin.phrases.order("name ASC").each do |phrase| %>
+<% @phrases.each do |phrase| %>
 <div class="phrase">
   <h4><%= phrase.name %>
   <% if phrase.format %>
@@ -14,39 +14,19 @@
   <% end %>
   </h4>
 
-  <table class="table table-condensed table-striped table-bordered">
-  <tbody>
-    <tr>
-      <td width="10">en</td>
-      <td><%= phrase.translations.english.first.text %></td>
-    </tr>
-
-    <% current_user.languages.each do |lang| %>
-      
+  <dl class="dl-horizontal">
+    <% phrase.translations.joins(:language).order("LOWER(languages.name) ASC").each do |translation| %>
+    <dt><%= translation.language.name %></dt>
+    <dd><%= phrase_text translation.text %></dd>
     <% end %>
 
-  </tbody>
-  </table>
-
-  <p><code><%= phrase.translations.english.first.text %></code></p>
+  <% current_user.languages.each do |lang| %>
+  <dt><%= lang.name %></dt>
+  <dd>
+    <%= text_field_tag "blah" %>
+  </dd>
+  <% end %>
+  </dl>
 
 </div>
 <% end %>
-
-
-<table class="table table-condensed table-striped table-bordered">
-<thead>
-  <tr>
-    <th>Phrase</th>
-    <th>Languages</th>
-  </tr>
-</thead>
-<tbody>
-<% @sourcemod_plugin.phrases.order("name ASC").each do |phrase| %>
-<tr>
-  <td><%= phrase.name %></td>
-  <td><%= phrase.languages.pluck(:iso_code).join(", ") %></td>
-</tr>
-<% end %>
-</tbody>
-</table>

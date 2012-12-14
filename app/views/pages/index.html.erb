@@ -1,0 +1,38 @@
+<% title "About" %>
+
+<div class="hero-unit">
+  <h1>Welcome to Sourcemod Translator!</h1>
+  <p>This application allows plugin developers to upload Phrase files from plugins, and other users can add translations for languages they are fluent in.
+  </p>
+  <p>
+    <%= link_to "Get Started!", "/auth/steam", :class => "btn btn-primary btn-large" %>
+  </p>
+</div>
+
+
+<div class="row">
+  <div class="span4">
+    <h2>Translators</h2>
+    <p>
+      Are you bilingual? Do you enjoy helping others in the community?
+      You can help internationalize plugins by adding translations for phrases.
+    </p>
+    <p><%= link_to "Get started", "/auth/steam", :class => "btn" %></p>
+  </div>
+  <div class="span4">
+    <h2>Developers</h2>
+    <p>
+      Want to support multiple languages in your plugin, but only know English?
+      Upload your plugin and let others add translations!
+    </p>
+    <p><%= link_to "Get started", "/auth/steam", :class => "btn" %></p>
+  </div>
+  <div class="span4">
+    <h2>Moderators</h2>
+    <p>
+      Are you a grammar nazi? Do you have extra time? 
+      You can work as a moderator and modify submitted translations to help provide plugin authors with the best translation possible.
+    </p>
+    <p><%= link_to "Get started", "/auth/steam", :class => "btn" %></p>
+  </div>
+</div>
