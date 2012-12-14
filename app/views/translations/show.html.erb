@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Phrase:</strong>
+  <%= @translation.phrase_id %>
+</p>
+
+<p>
+  <strong>Language:</strong>
+  <%= @translation.language_id %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @translation.user_id %>
+</p>
+
+<p>
+  <strong>Text:</strong>
+  <%= @translation.text %>
+</p>
+
+<p>
+  <strong>Votes count:</strong>
+  <%= @translation.votes_count %>
+</p>
+
+<p>
+  <strong>Translation flags count:</strong>
+  <%= @translation.translation_flags_count %>
+</p>
+
+
+<%= link_to 'Edit', edit_translation_path(@translation) %> |
+<%= link_to 'Back', translations_path %>

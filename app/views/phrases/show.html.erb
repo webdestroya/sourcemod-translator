@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Sourcemod plugin:</strong>
+  <%= @phrase.sourcemod_plugin_id %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @phrase.name %>
+</p>
+
+<p>
+  <strong>Format:</strong>
+  <%= @phrase.format %>
+</p>
+
+<p>
+  <strong>Translations count:</strong>
+  <%= @phrase.translations_count %>
+</p>
+
+
+<%= link_to 'Edit', edit_phrase_path(@phrase) %> |
+<%= link_to 'Back', phrases_path %>

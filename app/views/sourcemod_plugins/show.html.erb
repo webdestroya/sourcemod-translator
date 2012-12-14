@@ -1,0 +1,28 @@
+
+<% title "Plugin - #{@sourcemod_plugin.name}" %>
+<% content_for :page_heading do %>
+  <h1><%= @sourcemod_plugin.name %>
+    <small>by <%= @sourcemod_plugin.user.name %></small>
+  </h1>
+<% end %>
+
+<%= link_to "Translate this plugin", translate_sourcemod_plugin_path(@sourcemod_plugin), :class => "btn"  %>
+<br/>
+<br/>
+
+<table class="table table-condensed table-striped table-bordered">
+<thead>
+  <tr>
+    <th>Phrase</th>
+    <th>Languages</th>
+  </tr>
+</thead>
+<tbody>
+<% @sourcemod_plugin.phrases.order("name ASC").each do |phrase| %>
+<tr>
+  <td><%= phrase.name %></td>
+  <td><%= phrase.languages.pluck(:iso_code).join(", ") %></td>
+</tr>
+<% end %>
+</tbody>
+</table>

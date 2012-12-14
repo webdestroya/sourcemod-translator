@@ -1,0 +1,33 @@
+<%= form_for(@sourcemod_plugin) do |f| %>
+  <% if @sourcemod_plugin.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@sourcemod_plugin.errors.count, "error") %> prohibited this sourcemod_plugin from being saved:</h2>
+
+      <ul>
+      <% @sourcemod_plugin.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :user_id %><br />
+    <%= f.number_field :user_id %>
+  </div>
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :filename %><br />
+    <%= f.text_field :filename %>
+  </div>
+  <div class="field">
+    <%= f.label :phrases_count %><br />
+    <%= f.number_field :phrases_count %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

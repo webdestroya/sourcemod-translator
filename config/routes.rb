@@ -1,49 +1,21 @@
 SourcemodTranslator::Application.routes.draw do
-  # The priority is based upon order of creation: first created -> highest priority.
-  # See how all your routes lay out with "rake routes".
+  resources :translations
 
-  # You can have the root of your site routed with "root"
-  # root to: 'welcome#index'
+  get 'languages', to: 'languages#index', as: 'languages'
+  get 'languages/add/:language_id', to: 'languages#add', as: 'add_language'
+  get 'languages/remove/:language_id', to: 'languages#remove', as: 'remove_language'
 
-  # Example of regular route:
-  #   get 'products/:id' => 'catalog#view'
+  resources :phrases
 
-  # Example of named route that can be invoked with purchase_url(id: product.id)
-  #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
+  resources :sourcemod_plugins do
+    get 'translate', :action => :translate, :on => :member
+    post 'translate', :action => :translate_submit, :on => :member
+  end
 
-  # Example resource route (maps HTTP verbs to controller actions automatically):
-  #   resources :products
+  post 'auth/:provider/callback', to: 'sessions#create'
+  get 'auth/failure', to: redirect('/')
+  get 'login', to: 'sessions#new', as: 'login'
+  get 'logout', to: 'sessions#destroy', as: 'logout'
 
-  # Example resource route with options:
-  #   resources :products do
-  #     member do
-  #       get 'short'
-  #       post 'toggle'
-  #     end
-  #
-  #     collection do
-  #       get 'sold'
-  #     end
-  #   end
-
-  # Example resource route with sub-resources:
-  #   resources :products do
-  #     resources :comments, :sales
-  #     resource :seller
-  #   end
-
-  # Example resource route with more complex sub-resources:
-  #   resources :products do
-  #     resources :comments
-  #     resources :sales do
-  #       get 'recent', on: :collection
-  #     end
-  #   end
-
-  # Example resource route within a namespace:
-  #   namespace :admin do
-  #     # Directs /admin/products/* to Admin::ProductsController
-  #     # (app/controllers/admin/products_controller.rb)
-  #     resources :products
-  #   end
+  root :to => 'pages#home'
 end

@@ -5,7 +5,7 @@ ruby "1.9.3"
 gem 'rails',     github: 'rails/rails'
 gem 'journey',   github: 'rails/journey'
 gem 'arel',      github: 'rails/arel'
-#gem 'activerecord-deprecated_finders', github: 'rails/activerecord-deprecated_finders'
+gem 'activerecord-deprecated_finders', github: 'rails/activerecord-deprecated_finders'
 
 gem 'rails-observers'
 
@@ -69,8 +69,11 @@ gem 'redis'
 # Better webserver
 gem 'unicorn'
 
-# Synchronizes assets to S3
-gem 'asset_sync'
-
 # Steam stuff
 gem "steam-condenser", :require => ["steam-condenser/community"]
+
+
+# group :development do
+#   gem "better_errors"
+#   gem "binding_of_caller"
+# end

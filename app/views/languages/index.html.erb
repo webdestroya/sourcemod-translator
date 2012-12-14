@@ -1,0 +1,58 @@
+<% title "Languages" %>
+<% content_for :page_heading do %>
+  <h1>My Languages
+
+    <small>What languages can you translate?</small>
+  </h1>
+<% end %>
+
+
+<% unless current_user.user_languages.empty? %>
+<p>Below are the languages that you have add to your list.</p>
+<table class="table table-bordered table-striped table-condensed">
+  <thead>
+    <tr>
+        <th>ISO2</th>
+        <th>Name</th>
+        <th>&nbsp;</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <%= content_tag_for(:tr, current_user.languages) do |lang| %>
+        <td><%= lang.iso_code %></td>
+        <td><%= lang.name %></td>
+        <td><%= link_to "Remove", remove_language_path(lang) %></td>
+    <% end %>
+  </tbody>
+</table>
+
+<hr />
+
+<h2>Available Languages</h2>
+
+<% end %>
+
+
+
+<table class="table table-bordered table-striped table-condensed">
+  <thead>
+    <tr>
+        <th>ISO2</th>
+        <th>Name</th>
+        <th>&nbsp;</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @languages.each do |lang| %>
+      <% unless current_user.knows_lang?(lang) %>
+        <tr>
+        <td><%= lang.iso_code %></td>
+        <td><%= lang.name %></td>
+        <td><%= link_to "Add to list", add_language_path(lang) %></td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>

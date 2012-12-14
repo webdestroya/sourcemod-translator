@@ -1,14 +1,178 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<%# paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ %>
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+<%# Consider adding a manifest.appcache: h5bp.com/d/Offline %>
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
 <head>
-  <title>SourcemodTranslator</title>
-  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
-  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+  <meta charset="utf-8">
+
+  <%# Use the .htaccess and remove these lines to avoid edge case issues. More info: h5bp.com/b/378 %>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta http-equiv="imagetoolbar" content="no">
   <%= csrf_meta_tags %>
+  <title><%= content_for?(:title) ? yield(:title) : "Home" %> | Sourcemod Translator</title>
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  
+  
+  <meta name="robots" content="noindex" />
+  <meta http-equiv="imagetoolbar" content="false">
+
+  <meta name="application-name" content="Sourcemod Translator">
+  <meta name="msapplication-tooltip" content="A player database.">
+  <%#<meta name="msapplication-starturl" content="http://www.example.com/index.html?pinned=true">%>
+
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <%# Place favicon.ico and apple-touch-icon.png in the root directory: mathiasbynens.be/notes/touch-icons %>
+  <%#<link rel="icon" href="http://assets.tumblr.com/images/favicon.gif?2" type="image/gif"/>%>
+  <%#= favicon_link_tag 'icons/icon_114.png', :rel => 'apple-touch-icon', :type => 'image/png' %>
+  <%= favicon_link_tag 'favicon.ico' %>
+  <%#= favicon_link_tag 'icons/icon_22.png', :type => "image/png" %>
+
+  <%= stylesheet_link_tag    "application" %>  
 </head>
 <body>
+  
+<div class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+      <%= link_to "Sourcemod Translator", root_path, :class => "brand" %>
+    <ul class="nav">
+      
+      <li class="<%= "active" if controller.controller_name == 'players' %> dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Translations <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <li class="<%= "active" if current_page?(:controller => 'players', :action => 'search') %>"><%#= link_to "Search", search_path %></li>
+          <li class="<%= "active" if current_page?(:controller => 'players', :action => 'recent') %>"><%#= link_to "Recent Players", recent_players_path %></li>
+        </ul>
+      </li>
 
-<%= yield %>
+            <li class="<%= "active" if controller.controller_name == 'sourcemod_plugins' %> dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Plugins <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <li class="<%= "active" if current_page?(:controller => 'sourcemod_plugins', :action => 'index') %>"><%= link_to "Browse", sourcemod_plugins_path %></li>
+          <li class="<%= "active" if current_page?(:controller => 'sourcemod_plugins', :action => 'new') %>"><%= link_to "Add New Plugin", new_sourcemod_plugin_path %></li>
+        </ul>
+      </li>
+
+
+     
+    </ul>
+    
+    <% if current_user %>
+      <ul class="nav pull-right">
+        <li>
+          <a href="#" onclick="return false;"><%= current_user.name %></a>
+        </li>
+        <li><%= link_to "My Languages", languages_path %></li>
+        <li><%= link_to "Logout", logout_path(:current_url => request.url) %></li>
+      </ul>
+    <% else %>
+      
+      <ul class="nav pull-right">
+        <li><%= link_to "Login via Steam", "/auth/steam" %></li>
+      </ul>
+
+      
+    <% end %>
+    </div>
+  </div>
+</div>
+
+<div class="container" id="pagecontainer">
+
+  <div class="content">
+    
+    <% if content_for?(:page_heading) %>
+    <div class="page-header">
+      <%= yield :page_heading %>
+    </div>
+    <% else %>
+    <div class="page-header">
+      <h1>MitchDB <small>Player Database</small></h1>
+    </div>
+    <% end %>
+    
+
+    
+    <% unless flash[:notice].nil? %>
+    <%= success_box do %><%= notice %><% end %>
+    <% end %>
+    
+    <% unless flash[:success].nil? %>
+    <%= success_box do %><%= flash[:success] %><% end %>
+    <% end %>
+    
+    <% unless flash[:error].nil? %>
+    <%= error_box do %><%= flash[:error] %><% end %>
+    <% end %>
+
+    <% unless flash[:alert].nil? %>
+    <%= warning_box do %><%= alert %><% end %>
+    <% end %>
+    
+    <%= yield %>
+    
+    
+  </div>
+  
+  <footer>
+    <p>
+      <%= link_to "Home", root_path %>
+      
+      | <%= link_to "MitchDB", 'http://www.mitchdb.com/' %>
+      | Version 0.1.0
+    </p>
+    
+    <p>&copy; <%= Time.now.year %> MitchDB. All Rights Reserved.</p>
+  </footer>
+
+
+  
+</div>
+
+<%= javascript_include_tag "application" %>
+
+<%
+=begin
+%>  
+<!-- JavaScript at the bottom for fast page loading -->
+
+<!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="js/libs/jquery-1.6.4.min.js"><\/script>')</script>
+
+
+<!-- scripts concatenated and minified via build script -->
+<%= javascript_include_tag "plugins" %>
+<!-- end scripts -->
+
+
+<!-- Asynchronous Google Analytics snippet. Change UA-XXXXX-X to be your site's ID.
+mathiasbynens.be/notes/async-analytics-snippet -->
+
+<script>
+var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview'],['_trackPageLoadTime']];
+(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+s.parentNode.insertBefore(g,s)}(document,'script'));
+</script>
+
+
+<!-- Prompt IE 6 users to install Chrome Frame. Remove this if you want to support IE 6.
+chromium.org/developers/how-tos/chrome-frame-getting-started -->
+<!--[if lt IE 7 ]>
+<script defer src="//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.3/CFInstall.min.js"></script>
+<script defer>window.attachEvent('onload',function(){CFInstall.check({mode:'overlay'})})</script>
+<![endif]-->
+
+<%
+=end
+%>
 
 </body>
 </html>
