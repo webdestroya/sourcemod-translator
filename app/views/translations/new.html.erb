@@ -3,4 +3,14 @@
   <h1>Add Translation</h1>
 <% end %>
 
+
+<% if @languages.count == 0 %>
+<%= error_box do %>
+Whoops! It looks like translations have already been added for all the languages you know. Do you <%= link_to "know any more languages", languages_path %>?
+<br/>
+<br/>
+Otherwise, you can <%= link_to "go back to the phrase", @phrase %> page you were on.
+<% end %>
+<% else %>
 <%= render 'form' %>
+<% end %>

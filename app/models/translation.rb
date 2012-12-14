@@ -4,13 +4,13 @@ class Translation < ActiveRecord::Base
   belongs_to  :user
 
   validates_presence_of     :user_id
-  validates_associated      :user
+  #validates_associated      :user
 
-  validates_presence_of     :phrase_id
-  validates_associated      :phrase
+  #validates_presence_of     :phrase_id
+  #validates_associated      :phrase
 
   validates_presence_of     :language_id
-  validates_associated      :language
+  #validates_associated      :language
 
   validates_presence_of     :text
 

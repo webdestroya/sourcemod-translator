@@ -1,13 +1,13 @@
 <% title "Upload Phrases" %>
 <% content_for :page_heading do %>
   <h1>Upload Phrases
-    <small>Add any translations you have for your plugin</small>
+    <small>for <%= @sourcemod_plugin.name %></small>
   </h1>
 <% end %>
 
 
 
-<%= form_for(@sourcemod_plugin, :url => upload_sourcemod_plugin_path, :html => {:class => "form-horizontal"}) do |f| %>
+<%= form_for(@sourcemod_plugin, :url => upload_sourcemod_plugin_path, :method => :post, :html => {:class => "form-horizontal"}) do |f| %>
   <% if @sourcemod_plugin.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@sourcemod_plugin.errors.count, "error") %> prohibited this sourcemod_plugin from being saved:</h2>
@@ -29,7 +29,8 @@
   
   <div class="control-group">
     <div class="controls">
-    <%= f.submit "Upload Phrase" %>
+    <%= f.submit "Upload Phrase", :class => "btn btn-primary" %>
+    <%= link_to "Back to Plugin", @sourcemod_plugin, :class => "btn" %>
     </div>
   </div>
 <% end %>

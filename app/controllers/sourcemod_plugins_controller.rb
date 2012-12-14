@@ -4,12 +4,16 @@ class SourcemodPluginsController < ApplicationController
 
   load_and_authorize_resource
 
-  before_action :set_sourcemod_plugin, only: [:show, :edit, :update, :destroy, :upload, :upload_submit, :translate, :translate_submit]
+  before_action :set_sourcemod_plugin, only: [:show, :edit, :update, :destroy, :upload, :upload_submit]
 
   # GET /sourcemod_plugins
   # GET /sourcemod_plugins.json
   def index
-    @sourcemod_plugins = SourcemodPlugin.all
+    if params[:mine].eql?("1")
+      @sourcemod_plugins = current_user.sourcemod_plugins.order("LOWER(name) ASC").all
+    else
+      @sourcemod_plugins = SourcemodPlugin.where("phrases_count > 0").order("LOWER(name) ASC").all
+    end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -89,7 +93,6 @@ class SourcemodPluginsController < ApplicationController
 
 
   def upload
-    @sourcemod_plugin = SourcemodPlugin.new
 
     respond_to do |format|
       format.html # new.html.erb

@@ -17,14 +17,19 @@ class SourcemodPlugin < ActiveRecord::Base
     valid_lines = []
 
     File.open(tmpfile).readlines.each do |line|
+      line.strip!
+      line.gsub!(/\/\*.+\*\//, '')
+
       next if line =~ /^\s*\/\/.+$/
       next if line =~ /^\s*$/
+
       valid_lines << line 
     end
 
-    self.errors.add(:file, "is invalid format") unless valid_lines.shift.strip.eql?("\"Phrases\"")
-    self.errors.add(:file, "is invalid format") unless valid_lines.shift.strip.eql?("{")
-    self.errors.add(:file, "is invalid format") unless valid_lines.pop.strip.eql?("}")
+    self.errors.add(:file, "is invalid format") unless valid_lines.shift.eql?("\"Phrases\"")
+    self.errors.add(:file, "is invalid format") unless valid_lines.shift.eql?("{")
+    self.errors.add(:file, "is invalid format") unless valid_lines.pop.eql?("}")
+
 
     # TODO: Need some error handling here
 
@@ -32,9 +37,7 @@ class SourcemodPlugin < ActiveRecord::Base
     in_phrase = false
 
     valid_lines.each do |line|
-      line.strip!
-
-
+      
       if in_phrase
         # bail out
         next if line.eql?("{")
@@ -46,7 +49,7 @@ class SourcemodPlugin < ActiveRecord::Base
           next
         end
 
-        match = line.match(/^\s*\"([a-z]{2}|\#format)\"\s+\"(.+)\"\s*$/)
+        match = line.match(/^\s*\"([a-z0-9]{2,3}|\#format)\"\s+\"(.+)\"\s*$/)
 
         next if match.nil?
 
@@ -56,17 +59,25 @@ class SourcemodPlugin < ActiveRecord::Base
         if key.eql?("#format")
           phrase.format = value
         else
-          translation = phrase.translations.new
-          translation.user_id = self.user_id
-          translation.language = Language.where(iso_code: key.downcase).first_or_create(name: key.downcase)
-          translation.text = value
-          phrase.translations << translation
+          lang = Language.where(iso_code: key.downcase).first_or_create(name: key.downcase)
+
+          # LATER: If this is the plugin owner, then just overwrite the translation
+          # Skip over anything that is already existing
+          unless phrase.translations.where(language: lang).exists?
+            translation = phrase.translations.new
+            translation.user_id = self.user_id
+            translation.language = lang
+            translation.text = value
+            phrase.translations << translation
+          end
         end
         
       else
         in_phrase = true
-        phrase = self.phrases.new
-        phrase.name = line.gsub(/"/,'')
+        phrase_name = line.gsub(/"/,'')
+
+        phrase = self.phrases.where(:name => phrase_name).first_or_initialize
+        
         #phrase.translations = []
       end
     end

@@ -21,7 +21,6 @@
   <meta http-equiv="imagetoolbar" content="false">
 
   <meta name="application-name" content="Sourcemod Translator">
-  <meta name="msapplication-tooltip" content="A player database.">
   <%#<meta name="msapplication-starturl" content="http://www.example.com/index.html?pinned=true">%>
 
   <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -41,25 +40,27 @@
     <div class="container">
       <%= link_to "Sourcemod Translator", root_path, :class => "brand" %>
     <ul class="nav">
-      
-      <li class="<%= "active" if controller.controller_name == 'players' %> dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Translations <b class="caret"></b></a>
-        <ul class="dropdown-menu">
-          <li class="<%= "active" if current_page?(:controller => 'players', :action => 'search') %>"><%#= link_to "Search", search_path %></li>
-          <li class="<%= "active" if current_page?(:controller => 'players', :action => 'recent') %>"><%#= link_to "Recent Players", recent_players_path %></li>
-        </ul>
-      </li>
-
-            <li class="<%= "active" if controller.controller_name == 'sourcemod_plugins' %> dropdown">
+<%
+=begin
+%>      
+      <li class="<%= "active" if controller.controller_name == 'sourcemod_plugins' %> dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Plugins <b class="caret"></b></a>
         <ul class="dropdown-menu">
           <li class="<%= "active" if current_page?(:controller => 'sourcemod_plugins', :action => 'index') %>"><%= link_to "Browse", sourcemod_plugins_path %></li>
           <li class="<%= "active" if current_page?(:controller => 'sourcemod_plugins', :action => 'new') %>"><%= link_to "Add New Plugin", new_sourcemod_plugin_path %></li>
         </ul>
       </li>
+<%
+=end
+%>
 
+    <li class="<%= "active" if current_page?(:controller => 'sourcemod_plugins', :action => 'index') %>"><%= link_to "Browse Plugins", sourcemod_plugins_path %></li>
 
+    <li class="<%= "active" if current_page?(:controller => 'sourcemod_plugins', :action => 'new') %>"><%= link_to "Add New Plugin", new_sourcemod_plugin_path %></li>
      
+    <% if current_user && current_user.sourcemod_plugins.count > 0 %>
+    <li><%= link_to "My Plugins", sourcemod_plugins_path(:mine => 1) %></li>
+    <% end %>
     </ul>
     
     <% if current_user %>
@@ -119,11 +120,10 @@
     <p>
       <%= link_to "Home", root_path %>
       
-      | <%= link_to "MitchDB", 'http://www.mitchdb.com/' %>
       | Version 0.1.0
     </p>
     
-    <p>&copy; <%= Time.now.year %> MitchDB. All Rights Reserved.</p>
+    <p>&copy; <%= Time.now.year %> Mitch Dempsey. All Rights Reserved.</p>
   </footer>
 
 

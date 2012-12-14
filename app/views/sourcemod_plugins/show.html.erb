@@ -25,15 +25,15 @@ Whoops, it appears the developer of this plugin has not yet added any phrases to
 
 <% else %>
 
-<%= link_to "Translate this plugin", translate_sourcemod_plugin_path(@sourcemod_plugin), :class => "btn btn-success"  %>
+<%#= link_to "Translate this plugin", translate_sourcemod_plugin_path(@sourcemod_plugin), :class => "btn btn-success"  %>
 <br/>
 <br/>
 
 <h4>Translation Progress</h4>
 <dl class="dl-horizontal translation-progress">
-  <% @sourcemod_plugin.languages.each do |lang| %>
+  <% @sourcemod_plugin.languages.order("iso_code ASC").each do |lang| %>
   <% completed = 100.0*(@sourcemod_plugin.translations.where(language: lang).count/@sourcemod_plugin.phrases.count) %>
-  <dt title="<%= completed %>%">en</dt>
+  <dt title="<%= completed %>%"><%= lang.iso_code %></dt>
   <dd><div class="progress"><div class="bar" style="width: <%= completed %>%;"></div></div>
 
   </dd>
