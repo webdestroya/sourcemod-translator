@@ -47,6 +47,8 @@ group :test do
   gem 'selenium-webdriver', '2.20.0'
 end
 
+# Synchronizes assets to S3
+gem 'asset_sync'
 
 
 # Running development
