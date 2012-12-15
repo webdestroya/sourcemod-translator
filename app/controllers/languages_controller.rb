@@ -4,11 +4,9 @@ class LanguagesController < ApplicationController
 
   def index
     @languages = Language.where("iso_code <> 'en'").order("LOWER(name) ASC")
-
-
-
   end
 
+  # TODO: Authorize this action
   def add
     @language = Language.find(params[:language_id])
     @user_lang = current_user.user_languages.new(language_id: params[:language_id])
@@ -23,6 +21,7 @@ class LanguagesController < ApplicationController
 
   end
 
+  # TODO: Authorize this action
   def remove
     @language = Language.find(params[:language_id])
     @userlang = UserLanguage.where(:user_id => current_user.id, :language_id => params[:language_id]).first

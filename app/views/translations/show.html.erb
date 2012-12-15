@@ -1,35 +1,40 @@
-<p id="notice"><%= notice %></p>
+<% title "View Translation" %>
+<% content_for :page_heading do %>
+  <h1>View Translation
+    <small>&quot;<%= @translation.phrase.name %>&quot;</small>
+  </h1>
+<% end %>
 
-<p>
-  <strong>Phrase:</strong>
-  <%= @translation.phrase_id %>
-</p>
+<h3>Phrase Information</h3>
 
-<p>
-  <strong>Language:</strong>
-  <%= @translation.language_id %>
-</p>
+<dl class="dl-horizontal">
+  <dt>Phrase Name</dt>
+  <dd><%= @translation.phrase.name %></dd>
 
-<p>
-  <strong>User:</strong>
-  <%= @translation.user_id %>
-</p>
+  <% if @translation.phrase.format %>
+  <dt>Format</dt>
+  <dd><code><%= @translation.phrase.format %></code></dd>
+  <% end %>
 
-<p>
-  <strong>Text:</strong>
-  <%= @translation.text %>
-</p>
+  <dt>English</dt>
+  <dd><%= phrase_text @translation.phrase.english.text %></dd>
 
-<p>
-  <strong>Votes count:</strong>
-  <%= @translation.votes_count %>
-</p>
+</dl>
 
-<p>
-  <strong>Translation flags count:</strong>
-  <%= @translation.translation_flags_count %>
-</p>
+<h3>Translation Information</h3>
+<dl class="dl-horizontal">
+  <dt>Added By</dt>
+  <dd><%= @translation.user.name %></dd>
 
+  <dt>Date Created</dt>
+  <dd><%= @translation.created_at %></dd>
 
-<%= link_to 'Edit', edit_translation_path(@translation) %> |
-<%= link_to 'Back', translations_path %>
+  <dt>Language</dt>
+  <dd><%= @translation.language.name %> (<%= @translation.language.iso_code %>)</dd>
+
+  <dt>Translated Text</dt>
+  <dd><%= phrase_text @translation.text %></dd>
+
+</dl>
+
+<%= link_to 'Back to phrase', @translation.phrase %>

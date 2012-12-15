@@ -39,21 +39,10 @@
   <div class="navbar-inner">
     <div class="container">
       <%= link_to "SourceMod Translator", root_path, :class => "brand" %>
-    <ul class="nav">
-<%
-=begin
-%>      
-      <li class="<%= "active" if controller.controller_name == 'sourcemod_plugins' %> dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Plugins <b class="caret"></b></a>
-        <ul class="dropdown-menu">
-          <li class="<%= "active" if current_page?(:controller => 'sourcemod_plugins', :action => 'index') %>"><%= link_to "Browse", sourcemod_plugins_path %></li>
-          <li class="<%= "active" if current_page?(:controller => 'sourcemod_plugins', :action => 'new') %>"><%= link_to "Add New Plugin", new_sourcemod_plugin_path %></li>
-        </ul>
-      </li>
-<%
-=end
-%>
+    
 
+  <% if current_user %>
+<ul class="nav">
     <li class="<%= "active" if current_page?(:controller => 'sourcemod_plugins', :action => 'index') %>"><%= link_to "Browse Plugins", sourcemod_plugins_path %></li>
 
     <li class="<%= "active" if current_page?(:controller => 'sourcemod_plugins', :action => 'new') %>"><%= link_to "Add New Plugin", new_sourcemod_plugin_path %></li>
@@ -63,12 +52,12 @@
     <% end %>
     </ul>
     
-    <% if current_user %>
+    
       <ul class="nav pull-right">
         <li>
           <a href="#" onclick="return false;"><%= current_user.name %></a>
         </li>
-        <li><%= link_to "My Languages", languages_path %></li>
+        <li class="<%= "active" if current_page?(:controller => 'languages', :action => 'index') %>"><%= link_to "My Languages", languages_path %></li>
         <li><%= link_to "Logout", logout_path(:current_url => request.url) %></li>
       </ul>
     <% else %>

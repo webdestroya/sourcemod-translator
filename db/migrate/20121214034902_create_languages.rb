@@ -1,7 +1,7 @@
 class CreateLanguages < ActiveRecord::Migration
   def change
     create_table :languages do |t|
-      t.string    :iso_code,  null: false, limit: 3
+      t.string    :iso_code,  null: false, limit: 5
       t.string    :name,      null: false
     end
 

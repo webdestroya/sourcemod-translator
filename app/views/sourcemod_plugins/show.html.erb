@@ -8,26 +8,22 @@
 
 <% if @sourcemod_plugin.user.eql?(current_user) %>
   <%= info_box do %>
-  <h5>Plugin Owner</h5>
   <p>This is your plugin. You can perform the actions below if you want.</p>
     <%= link_to "Upload Phrases", upload_sourcemod_plugin_path(@sourcemod_plugin), :class => "btn"  %>
 
-    <%= link_to "Edit Plugin", edit_sourcemod_plugin_path(@sourcemod_plugin), :class => "btn"  %>
+    <%#= link_to "Edit Plugin", edit_sourcemod_plugin_path(@sourcemod_plugin), :class => "btn"  %>
+    <%#= link_to "Delete Plugin", delete_sourcemod_plugin_path(@sourcemod_plugin), :class => "btn"  %>
   <% end %>
 <% end %>
 
 
 <% if @sourcemod_plugin.phrases.count == 0 %>
 
-<%= error_box do %>
-Whoops, it appears the developer of this plugin has not yet added any phrases to translate.
-<% end %>
+  <%= error_box do %>
+  Whoops, it appears the developer of this plugin has not yet added any phrases to translate.
+  <% end %>
 
 <% else %>
-
-<%#= link_to "Translate this plugin", translate_sourcemod_plugin_path(@sourcemod_plugin), :class => "btn btn-success"  %>
-<br/>
-<br/>
 
 <h4>Translation Progress</h4>
 <dl class="dl-horizontal translation-progress">
@@ -40,6 +36,8 @@ Whoops, it appears the developer of this plugin has not yet added any phrases to
   <% end %>
 </dl>
 
+<h4>Phrases</h4>
+
 <table class="table table-condensed table-striped table-bordered">
 <thead>
   <tr>
@@ -48,7 +46,7 @@ Whoops, it appears the developer of this plugin has not yet added any phrases to
   </tr>
 </thead>
 <tbody>
-<% @sourcemod_plugin.phrases.order("name ASC").each do |phrase| %>
+<% @sourcemod_plugin.phrases.order("LOWER(name) ASC").each do |phrase| %>
 <tr>
   <td><%= link_to phrase.name, phrase %></td>
   <td><%= phrase.languages.pluck(:iso_code).join(", ") %></td>

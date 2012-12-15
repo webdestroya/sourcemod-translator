@@ -12,12 +12,11 @@ class SourcemodPluginsController < ApplicationController
     if params[:mine].eql?("1")
       @sourcemod_plugins = current_user.sourcemod_plugins.order("LOWER(name) ASC").all
     else
-      @sourcemod_plugins = SourcemodPlugin.where("phrases_count > 0").order("LOWER(name) ASC").all
+      @sourcemod_plugins = SourcemodPlugin.has_phrases.order("LOWER(name) ASC").all
     end
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @sourcemod_plugins }
     end
   end
 
@@ -26,7 +25,6 @@ class SourcemodPluginsController < ApplicationController
   def show
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @sourcemod_plugin }
     end
   end
 
@@ -37,7 +35,6 @@ class SourcemodPluginsController < ApplicationController
 
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render json: @sourcemod_plugin }
     end
   end
 
@@ -50,17 +47,12 @@ class SourcemodPluginsController < ApplicationController
   def create
 
     @sourcemod_plugin = current_user.sourcemod_plugins.new(sourcemod_plugin_params)
-    #@sourcemod_plugin.name = params[:sourcemod_plugin][:name]
-    #@sourcemod_plugin.filename = params[:sourcemod_plugin][:filename]
-    #@sourcemod_plugin.load_from_file(params[:sourcemod_plugin][:file].tempfile)
 
     respond_to do |format|
       if @sourcemod_plugin.save
-        format.html { redirect_to @sourcemod_plugin, notice: 'Sourcemod plugin was successfully created.' }
-        format.json { render json: @sourcemod_plugin, status: :created, location: @sourcemod_plugin }
+        format.html { redirect_to @sourcemod_plugin, notice: 'Plugin was successfully created.' }
       else
         format.html { render action: "new" }
-        format.json { render json: @sourcemod_plugin.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -70,11 +62,9 @@ class SourcemodPluginsController < ApplicationController
   def update
     respond_to do |format|
       if @sourcemod_plugin.update_attributes(sourcemod_plugin_params)
-        format.html { redirect_to @sourcemod_plugin, notice: 'Sourcemod plugin was successfully updated.' }
-        format.json { head :no_content }
+        format.html { redirect_to @sourcemod_plugin, notice: 'Plugin was successfully updated.' }
       else
         format.html { render action: "edit" }
-        format.json { render json: @sourcemod_plugin.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -86,20 +76,20 @@ class SourcemodPluginsController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to sourcemod_plugins_url }
-      format.json { head :no_content }
     end
   end
 
 
 
   def upload
-
+    authorize! :upload, @sourcemod_plugin
     respond_to do |format|
       format.html # new.html.erb
     end
   end
 
   def upload_submit
+    authorize! :upload, @sourcemod_plugin
 
     @sourcemod_plugin = current_user.sourcemod_plugins.find(params[:id])
     @sourcemod_plugin.load_from_file(params[:sourcemod_plugin][:file].tempfile)

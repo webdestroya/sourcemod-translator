@@ -34,7 +34,8 @@
   </div>
   <div class="control-group">
     <div class="controls">
-    <%= f.submit %>
+    <%= f.submit "Create Plugin", :class => "btn btn-primary" %>
+    <%= link_to "Cancel", sourcemod_plugins_path, :class => "btn" %>
     </div>
   </div>
 <% end %>

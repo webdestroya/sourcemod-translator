@@ -2,15 +2,20 @@
 <% content_for :page_heading do %>
   <h1>Plugins
     <% if params[:mine] %>
-    <small>by 
+    <small>by <%= current_user.name %></small>
     <% end %>
   </h1>
+<% end %>
+
+<%= info_box do %>
+Click on any plugin to start adding translations!
 <% end %>
 
 <table class="table table-bordered table-striped table-condensed">
   <thead>
     <tr>
         <th>Name</th>
+        <th>Creator</th>
         <th># Phrases</th>
     </tr>
   </thead>
@@ -18,11 +23,11 @@
   <tbody>
     <%= content_tag_for(:tr, @sourcemod_plugins) do |sourcemod_plugin| %>
         <td><%= link_to sourcemod_plugin.name, sourcemod_plugin %></td>
+        <td><%= sourcemod_plugin.user.name %></td>
         <td><%= sourcemod_plugin.phrases.count %></td>
     <% end %>
   </tbody>
 </table>
 
-<br />
 
-<%= link_to 'New SourceMod plugin', new_sourcemod_plugin_path %>
+<p>Showing <%= pluralize @sourcemod_plugins.count, "plugin" %></p>
