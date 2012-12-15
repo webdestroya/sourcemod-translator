@@ -1,6 +1,10 @@
 <% title "Plugins" %>
 <% content_for :page_heading do %>
-  <h1>Plugins</h1>
+  <h1>Plugins
+    <% if params[:mine] %>
+    <small>by 
+    <% end %>
+  </h1>
 <% end %>
 
 <table class="table table-bordered table-striped table-condensed">
@@ -21,4 +25,4 @@
 
 <br />
 
-<%= link_to 'New Sourcemod plugin', new_sourcemod_plugin_path %>
+<%= link_to 'New SourceMod plugin', new_sourcemod_plugin_path %>
