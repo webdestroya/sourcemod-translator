@@ -55,7 +55,7 @@
     
       <ul class="nav pull-right">
         <li>
-          <a href="#" onclick="return false;"><%= current_user.name %></a>
+          <%= link_to current_user.name, current_user %>
         </li>
         <li class="<%= "active" if current_page?(:controller => 'languages', :action => 'index') %>"><%= link_to "My Languages", languages_path %></li>
         <li><%= link_to "Logout", logout_path(:current_url => request.url) %></li>
@@ -63,7 +63,7 @@
     <% else %>
       
       <ul class="nav pull-right">
-        <li><%= link_to "Login via Steam", "/auth/steam" %></li>
+        <li><%= link_to image_tag("sits_small.png"), "/auth/steam" %></li>
       </ul>
 
       
@@ -85,19 +85,27 @@
 
     
     <% unless flash[:notice].nil? %>
-    <%= success_box do %><%= notice %><% end %>
+    <%= success_box do %>
+    <a class="close" data-dismiss="alert" href="#">&times;</a>
+    <%= notice %><% end %>
     <% end %>
     
     <% unless flash[:success].nil? %>
-    <%= success_box do %><%= flash[:success] %><% end %>
+    <%= success_box do %>
+    <a class="close" data-dismiss="alert" href="#">&times;</a>
+    <%= flash[:success] %><% end %>
     <% end %>
     
     <% unless flash[:error].nil? %>
-    <%= error_box do %><%= flash[:error] %><% end %>
+    <%= error_box do %>
+    <a class="close" data-dismiss="alert" href="#">&times;</a>
+    <%= flash[:error] %><% end %>
     <% end %>
 
     <% unless flash[:alert].nil? %>
-    <%= warning_box do %><%= alert %><% end %>
+    <%= warning_box do %>
+    <a class="close" data-dismiss="alert" href="#">&times;</a>
+    <%= alert %><% end %>
     <% end %>
     
     <%= yield %>
@@ -130,34 +138,35 @@
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
 <script>window.jQuery || document.write('<script src="js/libs/jquery-1.6.4.min.js"><\/script>')</script>
+<%
+=end
+%>
 
-
-<!-- scripts concatenated and minified via build script -->
-<%= javascript_include_tag "plugins" %>
-<!-- end scripts -->
-
-
-<!-- Asynchronous Google Analytics snippet. Change UA-XXXXX-X to be your site's ID.
-mathiasbynens.be/notes/async-analytics-snippet -->
-
-<script>
-var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview'],['_trackPageLoadTime']];
-(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
-s.parentNode.insertBefore(g,s)}(document,'script'));
-</script>
-
-
-<!-- Prompt IE 6 users to install Chrome Frame. Remove this if you want to support IE 6.
+<!-- Prompt IE 6 users to install Chrome Frame. 
 chromium.org/developers/how-tos/chrome-frame-getting-started -->
 <!--[if lt IE 7 ]>
 <script defer src="//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.3/CFInstall.min.js"></script>
 <script defer>window.attachEvent('onload',function(){CFInstall.check({mode:'overlay'})})</script>
 <![endif]-->
 
-<%
-=end
-%>
+<% unless Rails.env.development? %>
+<script type="text/javascript">
+
+  var _gaq = [
+  ['_setAccount', "<%= ENV['GA_ACCOUNT'] %>"],
+  ['_setDomainName', "<%= ENV['GA_DOMAIN'] %>"],
+  ['_setAllowLinker', true],
+  ['_trackPageview']
+  ];
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+<% end %>
 
 </body>
 </html>

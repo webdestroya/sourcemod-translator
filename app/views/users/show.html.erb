@@ -1,0 +1,33 @@
+<% title "User - #{@user.name}" %>
+<% content_for :page_heading do %>
+  <h1><%= @user.name %>
+    <small>User Profile</small>
+  </h1>
+<% end %>
+
+<dl class="dl-horizontal">
+
+  <dt>Joined</dt>
+  <dd><%= @user.created_at %></dd>
+
+  <dt>Languages</dt>
+  <dd><%= @user.languages.order("name ASC").pluck(:name).join(", ") %></dd>
+
+</dl>
+
+
+<h2>Plugins</h2>
+<% if @user.sourcemod_plugins.count > 0 %>
+
+<ul>
+<% @user.sourcemod_plugins.each do |plugin| %>
+<li><%= link_to plugin.name, plugin %></li>
+<% end %>
+</ul>
+
+<% else %>
+
+<p>Nothing here yet.</p>
+
+<% end %>
+

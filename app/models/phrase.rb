@@ -2,7 +2,7 @@ class Phrase < ActiveRecord::Base
   belongs_to    :sourcemod_plugin, counter_cache: true
 
   has_many      :translations,  dependent: :destroy
-  has_many      :languages,  through: :translations
+  has_many      :languages,  through: :translations, :uniq => true
 
   validates_presence_of     :sourcemod_plugin_id
   validates_presence_of     :name
@@ -17,6 +17,9 @@ class Phrase < ActiveRecord::Base
 
   # Do we already have a translation in this language?
   def has_language?(lang)
+
+    lang = Language.find_by_iso_code(lang) if lang.is_a?(String)
+
     self.translations.where(:language => lang).exists?
   end
 

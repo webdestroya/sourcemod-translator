@@ -5,6 +5,8 @@
   </h1>
 <% end %>
 
+<%= link_to 'Back to phrase', @translation.phrase %>
+
 <h3>Phrase Information</h3>
 
 <dl class="dl-horizontal">
@@ -24,7 +26,7 @@
 <h3>Translation Information</h3>
 <dl class="dl-horizontal">
   <dt>Added By</dt>
-  <dd><%= @translation.user.name %></dd>
+  <dd><%= link_to @translation.user.name, @translation.user %></dd>
 
   <dt>Date Created</dt>
   <dd><%= @translation.created_at %></dd>
@@ -37,4 +39,22 @@
 
 </dl>
 
-<%= link_to 'Back to phrase', @translation.phrase %>
+<% if @translation.user.eql?(current_user) %>
+
+  <%= info_box do %>
+  <p>This is your translation. You may to remove your translation at any time if you would like. (You can always add a better one later)</p>
+  <%= link_to 'Delete Translation', @translation, method: :delete, data: { confirm: 'Are you sure you want to remove this translation?' }, :class => "btn btn-danger" %>
+
+  <% end %>
+
+<% elsif @translation.phrase.sourcemod_plugin.user.eql?(current_user) %>
+
+  <%= info_box do %>
+  <p>You are the owner of this plugin. If you do not like this translation, you may delete it at any time.</p>
+  <%= link_to 'Delete Translation', @translation, method: :delete, data: { confirm: 'Are you sure you want to remove this translation?' }, :class => "btn btn-danger" %>
+
+  <% end %>
+
+<% else %>
+
+<% end %>

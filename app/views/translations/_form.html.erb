@@ -15,6 +15,20 @@
     </div>
   <% end %>
 
+  <div class="control-group">
+    <%= f.label "Plugin", :class => "control-label" %>
+    <div class="controls">
+      <span class="form-line"><%= link_to @phrase.sourcemod_plugin.name, @phrase.sourcemod_plugin %></span>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label "Phrase", :class => "control-label" %>
+    <div class="controls">
+      <span class="form-line"><%= @phrase.name %></span>
+    </div>
+  </div>
+
   
   <div class="control-group">
     <%= f.label :language_id, :class => "control-label" %>
@@ -23,12 +37,14 @@
     </div>
   </div>
 
+  <% if @phrase.format %>
   <div class="control-group">
     <%= f.label "Format", :class => "control-label" %>
     <div class="controls">
       <span class="form-line"><code><%= @phrase.format %></code></span>
     </div>
   </div>
+  <% end %>
 
 
   <div class="control-group">
@@ -46,6 +62,6 @@
     </div>
   </div>
   <div class="control-group">
-    <div class="controls"><%= f.submit %></div>
+    <div class="controls"><%= f.submit :class => "btn btn-primary" %></div>
   </div>
 <% end %>

@@ -1,0 +1,18 @@
+// Exported from SourceMod Translator
+// http://<%= request.env['HTTP_HOST'] %><%= url_for(@sourcemod_plugin) %>
+//
+"Phrases"
+{
+    <% @sourcemod_plugin.phrases.each do |phrase| %>
+    "<%= phrase.name %>"
+    {
+        <% if phrase.format %>
+        "#format"   "<%= phrase.format %>"
+        <% end %>
+        <% phrase.translations.each do |translation| %>
+        "<%= translation.language.iso_code %>"        "<%= translation.text %>"
+        <% end %>
+    }
+
+    <% end %>
+}

@@ -4,7 +4,7 @@ class SourcemodPluginsController < ApplicationController
 
   load_and_authorize_resource
 
-  before_action :set_sourcemod_plugin, only: [:show, :edit, :update, :destroy, :upload, :upload_submit]
+  before_action :set_sourcemod_plugin, only: [:show, :edit, :update, :destroy, :upload, :upload_submit, :phrases_file_text]
 
   # GET /sourcemod_plugins
   # GET /sourcemod_plugins.json
@@ -100,6 +100,13 @@ class SourcemodPluginsController < ApplicationController
       else
         format.html { render action: "upload" }
       end
+    end
+  end
+
+  def export
+    authorize! :export, @sourcemod_plugin
+    respond_to do |format|
+      format.text { render }
     end
   end
 

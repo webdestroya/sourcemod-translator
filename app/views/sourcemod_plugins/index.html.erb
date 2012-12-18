@@ -23,7 +23,7 @@ Click on any plugin to start adding translations!
   <tbody>
     <%= content_tag_for(:tr, @sourcemod_plugins) do |sourcemod_plugin| %>
         <td><%= link_to sourcemod_plugin.name, sourcemod_plugin %></td>
-        <td><%= sourcemod_plugin.user.name %></td>
+        <td><%= link_to sourcemod_plugin.user.name, sourcemod_plugin.user %></td>
         <td><%= sourcemod_plugin.phrases.count %></td>
     <% end %>
   </tbody>

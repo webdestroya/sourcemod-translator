@@ -82,9 +82,21 @@ class SourcemodPlugin < ActiveRecord::Base
         #phrase.translations = []
       end
     end
+  end
 
+  # This will change the owner of this plugin, and convert all translations
+  # that are owned by that user (and convert them to another user)
+  def change_owner!(new_user)
+    SourcemodPlugin.transaction do
+      # update the translations
+      self.translations.where(:user_id => self.user_id).all do |trans|
+        trans.update_column(:user_id, new_user.id)
+      end
 
+      # update the plugin
+      self.update_column(:user_id, new_user.id)
 
+    end
   end
 
 end

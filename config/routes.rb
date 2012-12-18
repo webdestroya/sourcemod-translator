@@ -1,6 +1,8 @@
 SourcemodTranslator::Application.routes.draw do
   resources :translations
 
+  resources :users, only: [:show, :index]
+
   get 'languages', to: 'languages#index', as: 'languages'
   get 'languages/add/:language_id', to: 'languages#add', as: 'add_language'
   get 'languages/remove/:language_id', to: 'languages#remove', as: 'remove_language'
@@ -13,7 +15,7 @@ SourcemodTranslator::Application.routes.draw do
   end
 
   resources :sourcemod_plugins do
-
+    get 'export', :action => :export, :on => :member
     get 'upload', :action => :upload, :on => :member
     post 'upload', :action => :upload_submit, :on => :member
   end

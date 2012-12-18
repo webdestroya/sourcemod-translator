@@ -29,9 +29,41 @@
 <h3>Translations
 <small>(<%= link_to "add", new_phrase_translation_path(@phrase) %>)</small>
 </h3>
-<dl class="dl-horizontal">
+<dl class="dl-horizontal translation-list">
   <% @phrase.translations.each do |translation| %>
   <dt><%= link_to translation.language.name, translation %> (<%= translation.language.iso_code %>)</dt>
-  <dd><%= phrase_text translation.text %></dd>
+  <dd><%= phrase_text translation.text %>
+    <br/>
+
+  </dd>
   <% end %>
 </dl>
+
+<%
+=begin
+%>
+<table class="table table-striped table-bordered table-condensed translation-list">
+<thead>
+<tr>
+  <th>Language</th>
+  <th>Text</th>
+  <th>&nbsp;</th>
+</tr>
+</thead>
+<tbody>
+  <% @phrase.translations.each do |translation| %>
+  <tr>
+    <td nowrap="nowrap"><%= link_to translation.language.name, translation %> (<%= translation.language.iso_code %>)</td>
+    <td><%= phrase_text translation.text %></td>
+    <td nowrap="nowrap">
+      <%= link_to "View", '#' %>
+      | <%= link_to "Delete", '#' %>
+
+    </td>
+  </tr>
+  <% end %>
+</tbody>
+</table>
+<%
+=end
+%>

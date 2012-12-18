@@ -11,10 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20121214035916) do
+ActiveRecord::Schema.define(version: 20121218221030) do
 
   create_table "languages", force: true do |t|
-    t.string "iso_code", limit: 2, null: false
+    t.string "iso_code", limit: 5, null: false
     t.string "name",               null: false
   end
 

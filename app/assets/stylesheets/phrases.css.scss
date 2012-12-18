@@ -10,3 +10,22 @@
   padding-top:5px;
   display:block;
 }
+
+dl.translation-list {
+  dd {
+    margin-bottom:0.5em;
+
+    span.options {
+      float:right;
+      display:none;
+    }
+
+    :hover {
+      background-color:khaki;
+
+      span.options {
+        display:block;
+      }
+    }
+  }
+}

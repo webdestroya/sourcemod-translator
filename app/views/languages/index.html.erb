@@ -18,7 +18,9 @@
     <tr>
         <th width="50">Code</th>
         <th>Name</th>
-        <th>&nbsp;</th>
+        <th nowrap="nowrap" width="70"># Users</th>
+        <th nowrap="nowrap" width="100"># Translations</th>
+        <th width="100">&nbsp;</th>
     </tr>
   </thead>
 
@@ -26,6 +28,8 @@
     <%= content_tag_for(:tr, current_user.languages) do |lang| %>
         <td><%= lang.iso_code %></td>
         <td><%= lang.name %></td>
+        <td><%= lang.users.count %></td>
+        <td><%= lang.translations.count %></td>
         <td><%= link_to "Remove", remove_language_path(lang) %></td>
     <% end %>
   </tbody>
@@ -44,7 +48,9 @@
     <tr>
         <th width="50">Code</th>
         <th>Name</th>
-        <th>&nbsp;</th>
+        <th nowrap="nowrap" width="70"># Users</th>
+        <th nowrap="nowrap" width="100"># Translations</th>
+        <th width="100">&nbsp;</th>
     </tr>
   </thead>
 
@@ -54,6 +60,8 @@
         <tr>
         <td><%= lang.iso_code %></td>
         <td><%= lang.name %></td>
+        <td><%= lang.users.count %></td>
+        <td><%= lang.translations.count %></td>
         <td><%= link_to "Add to list", add_language_path(lang) %></td>
         </tr>
       <% end %>
