@@ -10,14 +10,16 @@ class SourcemodPlugin < ActiveRecord::Base
   validates_presence_of   :name
   validates_presence_of   :filename
 
+  validates_uniqueness_of :filename
+
   scope :no_phrases,    -> {where(phrases_count: 0)}
   scope :has_phrases,    -> {where("sourcemod_plugins.phrases_count > 0")}
 
  
-  def load_from_file(tmpfile)
+  def load_from_file(input_stream)
     valid_lines = []
 
-    File.open(tmpfile).readlines.each do |line|
+    input_stream.readlines.each do |line|
       line.strip!
       line.gsub!(/\/\*.+\*\//, '')
 

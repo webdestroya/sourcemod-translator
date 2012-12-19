@@ -6,6 +6,12 @@
 <% end %>
 
 
+<%= info_box do %>
+<p>
+  This can either be a single <code><%= @sourcemod_plugin.filename %>.phrases.txt</code>, or it can be a Zip archive containing all translations.
+</p>
+<p>Note: If you upload a Zip archive, only files named <code><%= @sourcemod_plugin.filename %>.phrases.txt</code> will be imported.</p>
+<% end %>
 
 <%= form_for(@sourcemod_plugin, :url => upload_sourcemod_plugin_path, :method => :post, :html => {:class => "form-horizontal"}) do |f| %>
   <% if @sourcemod_plugin.errors.any? %>
@@ -24,6 +30,7 @@
     <%= f.label :file, :class => "control-label" %>
     <div class="controls">
       <%= f.file_field :file %>
+      <span class="help-inline">Only *.txt and *.zip are allowed.</span>
     </div>
   </div>
   

@@ -91,8 +91,25 @@ class SourcemodPluginsController < ApplicationController
   def upload_submit
     authorize! :upload, @sourcemod_plugin
 
-    @sourcemod_plugin = current_user.sourcemod_plugins.find(params[:id])
-    @sourcemod_plugin.load_from_file(params[:sourcemod_plugin][:file].tempfile)
+    ulfilename = params[:sourcemod_plugin][:file].original_filename
+    #@sourcemod_plugin = current_user.sourcemod_plugins.find(params[:id])
+    if ulfilename =~ /\.zip$/i
+
+      zf = Zip::ZipFile.new(params[:sourcemod_plugin][:file].tempfile)
+      zf.each_with_index do |entry, index|
+        entry_name = entry.name
+        if entry_name =~ /#{@sourcemod_plugin.filename}\.phrases\.txt$/i
+
+          #puts "entry #{index} is #{entry.name}, size = #{entry.size}, compressed size = #{entry.compressed_size}"
+          @sourcemod_plugin.load_from_file zf.get_input_stream(entry)
+        end
+      end
+
+    elsif ulfilename =~ /\.txt$/i
+      @sourcemod_plugin.load_from_file File.open(params[:sourcemod_plugin][:file].tempfile)
+    else
+      # error
+    end
 
     respond_to do |format|
       if @sourcemod_plugin.save

@@ -79,3 +79,5 @@ gem "steam-condenser", :require => ["steam-condenser/community"]
 #   gem "better_errors"
 #   gem "binding_of_caller"
 # end
+
+gem 'rubyzip', :require => ["zip/zip"], :group => :development

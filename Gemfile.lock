@@ -267,6 +267,7 @@ DEPENDENCIES
   redis
   rspec (= 2.8.0)
   rspec-rails
+  rubyzip
   sass-rails!
   selenium-webdriver (= 2.20.0)
   sprockets-rails!
