@@ -25,32 +25,21 @@
 
 <% else %>
 
-<h4>Translation Progress</h4>
-<div class="row">
-  <div class="span5">
-    <dl class="dl-horizontal translation-progress">
-  <% Language.all.order("iso_code ASC")[0..15].each do |lang| %>
+<h4>Translation Progress (<%= @sourcemod_plugin.percent_completed %>%) 
+<small>(<a href="#" onclick="$('.detailed').toggle();return false;">detailed</a>)</small>
+</h4>
+<dl class="dl-horizontal translation-progress">
+  <dt>Overall</dt>
+  <dd><div class="progress"><div class="bar" style="width: <%= @sourcemod_plugin.percent_completed %>%;"></div></div></dd>
+
+  <% Language.all.order("name ASC").each do |lang| %>
   <% completed = (100.0*@sourcemod_plugin.translations.where(language_id: lang.id).count)/@sourcemod_plugin.phrases.count %>
-  <dt title="<%= completed %>%"><%= lang.iso_code %></dt>
-  <dd><div class="progress"><div class="bar" style="width: <%= completed %>%;"></div></div>
+  <dt class="detailed" title="<%= completed %>%"><%= lang.name %> (<%= lang.iso_code %>)</dt>
+  <dd class="detailed"><div class="progress"><div class="bar" style="width: <%= completed %>%;"></div></div>
 
   </dd>
   <% end %>
 </dl>
-</div>
-<div class="span5">
-    <dl class="dl-horizontal translation-progress">
-  <% Language.all.order("iso_code ASC")[16..32].each do |lang| %>
-  <% completed = (100.0*@sourcemod_plugin.translations.where(language_id: lang.id).count)/@sourcemod_plugin.phrases.count %>
-  <dt title="<%= completed %>%"><%= lang.iso_code %></dt>
-  <dd><div class="progress"><div class="bar" style="width: <%= completed %>%;"></div></div>
-
-  </dd>
-  <% end %>
-</dl>
-</div>
-
-</div>
 
 <h4>Phrases</h4>
 

@@ -4,13 +4,16 @@
 
 dl.translation-progress {
   dt {
-    width:40px;
+    width:180px;
   }
   dd {
-    margin-left: 60px;
+    margin-left: 200px;
     .progress {
       margin-bottom:5px;
-      //width:400px;
+      width:550px;
     }
+  }
+  dt.detailed, dd.detailed {
+    display:none;
   }
 }

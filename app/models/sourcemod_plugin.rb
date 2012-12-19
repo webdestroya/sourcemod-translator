@@ -15,6 +15,10 @@ class SourcemodPlugin < ActiveRecord::Base
   scope :no_phrases,    -> {where(phrases_count: 0)}
   scope :has_phrases,    -> {where("sourcemod_plugins.phrases_count > 0")}
 
+  def percent_completed
+    ((100.0*self.translations.count) / (self.phrases.count * Language.count)).round 2
+  end
+
  
   def load_from_file(input_stream)
     valid_lines = []
