@@ -18,7 +18,7 @@ class Ability
       can [:show, :index, :translate, :translate_submit], Phrase
 
       # Everyone can make a new translation
-      can [:new, :create], Translation
+      can [:new, :create, :index, :show], Translation
 
       # Only the owner can manage a translation
       can :manage, Translation, user_id: user.id
