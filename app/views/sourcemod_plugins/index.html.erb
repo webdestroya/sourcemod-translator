@@ -17,6 +17,7 @@ Click on any plugin to start adding translations!
         <th>Name</th>
         <th>Creator</th>
         <th># Phrases</th>
+        <th>% Completed</th>
     </tr>
   </thead>
 
@@ -25,6 +26,7 @@ Click on any plugin to start adding translations!
         <td><%= link_to sourcemod_plugin.name, sourcemod_plugin %></td>
         <td><%= link_to sourcemod_plugin.user.name, sourcemod_plugin.user %></td>
         <td><%= sourcemod_plugin.phrases.count %></td>
+        <td><%= sourcemod_plugin.percent_completed %>%</td>
     <% end %>
   </tbody>
 </table>
