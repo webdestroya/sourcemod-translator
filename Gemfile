@@ -80,4 +80,4 @@ gem "steam-condenser", :require => ["steam-condenser/community"]
 #   gem "binding_of_caller"
 # end
 
-gem 'rubyzip', :require => ["zip/zip"], :group => :development
+gem 'rubyzip', :require => ["zip/zip"]
