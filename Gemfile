@@ -81,3 +81,6 @@ gem "steam-condenser", :require => ["steam-condenser/community"]
 # end
 
 gem 'rubyzip', :require => ["zip/zip"]
+
+
+# gem 'honeybadger'
