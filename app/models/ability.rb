@@ -24,6 +24,7 @@ class Ability
       can [:index, :add, :remove], Language
 
       can [:translate, :translate_submit], Phrase
+      can [:manage], Phrase, sourcemod_plugin: {user_id: user.id}
 
       can [:new, :create], Translation
 

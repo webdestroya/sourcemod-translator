@@ -9,8 +9,9 @@ class SourcemodPluginsController < ApplicationController
   # GET /sourcemod_plugins
   # GET /sourcemod_plugins.json
   def index
-    if params[:mine].eql?("1")
-      @sourcemod_plugins = current_user.sourcemod_plugins.order("LOWER(name) ASC").all
+    if params[:user_id]
+      @user = User.find params[:user_id]
+      @sourcemod_plugins = @user.sourcemod_plugins.order("LOWER(name) ASC").all
     else
       @sourcemod_plugins = SourcemodPlugin.has_phrases.order("LOWER(name) ASC").all
     end

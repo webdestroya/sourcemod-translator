@@ -11,7 +11,7 @@
   <p>This is your plugin. You can perform the actions below if you want.</p>
     <%= link_to "Upload Phrases", upload_sourcemod_plugin_path(@sourcemod_plugin), :class => "btn"  %>
 
-    <%#= link_to "Edit Plugin", edit_sourcemod_plugin_path(@sourcemod_plugin), :class => "btn"  %>
+    <%= link_to "Edit Plugin", edit_sourcemod_plugin_path(@sourcemod_plugin), :class => "btn"  %>
     <%#= link_to "Delete Plugin", delete_sourcemod_plugin_path(@sourcemod_plugin), :class => "btn"  %>
   <% end %>
 <% end %>
@@ -41,8 +41,17 @@
   <% end %>
 </dl>
 
-<h4>Phrases</h4>
+<h4>Export</h4>
+<dl class="dl-horizontal">
+  <dt>Single File</dt>
+  <dd><%= link_to "#{@sourcemod_plugin.filename}.phrases.txt", export_sourcemod_plugin_path(@sourcemod_plugin, :format => "txt") %></dd>
 
+  <dt>Multi-File Zip</dt>
+  <dd><em>Coming Soon</em></dd>
+</dl>
+
+<h4>Phrases</h4>
+<% no_english_phrases = false %>
 <table class="table table-condensed table-striped table-bordered">
 <thead>
   <tr>
@@ -52,12 +61,20 @@
 </thead>
 <tbody>
 <% @sourcemod_plugin.phrases.order("LOWER(name) ASC").each do |phrase| %>
-<tr>
+<% langs = phrase.languages.pluck(:iso_code).sort %>
+<% no_english_phrases = true unless langs.include?('en') %>
+<tr class="<%= 'no-english' unless langs.include?('en') %>">
   <td><%= link_to phrase.name, phrase %></td>
-  <td><%= phrase.languages.pluck(:iso_code).sort.join(", ") %></td>
+  <td><%= langs.join(", ") %></td>
 </tr>
 <% end %>
 </tbody>
 </table>
 
+<% end %>
+
+<% if no_english_phrases %>
+<%= error_box do %>
+The phrases above highlighted in red do not have an English translation. If you want to delete these phrases, then click on them and follow the prompt on the next page.
+<% end %>
 <% end %>

@@ -5,6 +5,15 @@
   </h1>
 <% end %>
 
+
+<% if @phrase.english.nil? && can?(:manage, @phrase) %>
+  <%= error_box do %>
+  <p>This phrase doesn't seem to exist in English. Do want to delete it?</p>
+  <%= link_to 'Delete Phrase', @phrase, method: :delete, 
+    data: { confirm: 'Are you sure? This will remove all translations as well.' }, :class => "btn btn-danger" %>
+  <% end %>
+<% end %>
+
 <h3>Phrase Information</h3>
 <dl>
   <dt>Plugin Name</dt>
@@ -24,7 +33,6 @@
   <% end %>
 
 </dl>
-
 
 <h3>Translations
 <% if can? :create, Translation %>

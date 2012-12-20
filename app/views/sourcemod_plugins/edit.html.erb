@@ -1,6 +1,21 @@
-<h1>Editing sourcemod_plugin</h1>
+<% title "Edit Plugin" %>
+<% content_for :page_heading do %>
+  <h1>Edit Plugin
+    <small><%= @sourcemod_plugin.name %></small>
+    </h1>
+<% end %>
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @sourcemod_plugin %> |
-<%= link_to 'Back', sourcemod_plugins_path %>
+
+<% if can? :delete, @sourcemod_plugin %>
+
+<hr />
+
+<%= error_box do %>
+<p><strong>Warning!</strong> Deleting this plugin will remove all phrases and all translations. You will not be able to recover your plugin if you delete it.</p>
+<%= link_to 'Delete Forever', @sourcemod_plugin, method: :delete, 
+  data: { confirm: 'Are you sure? You CANNOT recover a deleted plugin.' },
+  :class => "btn btn-danger" %>
+<% end %>
+<% end %>

@@ -18,8 +18,16 @@
   <dd><code><%= @translation.phrase.format %></code></dd>
   <% end %>
 
+  
   <dt>English</dt>
-  <dd><%= phrase_text @translation.phrase.english.text %></dd>
+  <dd>
+    <% if @translation.phrase.english %>
+    <%= phrase_text @translation.phrase.english.text %>
+    <% else %>
+    <em>None</em>
+    <% end %>
+  </dd>
+  
 
 </dl>
 

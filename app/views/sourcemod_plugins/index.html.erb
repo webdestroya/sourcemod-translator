@@ -1,8 +1,8 @@
 <% title "Plugins" %>
 <% content_for :page_heading do %>
   <h1>Plugins
-    <% if params[:mine] %>
-    <small>by <%= current_user.name %></small>
+    <% if @user %>
+    <small>by <%= @user.name %></small>
     <% end %>
   </h1>
 <% end %>

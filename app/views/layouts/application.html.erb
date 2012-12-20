@@ -49,7 +49,7 @@
     <li class="<%= "active" if current_page?(:controller => 'sourcemod_plugins', :action => 'new') %>"><%= link_to "Add New Plugin", new_sourcemod_plugin_path %></li>
      
     <% if current_user && current_user.sourcemod_plugins.count > 0 %>
-    <li><%= link_to "My Plugins", sourcemod_plugins_path(:mine => 1) %></li>
+    <li><%= link_to "My Plugins", user_sourcemod_plugins_path(current_user) %></li>
     <% end %>
     
   <% end %>

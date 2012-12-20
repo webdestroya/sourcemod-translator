@@ -10,24 +10,27 @@
   <dt>Joined</dt>
   <dd><%= @user.created_at %></dd>
 
+  <dt>Steam Profile</dt>
+  <dd><%= link_to "http://steamcommunity.com/profiles/#{@user.uid}", "http://steamcommunity.com/profiles/#{@user.uid}", :target => '_blank' %></dd>
+
   <dt>Languages</dt>
-  <dd><%= @user.languages.order("name ASC").pluck(:name).join(", ") %></dd>
+  <dd>
+    <% if @user.languages.count > 0 %>
+    <%= @user.languages.order("name ASC").pluck(:name).join(", ") %>
+    <% else %>
+    <em>None</em>
+    <% end %>
+  </dd>
+
+
+  <dt>Plugins</dt>
+  <dd>
+    <% if @user.sourcemod_plugins.count > 0 %>
+    <%= @user.sourcemod_plugins.count %> (<%= link_to "view plugins", user_sourcemod_plugins_path(@user) %>)
+    <% else %>
+    <em>None</em>
+    <% end %>
+  </dd>
 
 </dl>
-
-
-<h2>Plugins</h2>
-<% if @user.sourcemod_plugins.count > 0 %>
-
-<ul>
-<% @user.sourcemod_plugins.each do |plugin| %>
-<li><%= link_to plugin.name, plugin %></li>
-<% end %>
-</ul>
-
-<% else %>
-
-<p>Nothing here yet.</p>
-
-<% end %>
 

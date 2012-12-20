@@ -1,4 +1,4 @@
-<%= form_for(@sourcemod_plugin) do |f| %>
+<%= form_for(@sourcemod_plugin, :html => {:class => "form-horizontal"}) do |f| %>
   <% if @sourcemod_plugin.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@sourcemod_plugin.errors.count, "error") %> prohibited this sourcemod_plugin from being saved:</h2>
@@ -10,24 +10,26 @@
       </ul>
     </div>
   <% end %>
-
-  <div class="field">
-    <%= f.label :user_id %><br />
-    <%= f.number_field :user_id %>
+<div class="control-group">
+    <%= f.label :name, :class => "control-label" %>
+    <div class="controls">
+      <%= f.text_field :name %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
+  <div class="control-group">
+    <%= f.label :filename, :class => "control-label" %>
+    <div class="controls">
+      <div class="input-append">
+      <%= f.text_field :filename %>
+      <span class="add-on">.phrases.txt</span>
+      </div>
+      <span class="help-block">This is the filename part of your plugin. All phrase files will be prepended with this.</span>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :filename %><br />
-    <%= f.text_field :filename %>
-  </div>
-  <div class="field">
-    <%= f.label :phrases_count %><br />
-    <%= f.number_field :phrases_count %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
+  <div class="control-group">
+    <div class="controls">
+    <%= f.submit "Update Plugin", :class => "btn btn-primary" %>
+    <%= link_to "Cancel", @sourcemod_plugin, :class => "btn" %>
+    </div>
   </div>
 <% end %>
