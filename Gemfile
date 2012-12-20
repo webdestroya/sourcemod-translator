@@ -82,6 +82,6 @@ gem "steam-condenser", :require => ["steam-condenser/community"]
 
 gem 'rubyzip', :require => ["zip/zip"]
 
-gem 'newrelic_rpm', :group => :production
+#gem 'newrelic_rpm', :group => :production
 
 # gem 'honeybadger'
