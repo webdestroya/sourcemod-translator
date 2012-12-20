@@ -11,7 +11,7 @@ module LayoutHelper
   
   
   def icon_button(icon, text)
-    content_tag(:i, nil, class: "icon #{icon}")+" #{text}".html_safe
+    content_tag(:i, nil, class: "icon icon-#{icon}")+" #{text}".html_safe
   end
   
   

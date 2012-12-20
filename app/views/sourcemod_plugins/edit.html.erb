@@ -14,7 +14,7 @@
 
 <%= error_box do %>
 <p><strong>Warning!</strong> Deleting this plugin will remove all phrases and all translations. You will not be able to recover your plugin if you delete it.</p>
-<%= link_to 'Delete Forever', @sourcemod_plugin, method: :delete, 
+<%= link_to icon_button('trash', 'Delete Forever'), @sourcemod_plugin, method: :delete, 
   data: { confirm: 'Are you sure? You CANNOT recover a deleted plugin.' },
   :class => "btn btn-danger" %>
 <% end %>

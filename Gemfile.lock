@@ -164,6 +164,7 @@ GEM
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
     net-ssh (2.6.2)
+    newrelic_rpm (3.5.4.33)
     nokogiri (1.5.5)
     omniauth (1.1.1)
       hashie (~> 1.2)
@@ -258,6 +259,7 @@ DEPENDENCIES
   journey!
   jquery-rails
   kaminari
+  newrelic_rpm
   omniauth
   omniauth-openid
   omniauth-steam
