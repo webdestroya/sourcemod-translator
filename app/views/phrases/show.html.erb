@@ -27,7 +27,9 @@
 
 
 <h3>Translations
+<% if can? :create, Translation %>
 <small>(<%= link_to "add", new_phrase_translation_path(@phrase) %>)</small>
+<% end %>
 </h3>
 <dl class="dl-horizontal translation-list">
   <% @phrase.translations.each do |translation| %>

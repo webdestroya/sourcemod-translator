@@ -7,24 +7,30 @@ class Ability
 
     cannot :manage, :all
 
+    # Everyone can make a new translation
+    can [:index, :show], Translation
+    can [:index, :show], SourcemodPlugin
+
+    # Can view the phrases
+    can [:show, :index], Phrase
+
+    can [:index, :show], User
+
     unless user.guest? || user.banned?
-      can [:show, :create], SourcemodPlugin
+      can :create, SourcemodPlugin
       can :manage, SourcemodPlugin, user_id: user.id
 
       # language list page, and add/remove personal languages
       can [:index, :add, :remove], Language
 
-      # Can view the phrases
-      can [:show, :index, :translate, :translate_submit], Phrase
+      can [:translate, :translate_submit], Phrase
 
-      # Everyone can make a new translation
-      can [:new, :create, :index, :show], Translation
+      can [:new, :create], Translation
 
       # Only the owner can manage a translation
       can :manage, Translation, user_id: user.id
       can [:delete], Translation, sourcemod_plugin: {user_id: user.id}
 
-      can [:index, :show], User
     end
 
     if user.admin?

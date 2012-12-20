@@ -12,7 +12,11 @@
 }
 
 dl.translation-list {
+  dt {
+    width: 180px;
+  }
   dd {
+    margin-left: 200px;
     margin-bottom:0.5em;
 
     span.options {
