@@ -4,7 +4,7 @@ class SourcemodPluginsController < ApplicationController
 
   load_and_authorize_resource
 
-  before_action :set_sourcemod_plugin, only: [:show, :edit, :update, :destroy, :upload, :upload_submit, :phrases_file_text]
+  before_action :set_sourcemod_plugin, only: [:show, :edit, :update, :destroy, :upload, :upload_submit, :phrases_file_text, :download]
 
   # GET /sourcemod_plugins
   # GET /sourcemod_plugins.json
@@ -126,6 +126,61 @@ class SourcemodPluginsController < ApplicationController
     respond_to do |format|
       format.text { render }
     end
+  end
+
+  def download
+    authorize! :download, @sourcemod_plugin
+
+    filename = params[:filename]
+    filename ||= "#{@sourcemod_plugin.filename}.translations.zip"
+
+    phrases = Phrase.where(id: @sourcemod_plugin.translations.english.pluck(:phrase_id))
+
+    t = Tempfile.new("#{@sourcemod_plugin.filename}_download.zip")
+
+    Zip::ZipOutputStream.open(t.path) do |z|
+
+      @sourcemod_plugin.languages.each do |language|
+        translations = Translation.where(phrase_id: phrases.pluck(:id)).where(language_id: language.id)
+
+        next if translations.count == 0
+
+        if language.english?
+          z.put_next_entry "addons/sourcemod/translations/#{@sourcemod_plugin.filename}.phrases.txt"
+        else
+          z.put_next_entry "addons/sourcemod/translations/#{language.iso_code}/#{@sourcemod_plugin.filename}.phrases.txt"
+        end
+
+        z.puts "// Exported from SourceMod Translator"
+        z.puts "// Date: #{Time.zone.now}"
+        z.puts "// Language: #{language.name} (#{language.iso_code})"
+        z.puts "// "
+        z.puts "// To view other translations for this plugin, please visit:"
+        z.puts "// http://#{request.env['HTTP_HOST']}#{sourcemod_plugin_path(@sourcemod_plugin)}"
+        z.puts "//"
+
+        z.puts "\"Phrases\""
+        z.puts "{"
+        z.puts ""
+        translations.each do |translation|
+          z.puts "\t\"#{translation.phrase.name}\""
+          z.puts "\t{"
+          if language.english? && translation.phrase.format
+            z.puts "\t\t\"#format\"\t\"#{translation.phrase.format}\""
+          end
+          z.puts "\t\t\"#{language.iso_code}\"\t\"#{translation.text}\""
+          z.puts "\t}"
+          z.puts ""
+        end
+        z.puts "}"
+      end
+
+    end
+
+    send_file t.path, type: "application/zip", 
+                      disposition: "attachment", 
+                      filename: filename
+    t.close
   end
 
 

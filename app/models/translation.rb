@@ -16,6 +16,6 @@ class Translation < ActiveRecord::Base
 
   scope :english,   -> {where(:language_id => Language.find_by_iso_code("en").id)}
 
-
+  scope :language,  ->(language) {where(language_id: language.id)}
 
 end

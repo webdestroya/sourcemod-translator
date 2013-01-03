@@ -10,4 +10,8 @@ class Language < ActiveRecord::Base
   validates_uniqueness_of :iso_code
 
   validates_presence_of   :name
+
+  def english?
+    self.iso_code.eql?("en")
+  end
 end
