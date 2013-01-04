@@ -2,6 +2,6 @@
 
 <ul>
   <% @tags.each do |tag| %>
-  <li><%= link_to tag.name, tagged_sourcemod_plugins_path(tag.name) %></li>
+  <li><%= link_to tag.name, tagged_sourcemod_plugins_path(tag.name) %> (<%= pluralize tag.plugin_tags.count, "plugin" %>)</li>
   <% end %>
 </ul>

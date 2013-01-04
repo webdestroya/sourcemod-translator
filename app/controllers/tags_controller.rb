@@ -4,9 +4,9 @@ class TagsController < ApplicationController
   end
 
   def index
-    @tags = Tag.order("name ASC")
+    @tags = Tag.used.order("name ASC")
 
-    
+
   end
   
 end
