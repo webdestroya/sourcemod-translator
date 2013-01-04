@@ -92,14 +92,28 @@ class SourcemodPlugin < ActiveRecord::Base
         else
           lang = Language.where(iso_code: key.downcase).first_or_create(name: key.downcase)
 
-          # LATER: If this is the plugin owner, then just overwrite the translation
-          # Skip over anything that is already existing
-          unless phrase.translations.where(language: lang).exists?
-            translation = phrase.translations.new
-            translation.user_id = self.user_id
-            translation.language = lang
-            translation.text = value
-            phrase.translations << translation
+          # Remove any existing translations in this language
+          existing_trans = phrase.translations.where(language: lang).first
+          if existing_trans
+            # if theres an existing one, deal with it
+
+            if existing_trans.user_id.eql?(self.user_id)
+              # It already exists, but is owned by the current user. just update
+              existing_trans.update_attribute(:text, value)
+
+            elsif !existing_trans.text.eql?(value)
+              # It was created by another user (and the text is different)
+              # remove the existing one
+              existing_trans.destroy
+
+              # add it back
+              phrase.translations << phrase.translations.new( user_id: self.user_id, 
+                                                              language: lang, 
+                                                              text: value)
+            end
+          else
+            # No existing translation found
+            phrase.translations << phrase.translations.new(user_id: self.user_id, language: lang, text: value)
           end
         end
         
