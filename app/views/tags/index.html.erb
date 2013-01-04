@@ -1,7 +1,11 @@
 <h1>Tags</h1>
 
+<% if @tags.count > 0 %>
 <ul>
   <% @tags.each do |tag| %>
   <li><%= link_to tag.name, tagged_sourcemod_plugins_path(tag.name) %> (<%= pluralize tag.plugin_tags.count, "plugin" %>)</li>
   <% end %>
 </ul>
+<% else %>
+<p>No tags have been added yet!</p>
+<% end %>

@@ -53,6 +53,7 @@
     <% end %>
 
     <li><%= link_to "Translate!", random_translations_path %></li>
+    <li class="<%= "active" if current_page?(:controller => 'tags', :action => 'index') %>"><%= link_to "Tags", tags_path %></li>
     
   <% end %>
 </ul>    
