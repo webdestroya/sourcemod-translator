@@ -5,6 +5,9 @@ class SourcemodPlugin < ActiveRecord::Base
   has_many      :phrases,   dependent: :destroy
   has_many      :translations,  through: :phrases
   has_many      :languages,  through: :translations, :uniq => true
+
+  has_many      :plugin_tags, dependent: :destroy
+  has_many      :tags, through: :plugin_tags
   
   validates_presence_of   :user_id
   validates_presence_of   :name
@@ -14,6 +17,21 @@ class SourcemodPlugin < ActiveRecord::Base
 
   scope :no_phrases,    -> {where(phrases_count: 0)}
   scope :has_phrases,    -> {where("sourcemod_plugins.phrases_count > 0")}
+
+  scope :tagged,        ->(tags) {
+    where([
+      "sourcemod_plugins.id IN (SELECT plugin_tags.sourcemod_plugin_id FROM plugin_tags WHERE plugin_tags.tag_id IN (?))", 
+      Tag.tokens(tags).collect{|t|t.id}
+    ])
+  }
+
+  def tag_list
+    self.tags.collect{|t|t.name}.join(",")
+  end
+
+  def tag_list=(tokens)
+    self.tag_ids = Tag.ids_from_tokens(tokens)
+  end
 
   def percent_completed
     @percent_completed ||= ((100.0*self.translations.count) / (self.phrases.count * Language.count)).round 2

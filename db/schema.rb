@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20121218221030) do
+ActiveRecord::Schema.define(version: 20130104175800) do
 
   create_table "languages", force: true do |t|
     t.string "iso_code", limit: 5, null: false
@@ -31,6 +31,13 @@ ActiveRecord::Schema.define(version: 20121218221030) do
 
   add_index "phrases", ["sourcemod_plugin_id", "name"], name: "index_phrases_on_sourcemod_plugin_id_and_name", unique: true
 
+  create_table "plugin_tags", force: true do |t|
+    t.integer "sourcemod_plugin_id", null: false
+    t.integer "tag_id",              null: false
+  end
+
+  add_index "plugin_tags", ["tag_id", "sourcemod_plugin_id"], name: "index_plugin_tags_on_tag_id_and_sourcemod_plugin_id", unique: true
+
   create_table "sourcemod_plugins", force: true do |t|
     t.integer  "user_id",                   null: false
     t.string   "name",                      null: false
@@ -41,6 +48,12 @@ ActiveRecord::Schema.define(version: 20121218221030) do
   end
 
   add_index "sourcemod_plugins", ["user_id"], name: "index_sourcemod_plugins_on_user_id"
+
+  create_table "tags", force: true do |t|
+    t.string "name", null: false
+  end
+
+  add_index "tags", ["name"], name: "index_tags_on_name", unique: true
 
   create_table "translations", force: true do |t|
     t.integer  "phrase_id",                           null: false

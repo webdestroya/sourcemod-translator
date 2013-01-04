@@ -1,4 +1,7 @@
 SourcemodTranslator::Application.routes.draw do
+  
+  resources :tags, only: [:index]
+  
   resources :translations, except: [:index] do
     get 'random', :action => :random, :on => :collection
   end
@@ -19,6 +22,7 @@ SourcemodTranslator::Application.routes.draw do
   end
 
   resources :sourcemod_plugins do
+    get 'tagged/:tags', action: :index, on: :collection, :constraints => { :tags => /[-_a-zA-Z0-9\+]+/ }, as: :tagged
     get 'download/:filename', :action => :download, :on => :member, :constraints => { :filename => /.+/ }, :as => :download
     get 'export', :action => :export, :on => :member
     get 'clean', :action => :clean, :on => :member
@@ -32,6 +36,8 @@ SourcemodTranslator::Application.routes.draw do
   get 'logout', to: 'sessions#destroy', as: 'logout'
 
   get 'home', to: 'pages#home', as: 'home'
+  get 'stats', to: 'pages#stats', as: 'stats'
+  get 'contact', to: 'pages#contact', as: 'contact'
 
   root :to => 'pages#index'
 end

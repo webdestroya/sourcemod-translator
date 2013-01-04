@@ -22,6 +22,8 @@ group :assets do
   # gem 'therubyracer', platforms: :ruby
 
   gem 'uglifier', '>= 1.0.3'
+
+  gem 'select2-rails'
 end
 
 gem 'jquery-rails'
@@ -85,3 +87,5 @@ gem 'rubyzip', :require => ["zip/zip"]
 #gem 'newrelic_rpm', :group => :production
 
 # gem 'honeybadger'
+
+#gem 'acts-as-taggable-on'

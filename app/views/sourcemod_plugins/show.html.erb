@@ -25,6 +25,7 @@
 
 <% else %>
 
+
 <h4>Translation Progress (<%= @sourcemod_plugin.percent_completed %>%) 
 <small>(<a href="#" onclick="$('.detailed').toggle();return false;">detailed</a>)</small>
 </h4>
@@ -52,6 +53,15 @@
   <dt>Multi-File Zip</dt>
   <dd><%= link_to "#{@sourcemod_plugin.filename}.translations.zip", download_sourcemod_plugin_path(@sourcemod_plugin, :filename => "#{@sourcemod_plugin.filename}.translations.zip"), :data => {:track => "export-zip"} %></dd>
 </dl>
+
+<% if @sourcemod_plugin.tags.count > 0 %>
+<h4>Tags</h4>
+<ul class="taglist">
+  <% @sourcemod_plugin.tags.order("tags.name ASC").each do |tag| %>
+  <li><%= link_to tag.name, tagged_sourcemod_plugins_path(tag.name) %></li>
+  <% end %>
+</ul>
+<% end %>
 
 <h4>Phrases</h4>
 <% no_english_phrases = false %>

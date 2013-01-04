@@ -4,6 +4,11 @@
     <% if @user %>
     <small>by <%= @user.name %></small>
     <% end %>
+    <% if @tags && !@tags.empty? %>
+    <small>
+      tagged as <em><%= @tags.join(", ") %></em>
+    </small>
+    <% end %>
   </h1>
 <% end %>
 

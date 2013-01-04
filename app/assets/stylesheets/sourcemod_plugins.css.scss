@@ -23,3 +23,18 @@ tr.no-english {
     background-color: #F2DEDE !important;
   }
 }
+
+ul.taglist {
+  li {
+    list-style-type: none;
+    margin:0;
+    padding:0;
+    display:inline;
+    &:after {
+      content: ",";
+    }
+  }
+  li:last-child:after {
+    content: "";
+  }
+}

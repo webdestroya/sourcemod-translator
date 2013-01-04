@@ -9,12 +9,28 @@ class SourcemodPluginsController < ApplicationController
   # GET /sourcemod_plugins
   # GET /sourcemod_plugins.json
   def index
+
+    search = SourcemodPlugin.scoped
+
     if params[:user_id]
       @user = User.find params[:user_id]
-      @sourcemod_plugins = @user.sourcemod_plugins.order("LOWER(name) ASC").all
+      search = search.where(user_id: @user.id)
+
+      unless @user.eql?(current_user)
+        search = search.has_phrases
+      end
     else
-      @sourcemod_plugins = SourcemodPlugin.has_phrases.order("LOWER(name) ASC").all
+      search = search.has_phrases
     end
+
+    if params[:tags]
+      search = search.tagged(params[:tags])
+      @tags = Tag.tokens params[:tags]
+    end
+
+    search = search.order("LOWER(sourcemod_plugins.name) ASC")
+
+    @sourcemod_plugins = search
 
     respond_to do |format|
       format.html # index.html.erb
@@ -48,6 +64,8 @@ class SourcemodPluginsController < ApplicationController
   def create
 
     @sourcemod_plugin = current_user.sourcemod_plugins.new(sourcemod_plugin_params)
+
+    puts @sourcemod_plugin.tag_list.inspect
 
     respond_to do |format|
       if @sourcemod_plugin.save
@@ -205,7 +223,7 @@ class SourcemodPluginsController < ApplicationController
     # Use this method to whitelist the permissible parameters. Example: params.require(:person).permit(:name, :age)
     # Also, you can specialize this method with per-user checking of permissible attributes.
     def sourcemod_plugin_params
-      params.require(:sourcemod_plugin).permit(:name, :filename)
+      params.require(:sourcemod_plugin).permit(:name, :filename, :tag_list)
     end
 
     def new_sourcemod_plugin
