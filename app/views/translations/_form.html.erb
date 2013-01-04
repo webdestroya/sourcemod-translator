@@ -1,6 +1,10 @@
 
 <%= form_for(@translation, :html => {:class => "form-horizontal"}) do |f| %>
 
+  <% if params[:random] %>
+  <%= hidden_field_tag :random, "1" %>
+  <% end %>
+
   <%= f.hidden_field :phrase_id %>
 
   <% if @translation.errors.any? %>
@@ -58,10 +62,25 @@
     <%= f.label :text, :class => "control-label" %>
     <div class="controls">
       <%= f.text_field :text, :class => "span8" %>
-      <span class="help-inline">Add your translation using the language you specified above</span>
+      <span class="help-inline">Add your translation using the language you specified above. 
+        <strong>Note:</strong> Make sure to escape all quotes! <code>\&quot;</code>
+      </span>
     </div>
   </div>
   <div class="control-group">
-    <div class="controls"><%= f.submit :class => "btn btn-primary" %></div>
+    <div class="controls">
+      <%= f.submit :class => "btn btn-primary" %>
+      <% if params[:random] %>
+      <%= link_to "Skip Translation", random_translations_path, :class => "btn" %>
+      <% end %>
+    </div>
   </div>
+<% end %>
+
+<% if params[:random] %>
+<%= info_box do %>
+<strong>You are in random translation mode!</strong>
+<br/>
+This will let you add translations for any plugin that needs a translation in your language. If you are unsure of a translation, you can press <strong>Skip Translation</strong> at any time.
+<% end %>
 <% end %>

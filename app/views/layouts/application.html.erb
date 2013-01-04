@@ -51,6 +51,8 @@
     <% if current_user && current_user.sourcemod_plugins.count > 0 %>
     <li><%= link_to "My Plugins", user_sourcemod_plugins_path(current_user) %></li>
     <% end %>
+
+    <li><%= link_to "Translate!", random_translations_path %></li>
     
   <% end %>
 </ul>    

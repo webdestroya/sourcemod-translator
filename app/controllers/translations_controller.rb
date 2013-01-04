@@ -1,4 +1,7 @@
 class TranslationsController < ApplicationController
+
+  # TODO: If they try to add a translation when there are no valid languages, we should error
+
   before_filter :new_translation, :only => [:create]
 
   load_and_authorize_resource
@@ -79,6 +82,39 @@ class TranslationsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to @translation.phrase, notice: "Translation deleted" }
     end
+  end
+
+  # This will show an edit page for a random translation
+  # This requires a user with languages
+  # and searches for phrases that are missing translations in the language this user
+  # knows
+  def random
+    if current_user.nil?
+      flash[:error] = "You must be logged in!"
+      redirect_to sourcemod_plugins_path and return
+    end
+
+    langs = current_user.languages.pluck(:id)
+
+    if langs.empty?
+      flash[:error] = "You must add some languages!"
+      redirect_to languages_path and return
+    end
+
+    phrases = Phrase.where(["phrases.id NOT IN (SELECT translations.phrase_id FROM translations WHERE translations.language_id IN (?))", langs])
+              .order("phrases.translations_count DESC")
+              .limit(100)
+              .pluck(:id)
+              
+
+    if phrases.size > 0
+      phrases.shuffle!
+      phrase = Phrase.find(phrases[0])
+      redirect_to new_phrase_translation_path(phrase, :random => 1) and return      
+    end
+
+    flash[:alert] = "Sorry, we couldn't find any phrases that you can translate :("
+    redirect_to sourcemod_plugins_path and return
   end
 
   private

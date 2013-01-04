@@ -1,5 +1,7 @@
 SourcemodTranslator::Application.routes.draw do
-  resources :translations, except: [:index]
+  resources :translations, except: [:index] do
+    get 'random', :action => :random, :on => :collection
+  end
 
   resources :users, only: [:show, :index] do
     resources :sourcemod_plugins, only: [:index]
