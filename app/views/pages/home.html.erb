@@ -1,0 +1,37 @@
+<h1>Home</h1>
+
+
+<h3>Plugin Developers</h3>
+<div class="home-step">
+  <h4>Step 1: Create a Plugin</h4>
+  <p>
+    Start having other users add translations for your plugin! It's easy! To get started, <%= link_to "create a new plugin", new_sourcemod_plugin_path %> and then follow Step 2!
+  </p>
+</div>
+
+<div class="home-step">
+  <h4>Step 2: Upload Phrases</h4>
+  <p>
+    Once you have created a plugin, you should click the button labeled <strong>Upload Phrases</strong>. Once you upload the English phrases for your plugin you are all set! Be sure to upload the additional languages if you have them.
+  </p>
+</div>
+
+<hr />
+
+<h3>Translators</h3>
+<div class="home-step">
+  <h4>Step 1: Specify Language(s)</h4>
+  <p>
+    We need to know what languages you know! To let us know what languages you know, click the <strong><%= link_to "My Languages", languages_path %></strong> link in the top right of the screen. Make sure to click <strong>Add to list</strong> for any languages you want to translate for.
+  </p>
+</div>
+
+<div class="home-step">
+  <h4>Step 2: Translate!</h4>
+  <p>
+    If you want to translate a specific plugin, you can find it in the <%= link_to "list of plugins", sourcemod_plugins_path %>. Click on each phrase to add a translation for that phrase.
+  </p>
+  <p>
+    Alternatively, you can add translations for random phrases from any plugin. To get started, just click the <strong><%= link_to "Translate!", random_translations_path %></strong> link in the top menu bar!
+  </p>
+</div>
