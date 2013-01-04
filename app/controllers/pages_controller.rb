@@ -7,4 +7,12 @@ class PagesController < ApplicationController
   def home
   end
 
+  # Statistics
+  def stats
+
+  end
+
+  def contact
+  end
+
 end
