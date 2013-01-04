@@ -1,5 +1,5 @@
 SourcemodTranslator::Application.routes.draw do
-  resources :translations
+  resources :translations, except: [:index]
 
   resources :users, only: [:show, :index] do
     resources :sourcemod_plugins, only: [:index]

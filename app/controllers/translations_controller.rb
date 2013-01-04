@@ -65,10 +65,8 @@ class TranslationsController < ApplicationController
     respond_to do |format|
       if @translation.update_attributes(translation_params)
         format.html { redirect_to @translation, notice: 'Translation was successfully updated.' }
-        format.json { head :no_content }
       else
         format.html { render action: "edit" }
-        format.json { render json: @translation.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -79,8 +77,7 @@ class TranslationsController < ApplicationController
     @translation.destroy
 
     respond_to do |format|
-      format.html { redirect_to translations_url }
-      format.json { head :no_content }
+      format.html { redirect_to @translation.phrase, notice: "Translation deleted" }
     end
   end
 
