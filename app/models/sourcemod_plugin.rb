@@ -16,7 +16,13 @@ class SourcemodPlugin < ActiveRecord::Base
   scope :has_phrases,    -> {where("sourcemod_plugins.phrases_count > 0")}
 
   def percent_completed
-    ((100.0*self.translations.count) / (self.phrases.count * Language.count)).round 2
+    @percent_completed ||= ((100.0*self.translations.count) / (self.phrases.count * Language.count)).round 2
+  end
+
+  # This is the percentage of attempted languages / completed languages
+  # If there are NO translations for a language, we don't count that language 
+  def attempted
+    @attempted ||= ((100.0*self.translations.count) / (self.phrases.count * self.languages.count)).round 2
   end
 
  
@@ -83,7 +89,7 @@ class SourcemodPlugin < ActiveRecord::Base
         in_phrase = true
         phrase_name = line.gsub(/"/,'')
 
-        phrase = self.phrases.where(:name => phrase_name).first_or_initialize
+        phrase = self.phrases.where(name: phrase_name).first_or_initialize
         
         #phrase.translations = []
       end
@@ -102,6 +108,18 @@ class SourcemodPlugin < ActiveRecord::Base
       # update the plugin
       self.update_column(:user_id, new_user.id)
 
+    end
+  end
+
+
+  # TODO: This will drop all phrases that do not have an english translation
+  # We use english as the primary language
+  def clean!
+    Phrase.transaction do
+      english_phrase_ids = self.translations.english.pluck(:phrase_id)
+      Phrase.where(sourcemod_plugin_id: self.id)
+            .where(["\"phrases\".\"id\" NOT IN (?)", english_phrase_ids])
+            .destroy_all
     end
   end
 

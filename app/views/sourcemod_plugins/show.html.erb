@@ -29,13 +29,16 @@
 <small>(<a href="#" onclick="$('.detailed').toggle();return false;">detailed</a>)</small>
 </h4>
 <dl class="dl-horizontal translation-progress">
-  <dt>Overall</dt>
-  <dd><div class="progress"><div class="bar" style="width: <%= @sourcemod_plugin.percent_completed %>%;"></div></div></dd>
+  <dt><abbr title="The percentage of completed languages vs the total available languages">Overall</abbr></dt>
+  <dd><div class="progress"><div class="bar <%= 'bar-success' if @sourcemod_plugin.percent_completed==100.0 %>" style="width: <%= @sourcemod_plugin.percent_completed %>%;"></div></div></dd>
+
+  <dt><abbr title="This is the percentage of completed languages vs attempted languages">Attempted</abbr></dt>
+  <dd><div class="progress"><div class="bar <%= 'bar-success' if @sourcemod_plugin.attempted==100.0 %>" style="width: <%= @sourcemod_plugin.attempted %>%;"></div></div></dd>
 
   <% Language.all.order("name ASC").each do |lang| %>
-  <% completed = (100.0*@sourcemod_plugin.translations.where(language_id: lang.id).count)/@sourcemod_plugin.phrases.count %>
+  <% completed = ((100.0*@sourcemod_plugin.translations.where(language_id: lang.id).count)/@sourcemod_plugin.phrases.count).round 2 %>
   <dt class="detailed" title="<%= completed %>%"><%= lang.name %> (<%= lang.iso_code %>)</dt>
-  <dd class="detailed"><div class="progress"><div class="bar" style="width: <%= completed %>%;"></div></div>
+  <dd class="detailed"><div class="progress"><div class="bar <%= 'bar-success' if completed==100.0 %>" style="width: <%= completed %>%;"></div></div>
 
   </dd>
   <% end %>
@@ -44,10 +47,10 @@
 <h4>Export</h4>
 <dl class="dl-horizontal">
   <dt>Single File</dt>
-  <dd><%= link_to "#{@sourcemod_plugin.filename}.phrases.txt", export_sourcemod_plugin_path(@sourcemod_plugin, :format => "txt") %></dd>
+  <dd><%= link_to "#{@sourcemod_plugin.filename}.phrases.txt", export_sourcemod_plugin_path(@sourcemod_plugin, :format => "txt"), :data => {:track => "export-txt"} %></dd>
 
   <dt>Multi-File Zip</dt>
-  <dd><%= link_to "#{@sourcemod_plugin.filename}.translations.zip", download_sourcemod_plugin_path(@sourcemod_plugin, :filename => "#{@sourcemod_plugin.filename}.translations.zip") %></dd>
+  <dd><%= link_to "#{@sourcemod_plugin.filename}.translations.zip", download_sourcemod_plugin_path(@sourcemod_plugin, :filename => "#{@sourcemod_plugin.filename}.translations.zip"), :data => {:track => "export-zip"} %></dd>
 </dl>
 
 <h4>Phrases</h4>
@@ -75,6 +78,12 @@
 
 <% if no_english_phrases %>
 <%= error_box do %>
-The phrases above highlighted in red do not have an English translation. If you want to delete these phrases, then click on them and follow the prompt on the next page.
+<p>The phrases above highlighted in red do not have an English translation.</p>
+
+  <% if can? :clean, @sourcemod_plugin %>
+  <p>If you want to delete these phrases, then click on them and follow the prompt on the next page. Alternatively, you may click the button below to clear all phrases.</p>
+  <%= link_to "Clean Plugin", clean_sourcemod_plugin_path(@sourcemod_plugin), :class => "btn btn-danger", data: { confirm: 'Are you sure? This will remove all translations as well.' } %>
+  <% end %>
+
 <% end %>
 <% end %>

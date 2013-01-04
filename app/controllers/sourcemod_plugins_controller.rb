@@ -4,7 +4,7 @@ class SourcemodPluginsController < ApplicationController
 
   load_and_authorize_resource
 
-  before_action :set_sourcemod_plugin, only: [:show, :edit, :update, :destroy, :upload, :upload_submit, :phrases_file_text, :download]
+  before_action :set_sourcemod_plugin, only: [:show, :edit, :update, :destroy, :upload, :upload_submit, :phrases_file_text, :download, :clean]
 
   # GET /sourcemod_plugins
   # GET /sourcemod_plugins.json
@@ -183,6 +183,18 @@ class SourcemodPluginsController < ApplicationController
     t.close
   end
 
+
+
+  def clean
+    authorize! :clean, @sourcemod_plugin
+    respond_to do |format|
+      if @sourcemod_plugin.clean!
+        format.html { redirect_to @sourcemod_plugin, notice: 'Plugin successfully cleaned.' }
+      else
+        format.html { redirect_to @sourcemod_plugin, notice: 'Error!' }
+      end
+    end
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

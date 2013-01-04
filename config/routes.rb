@@ -19,6 +19,7 @@ SourcemodTranslator::Application.routes.draw do
   resources :sourcemod_plugins do
     get 'download/:filename', :action => :download, :on => :member, :constraints => { :filename => /.+/ }, :as => :download
     get 'export', :action => :export, :on => :member
+    get 'clean', :action => :clean, :on => :member
     get 'upload', :action => :upload, :on => :member
     post 'upload', :action => :upload_submit, :on => :member
   end
