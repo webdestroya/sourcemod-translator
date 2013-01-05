@@ -38,6 +38,7 @@ SourcemodTranslator::Application.routes.draw do
   get 'home', to: 'pages#home', as: 'home'
   get 'stats', to: 'pages#stats', as: 'stats'
   get 'contact', to: 'pages#contact', as: 'contact'
+  get 'changelog', to: 'pages#changelog', as: 'changelog'
 
   root :to => 'pages#index'
 end

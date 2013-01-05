@@ -15,4 +15,7 @@ class PagesController < ApplicationController
   def contact
   end
 
+  def changelog
+  end
+
 end
