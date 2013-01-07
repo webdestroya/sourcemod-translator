@@ -65,7 +65,7 @@ class SourcemodPluginsController < ApplicationController
 
     @sourcemod_plugin = current_user.sourcemod_plugins.new(sourcemod_plugin_params)
 
-    puts @sourcemod_plugin.tag_list.inspect
+    #puts @sourcemod_plugin.tag_list.inspect
 
     respond_to do |format|
       if @sourcemod_plugin.save
