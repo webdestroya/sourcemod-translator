@@ -53,9 +53,15 @@ class TranslationsController < ApplicationController
   def create
     @translation = current_user.translations.new(translation_params)
 
+
+
     respond_to do |format|
       if @translation.save
-        format.html { redirect_to @translation.phrase, notice: 'Translation was successfully created.' }
+
+        redirect_path = phrase_path(@translation.phrase)
+        redirect_path = random_translations_path if params[:random]
+
+        format.html { redirect_to redirect_path, notice: 'Translation was successfully created.' }
       else
         format.html { render action: "new" }
       end
