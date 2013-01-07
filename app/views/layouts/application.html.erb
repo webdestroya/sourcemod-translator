@@ -126,8 +126,9 @@
     <p>
       <%= link_to "Home", root_path %>
       | <%= link_to "Contact", contact_path %>
+      | <%= link_to "Changelog", changelog_path %>
       
-      | Version 0.1.0
+      | Version <%= $VERSION %>
     </p>
     
     <p>&copy; <%= Time.now.year %> Mitch Dempsey. All Rights Reserved.</p>
