@@ -22,9 +22,9 @@ group :assets do
   # gem 'therubyracer', platforms: :ruby
 
   gem 'uglifier', '>= 1.0.3'
-
-  gem 'select2-rails'
+  #gem 'select2-rails'
 end
+
 
 gem 'jquery-rails'
 
