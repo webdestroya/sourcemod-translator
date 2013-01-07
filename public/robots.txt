@@ -3,3 +3,7 @@
 # To ban all spiders from the entire site uncomment the next two lines:
 # User-agent: *
 # Disallow: /
+
+# Not sure why this thing keeps crawling the site
+user-agent: AhrefsBot
+disallow: /
