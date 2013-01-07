@@ -1,0 +1,31 @@
+"Phrases"
+{
+  "16b1d5c749516fb6bb5cbebfbc635dec"
+  {
+    "en"    "You pull on your socks."
+  }
+
+  "95c63ffdbbf81d75d4bf460d812bc16b"
+  {
+    "#format" "{1:s},{2:s}"
+    "en"    "You set player \"{1}\" to race {2}."
+  }
+
+  "c73a8e9a75c8103b0233083522e69c6d"
+  {
+    "#format" "{1:d}"
+    "en"    "You have {1} Gold" ///THIS IS MENU DO NOT ADD COLOR
+  }
+
+  "6ff48234f2ae9edef49a4ea47ac80ab6"
+  {
+    "en"    "playerinfo <optional name>: More than one target found";
+  }
+
+  "6404000d559425b4c0b06a5ba0dc52e8"
+  {
+    "#format" "{1:s},{2:s}"
+    "en"    "{1} ({2})";
+  }
+
+}

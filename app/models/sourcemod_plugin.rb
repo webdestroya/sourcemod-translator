@@ -80,7 +80,8 @@ class SourcemodPlugin < ActiveRecord::Base
           next
         end
 
-        match = line.match(/^\s*\"([a-z0-9]{2,3}|\#format)\"\s+\"(.+)\"\s*$/)
+        #match = line.match(/^\s*\"([a-z0-9]{2,3}|\#format)\"\s+\"(.+)\"\s*$/)
+        match = line.match /"([_0-9a-z]{2,5}|\#format)"\s+"((?:[^"\\]|\\.)+)"/
 
         next if match.nil?
 
