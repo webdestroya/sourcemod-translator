@@ -27,6 +27,7 @@ en:
     add_plugin: "Add Plugin"
     my_plugins: "My Plugins"
     translate: "Translate!"
+    logout: Logout
 
   activerecord:
     models:
