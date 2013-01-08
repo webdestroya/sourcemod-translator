@@ -18,4 +18,6 @@ class Translation < ActiveRecord::Base
 
   scope :language,  ->(language) {where(language_id: language.id)}
 
+  # TODO: Add a field to denote whether this was Imported or done on the site
+
 end

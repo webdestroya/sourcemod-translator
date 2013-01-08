@@ -1,5 +1,10 @@
 class SourcemodPlugin < ActiveRecord::Base
 
+  # TODO: Add percent complete to DB
+  # TODO: Add percent attempted to DB
+
+  # TODO: What if the parser parsed the whole file, THEN tried to do all the DB queries?
+
   belongs_to    :user
 
   has_many      :phrases,   dependent: :destroy

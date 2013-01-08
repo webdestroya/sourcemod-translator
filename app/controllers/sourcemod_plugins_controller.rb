@@ -1,5 +1,7 @@
 class SourcemodPluginsController < ApplicationController
 
+  # TODO: The random plugin should have a param called "skip" that is incremented each time we load it. That way, we can skip thru sorted lists
+
   before_filter :new_sourcemod_plugin, :only => [:create]
 
   load_and_authorize_resource
