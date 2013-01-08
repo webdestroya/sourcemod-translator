@@ -43,21 +43,21 @@
 
   
 <ul class="nav">
-    <li class="<%= "active" if current_page?(:controller => 'sourcemod_plugins', :action => 'index') %>"><%= link_to "Browse Plugins", sourcemod_plugins_path %></li>
+    <li class="<%= "active" if current_page?(:controller => 'sourcemod_plugins', :action => 'index') %>"><%= link_to t('menubar.browse_plugins'), sourcemod_plugins_path %></li>
 
   <% if current_user %>
-    <li class="<%= "active" if current_page?(:controller => 'sourcemod_plugins', :action => 'new') %>"><%= link_to "Add New Plugin", new_sourcemod_plugin_path %></li>
+    <li class="<%= "active" if current_page?(:controller => 'sourcemod_plugins', :action => 'new') %>"><%= link_to t('menubar.add_plugin'), new_sourcemod_plugin_path %></li>
      
     <% if current_user && current_user.sourcemod_plugins.count > 0 %>
-    <li><%= link_to "My Plugins", user_sourcemod_plugins_path(current_user) %></li>
+    <li><%= link_to t('menubar.my_plugins'), user_sourcemod_plugins_path(current_user) %></li>
     <% end %>
 
-    <li><%= link_to "Translate!", random_translations_path %></li>
+    <li><%= link_to t('menubar.translate'), random_translations_path %></li>
     
     
   <% end %>
 
-  <li class="<%= "active" if current_page?(:controller => 'tags', :action => 'index') %>"><%= link_to "Tags", tags_path %></li>
+  <li class="<%= "active" if current_page?(:controller => 'tags', :action => 'index') %>"><%= link_to Tag.model_name.human.pluralize, tags_path %></li>
 
 </ul>    
     
@@ -67,7 +67,7 @@
           <%= link_to current_user.name, current_user %>
         </li>
         <li class="<%= "active" if current_page?(:controller => 'languages', :action => 'index') %>"><%= link_to "My Languages", languages_path %></li>
-        <li><%= link_to "Logout", logout_path(:current_url => request.url) %></li>
+        <li><%= link_to t('menubar.logout'), logout_path(:current_url => request.url) %></li>
       </ul>
   <% else %>
       

@@ -1,14 +1,14 @@
 <%= form_for(@sourcemod_plugin, :html => {:class => "form-horizontal"}) do |f| %>
   <% if @sourcemod_plugin.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@sourcemod_plugin.errors.count, "error") %> prohibited this sourcemod_plugin from being saved:</h2>
+    <%= error_box do %>
+      <h4><%= pluralize(@sourcemod_plugin.errors.count, "error") %> prevented this plugin from being saved:</h4>
 
       <ul>
       <% @sourcemod_plugin.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
       </ul>
-    </div>
+    <% end %>
   <% end %>
 <div class="control-group">
   <%= f.label :name, :class => "control-label" %>
@@ -23,23 +23,24 @@
     <%= f.text_field :filename %>
     <span class="add-on">.phrases.txt</span>
     </div>
-    <span class="help-block">This is the filename part of your plugin. All phrase files will be prepended with this.</span>
+    <span class="help-block">This is the filename part of your plugin. All phrase files will be prepended with this. <strong>Note:</strong> This should be unique across ALL plugins</span>
   </div>
 </div>
 <div class="control-group">
   <%= f.label :tag_list, :class => "control-label" %>
   <div class="controls">
-    <%= f.text_field :tag_list, data: {'all-tags' => Tag.order("name ASC").collect{|x|x.name}.join(",")} %>
+    <%= f.text_field :tag_list, data: {'all-tags' => all_tag_list} %>
+    <span class="help-block">Use tags to help categorize your plugin.</span>
   </div>
 </div>
 <div class="control-group">
   <div class="controls">
   <% if @sourcemod_plugin.new_record? %>
-    <%= f.submit "Create Plugin", :class => "btn btn-primary" %>
-    <%= link_to "Cancel", sourcemod_plugins_path, :class => "btn" %>
+    <%= f.submit :class => "btn btn-primary" %>
+    <%= link_to t(:cancel), sourcemod_plugins_path, :class => "btn" %>
   <% else %>
-    <%= f.submit "Update Plugin", :class => "btn btn-primary" %>
-    <%= link_to "Cancel", @sourcemod_plugin, :class => "btn" %>
+    <%= f.submit :class => "btn btn-primary" %>
+    <%= link_to t(:cancel), @sourcemod_plugin, :class => "btn" %>
   <% end %>
   </div>
 </div>

@@ -9,7 +9,7 @@
 
   <% if @translation.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@translation.errors.count, "error") %> prohibited this translation from being saved:</h2>
+      <h2><%= pluralize(@translation.errors.count, "error") %> prevented this translation from being saved:</h2>
 
       <ul>
       <% @translation.errors.full_messages.each do |msg| %>
@@ -20,14 +20,14 @@
   <% end %>
 
   <div class="control-group">
-    <%= f.label "Plugin", :class => "control-label" %>
+    <%= f.label SourcemodPlugin.model_name.human, :class => "control-label" %>
     <div class="controls">
       <span class="form-line"><%= link_to @phrase.sourcemod_plugin.name, @phrase.sourcemod_plugin %></span>
     </div>
   </div>
 
   <div class="control-group">
-    <%= f.label "Phrase", :class => "control-label" %>
+    <%= f.label Phrase.model_name.human, :class => "control-label" %>
     <div class="controls">
       <span class="form-line"><%= link_to @phrase.name, @phrase %></span>
     </div>
@@ -43,7 +43,7 @@
 
   <% if @phrase.format %>
   <div class="control-group">
-    <%= f.label "Format", :class => "control-label" %>
+    <%= f.label Phrase.human_attribute_name(:format), :class => "control-label" %>
     <div class="controls">
       <span class="form-line"><code><%= @phrase.format %></code></span>
     </div>
@@ -52,7 +52,7 @@
 
 
   <div class="control-group">
-    <%= f.label "English", :class => "control-label" %>
+    <%= f.label Phrase.human_attribute_name(:english), :class => "control-label" %>
     <div class="controls">
       <span class="form-line"><%= phrase_text @phrase.english.text %></span>
     </div>

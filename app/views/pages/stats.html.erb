@@ -8,5 +8,21 @@
   <dt>Plugins</dt>
   <dd><%= SourcemodPlugin.count %></dd>
 
+  <dt>Used Tags</dt>
+  <dd><%= Tag.used.count %></dd>
+
+  <% if Tag.unused.count > 0 %>
+  <dt>Unused Tags</dt>
+  <dd><%= Tag.unused.count %> - <%= Tag.unused.collect{|t|t.name}.join(", ") %>
+  </dd>
+  <% end %>
   
 </dl>
+
+
+<h3>Last 10 Users</h3>
+<ul>
+  <% User.order("created_at DESC").limit(10).each do |user| %>
+  <li><%= link_to user.name, user %></li>
+  <% end %>
+</ul>

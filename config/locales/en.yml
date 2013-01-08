@@ -20,4 +20,18 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  cancel: Cancel
+
+  menubar:
+    browse_plugins: "Browse Plugins"
+    add_plugin: "Add Plugin"
+    my_plugins: "My Plugins"
+    translate: "Translate!"
+
+  activerecord:
+    models:
+      sourcemod_plugin: Plugin
+      tag: Tag
+    attributes:
+      sourcemod_plugin:
+        tag_list: Tags
