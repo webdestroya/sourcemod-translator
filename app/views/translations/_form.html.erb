@@ -5,6 +5,10 @@
   <%= hidden_field_tag :random, "1" %>
   <% end %>
 
+  <% if @plugin %>
+  <%= hidden_field_tag :plugin_id, @plugin.id %>
+  <% end %>
+
   <%= f.hidden_field :phrase_id %>
 
   <% if @translation.errors.any? %>
@@ -71,7 +75,7 @@
     <div class="controls">
       <%= f.submit :class => "btn btn-primary" %>
       <% if params[:random] %>
-      <%= link_to "Skip Translation", random_translations_path, :class => "btn" %>
+      <%= link_to "Skip Translation", random_translations_path(:plugin_id => params[:plugin_id]), :class => "btn" %>
       <% end %>
     </div>
   </div>

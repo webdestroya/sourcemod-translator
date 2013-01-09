@@ -107,16 +107,29 @@ class TranslationsController < ApplicationController
       redirect_to languages_path and return
     end
 
-    phrases = Phrase.where(["phrases.id NOT IN (SELECT translations.phrase_id FROM translations WHERE translations.language_id IN (?))", langs])
-              .order("phrases.translations_count DESC")
-              .limit(100)
-              .pluck(:id)
-              
+    phrase_search = Phrase.scoped
+    phrase_search = phrase_search.where(["phrases.id NOT IN (SELECT translations.phrase_id FROM translations WHERE translations.language_id IN (?))", langs])
+
+    if params[:plugin_id]
+      @plugin = SourcemodPlugin.find params[:plugin_id].to_i
+      if @plugin
+        phrase_search = phrase_search.where(:sourcemod_plugin_id => @plugin.id)
+      end
+    end
+
+    phrase_search = phrase_search.order("phrases.translations_count DESC")
+    
+    phrases = phrase_search.limit(100).pluck(:id)          
 
     if phrases.size > 0
+
+      options = {}
+      options[:random] = 1
+      options[:plugin_id] = params[:plugin_id] if @plugin
+
       phrases.shuffle!
       phrase = Phrase.find(phrases[0])
-      redirect_to new_phrase_translation_path(phrase, :random => 1) and return      
+      redirect_to new_phrase_translation_path(phrase, options) and return      
     end
 
     flash[:alert] = "Sorry, we couldn't find any phrases that you can translate :("

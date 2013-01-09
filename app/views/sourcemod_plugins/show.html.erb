@@ -43,7 +43,14 @@
 
   </dd>
   <% end %>
+
+  <dt>&nbsp;</dt>
+  <dd>
+    <%= link_to "Translate this plugin!", random_translations_path(:plugin_id => @sourcemod_plugin.id), :class => "btn btn-success" %>
+  </dd>
 </dl>
+
+
 
 <h4>Export</h4>
 <dl class="dl-horizontal">
