@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130104175800) do
+ActiveRecord::Schema.define(version: 20130109192726) do
 
   create_table "languages", force: true do |t|
     t.string "iso_code", limit: 5, null: false
@@ -56,15 +56,18 @@ ActiveRecord::Schema.define(version: 20130104175800) do
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true
 
   create_table "translations", force: true do |t|
-    t.integer  "phrase_id",                           null: false
-    t.integer  "language_id",                         null: false
-    t.integer  "user_id",                             null: false
-    t.string   "text",                                null: false
-    t.integer  "votes_count",             default: 0, null: false
-    t.integer  "translation_flags_count", default: 0, null: false
+    t.integer  "phrase_id",                               null: false
+    t.integer  "language_id",                             null: false
+    t.integer  "user_id",                                 null: false
+    t.string   "text",                                    null: false
+    t.integer  "votes_count",             default: 0,     null: false
+    t.integer  "translation_flags_count", default: 0,     null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "imported",                default: false
   end
+
+  add_index "translations", ["imported"], name: "index_translations_on_imported"
 
   create_table "user_languages", force: true do |t|
     t.integer  "user_id",     null: false

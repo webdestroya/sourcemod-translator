@@ -13,6 +13,7 @@
   <dt>Steam Profile</dt>
   <dd><%= link_to "http://steamcommunity.com/profiles/#{@user.uid}", "http://steamcommunity.com/profiles/#{@user.uid}", :target => '_blank' %></dd>
 
+
   <dt>Languages</dt>
   <dd>
     <% if @user.languages.count > 0 %>
@@ -31,6 +32,9 @@
     <em>None</em>
     <% end %>
   </dd>
+
+  <dt>Translations</dt>
+  <dd><%= pluralize @user.translations.web.count, "translation" %></dd>
 
 </dl>
 

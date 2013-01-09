@@ -14,10 +14,11 @@ class Translation < ActiveRecord::Base
 
   validates_presence_of     :text
 
+  scope :imported,  -> {where(imported: true)}
+  scope :web,       -> {where(imported: false)}
+
   scope :english,   -> {where(:language_id => Language.find_by_iso_code("en").id)}
 
   scope :language,  ->(language) {where(language_id: language.id)}
-
-  # TODO: Add a field to denote whether this was Imported or done on the site
 
 end

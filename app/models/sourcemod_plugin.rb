@@ -106,6 +106,7 @@ class SourcemodPlugin < ActiveRecord::Base
             if existing_trans.user_id.eql?(self.user_id)
               # It already exists, but is owned by the current user. just update
               existing_trans.update_attribute(:text, value)
+              existing_trans.update_attribute(:imported, true)
 
             elsif !existing_trans.text.eql?(value)
               # It was created by another user (and the text is different)
@@ -115,11 +116,12 @@ class SourcemodPlugin < ActiveRecord::Base
               # add it back
               phrase.translations << phrase.translations.new( user_id: self.user_id, 
                                                               language: lang, 
-                                                              text: value)
+                                                              text: value,
+                                                              imported: true)
             end
           else
             # No existing translation found
-            phrase.translations << phrase.translations.new(user_id: self.user_id, language: lang, text: value)
+            phrase.translations << phrase.translations.new(user_id: self.user_id, language: lang, text: value, imported: true)
           end
         end
         
