@@ -146,17 +146,14 @@ class SourcemodPlugin < ActiveRecord::Base
 
     input_stream.readlines.each do |line|
       line.strip!
-      line.gsub! /\/\*.+\*\//, ''
-
+      line.gsub! /\/\*.+\*\//, '' # strip single line block comments
       next if line =~ /^\s*$/ # ignore blank lines
 
       # convert format description lines to special format
       line.gsub! /^\/\/\s*([0-9]+)\s*[:]\s*(.+)/, "@\\1: \\2"
 
-
       next if line =~ /^\s*\/\/.+$/ # ignore comments
-      
-
+    
       valid_lines << line 
     end
 
@@ -169,16 +166,16 @@ class SourcemodPlugin < ActiveRecord::Base
 
     phrase = nil
     format_infos = {}
-    in_phrase = false
 
     valid_lines.each do |line|
       
-      if in_phrase
+      # if we have a valid phrase (are in a phrase block)
+      if phrase
         # bail out
         next if line.eql?("{")
 
+        # end of the phrase block
         if line.eql?("}")
-          in_phrase = false
           self.phrases << phrase
           phrase = nil
           next
@@ -227,24 +224,21 @@ class SourcemodPlugin < ActiveRecord::Base
               existing_trans.destroy
 
               # add it back
-              phrase.translations.new(  user_id: self.user_id, 
-                                        language: lang, 
-                                        text: value,
-                                        imported: true)
+              phrase.translations.new  user_id: self.user_id, 
+                                       language: lang, 
+                                       text: value,
+                                       imported: true
             end
           else
             # No existing translation found
-            phrase.translations.new(user_id: self.user_id, language: lang, text: value, imported: true)
+            phrase.translations.new user_id: self.user_id, language: lang, text: value, imported: true
           end
         end
         
       else
-        in_phrase = true
         phrase_match = line.match /^"((?:[^"\\]|\\.)+)"/
 
-        phrase_name = phrase_match[1]
-
-        phrase = self.phrases.where(name: phrase_name).first_or_initialize
+        phrase = self.phrases.where(name: phrase_match[1]).first_or_initialize
         format_infos = {}
       end
     end
