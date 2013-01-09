@@ -1,6 +1,7 @@
 "Phrases"
 {
-  "16b1d5c749516fb6bb5cbebfbc635dec"
+  // line comment
+  "16b1d5c749516fb6bb5cbebfbc635dec" // some comment
   {
     "en"    "You pull on your socks."
   }

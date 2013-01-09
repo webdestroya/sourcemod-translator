@@ -125,7 +125,10 @@ class SourcemodPlugin < ActiveRecord::Base
         
       else
         in_phrase = true
-        phrase_name = line.gsub(/"/,'')
+        phrase_match = line.match /\s*"((?:[^"\\]|\\.)+)"/
+
+        #phrase_name = line.gsub(/"/,'')
+        phrase_name = phrase_match[1]
 
         phrase = self.phrases.where(name: phrase_name).first_or_initialize
         
