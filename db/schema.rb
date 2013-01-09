@@ -11,7 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130109192726) do
+ActiveRecord::Schema.define(version: 20130109205128) do
+
+  create_table "format_infos", force: true do |t|
+    t.integer  "phrase_id",              null: false
+    t.integer  "position",               null: false
+    t.string   "format_class", limit: 3, null: false
+    t.string   "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "format_infos", ["phrase_id", "position"], name: "index_format_infos_on_phrase_id_and_position", unique: true
 
   create_table "languages", force: true do |t|
     t.string "iso_code", limit: 5, null: false

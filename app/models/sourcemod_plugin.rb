@@ -48,8 +48,8 @@ class SourcemodPlugin < ActiveRecord::Base
     @attempted ||= ((100.0*self.translations.count) / (self.phrases.count * self.languages.count)).round 2
   end
 
- 
-  def load_from_file(input_stream)
+=begin 
+  def load_from_file_old(input_stream)
     valid_lines = []
 
     input_stream.readlines.each do |line|
@@ -138,6 +138,117 @@ class SourcemodPlugin < ActiveRecord::Base
       end
     end
   end
+=end
+
+
+  def load_from_file(input_stream)
+    valid_lines = []
+
+    input_stream.readlines.each do |line|
+      line.strip!
+      line.gsub! /\/\*.+\*\//, ''
+
+      next if line =~ /^\s*$/ # ignore blank lines
+
+      # convert format description lines to special format
+      line.gsub! /^\/\/\s*([0-9]+)\s*[:]\s*(.+)/, "@\\1: \\2"
+
+
+      next if line =~ /^\s*\/\/.+$/ # ignore comments
+      
+
+      valid_lines << line 
+    end
+
+    self.errors.add(:file, "is invalid format") unless valid_lines.shift.eql?("\"Phrases\"")
+    self.errors.add(:file, "is invalid format") unless valid_lines.shift.eql?("{")
+    self.errors.add(:file, "is invalid format") unless valid_lines.pop.eql?("}")
+
+
+    # TODO: Need some error handling here
+
+    phrase = nil
+    format_infos = {}
+    in_phrase = false
+
+    valid_lines.each do |line|
+      
+      if in_phrase
+        # bail out
+        next if line.eql?("{")
+
+        if line.eql?("}")
+          in_phrase = false
+          self.phrases << phrase
+          phrase = nil
+          next
+        end
+
+
+        # check for format descriptions
+        format_info_match = line.match /^@([0-9]+): (.+)$/
+        if format_info_match
+
+          # We matched, so set the info!
+          format_infos[ format_info_match[1] ] = format_info_match[2]
+          next
+        end
+
+        # check if there is a matching key value pair
+        match = line.match /^"([_0-9a-z]{2,5}|\#format)"\s+"((?:[^"\\]|\\.)+)"/
+
+        # No match, so skip
+        next if match.nil?
+
+        key = match[1]
+        value = match[2]
+
+        if key.eql?("#format")
+          phrase.format = value
+
+          # This is the format line, so load all our format infos
+          phrase.generate_format_info format_infos
+        else
+          lang = Language.where(iso_code: key.downcase).first_or_create(name: key.downcase)
+
+          # Remove any existing translations in this language
+          existing_trans = phrase.translations.where(language: lang).first
+          if existing_trans
+            # if theres an existing one, deal with it
+
+            if existing_trans.user_id.eql?(self.user_id)
+              # It already exists, but is owned by the current user. just update
+              existing_trans.update_attribute(:text, value)
+              existing_trans.update_attribute(:imported, true)
+
+            elsif !existing_trans.text.eql?(value)
+              # It was created by another user (and the text is different)
+              # remove the existing one
+              existing_trans.destroy
+
+              # add it back
+              phrase.translations.new(  user_id: self.user_id, 
+                                        language: lang, 
+                                        text: value,
+                                        imported: true)
+            end
+          else
+            # No existing translation found
+            phrase.translations.new(user_id: self.user_id, language: lang, text: value, imported: true)
+          end
+        end
+        
+      else
+        in_phrase = true
+        phrase_match = line.match /^"((?:[^"\\]|\\.)+)"/
+
+        phrase_name = phrase_match[1]
+
+        phrase = self.phrases.where(name: phrase_name).first_or_initialize
+        format_infos = {}
+      end
+    end
+  end # load_from_file2
 
   # This will change the owner of this plugin, and convert all translations
   # that are owned by that user (and convert them to another user)

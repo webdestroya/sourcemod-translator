@@ -1,0 +1,31 @@
+<h1>Listing format_infos</h1>
+
+<table>
+  <thead>
+    <tr>
+        <th>Phrase</th>
+        <th>Position</th>
+        <th>Format class</th>
+        <th>Description</th>
+        <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <%= content_tag_for(:tr, @format_infos) do |format_info| %>
+        <td><%= format_info.phrase_id %></td>
+        <td><%= format_info.position %></td>
+        <td><%= format_info.format_class %></td>
+        <td><%= format_info.description %></td>
+        <td><%= link_to 'Show', format_info %></td>
+      <td><%= link_to 'Edit', edit_format_info_path(format_info) %></td>
+      <td><%= link_to 'Destroy', format_info, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <% end %>
+  </tbody>
+</table>
+
+<br />
+
+<%= link_to 'New Format info', new_format_info_path %>

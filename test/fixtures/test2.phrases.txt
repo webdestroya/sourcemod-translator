@@ -10,9 +10,9 @@
 
   "95c63ffdbbf81d75d4bf460d812bc16b"
   {
-    // 1: Some field description
+    // 1: Some field descriptionNEW INFO
     // 2: the next field info
-    "#format" "{1:s},{2:s}"
+    "#format" "{1:s},{2:s},{3:d}"
     "en"    "You set player \"{1}\" to race {2}."
   }
 

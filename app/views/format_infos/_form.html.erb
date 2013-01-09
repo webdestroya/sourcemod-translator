@@ -1,0 +1,33 @@
+<%= form_for(@format_info) do |f| %>
+  <% if @format_info.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@format_info.errors.count, "error") %> prohibited this format_info from being saved:</h2>
+
+      <ul>
+      <% @format_info.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :phrase_id %><br />
+    <%= f.number_field :phrase_id %>
+  </div>
+  <div class="field">
+    <%= f.label :position %><br />
+    <%= f.number_field :position %>
+  </div>
+  <div class="field">
+    <%= f.label :format_class %><br />
+    <%= f.text_field :format_class %>
+  </div>
+  <div class="field">
+    <%= f.label :description %><br />
+    <%= f.text_field :description %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
