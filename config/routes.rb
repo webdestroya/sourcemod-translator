@@ -1,7 +1,5 @@
 SourcemodTranslator::Application.routes.draw do
   
-  resources :format_infos
-
   resources :tags, only: [:index]
   
   resources :translations, except: [:index] do

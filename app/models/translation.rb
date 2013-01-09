@@ -1,4 +1,7 @@
 class Translation < ActiveRecord::Base
+
+  # TODO: After saving this translation, we should update the percentages on the sourcemod plugin?
+
   belongs_to  :language
   belongs_to  :phrase, counter_cache: true
   belongs_to  :user

@@ -2,6 +2,7 @@ class SourcemodPlugin < ActiveRecord::Base
 
   # TODO: Add percent complete to DB
   # TODO: Add percent attempted to DB
+  # Should these be counters? 
 
   # TODO: What if the parser parsed the whole file, THEN tried to do all the DB queries?
 
@@ -47,98 +48,6 @@ class SourcemodPlugin < ActiveRecord::Base
   def attempted
     @attempted ||= ((100.0*self.translations.count) / (self.phrases.count * self.languages.count)).round 2
   end
-
-=begin 
-  def load_from_file_old(input_stream)
-    valid_lines = []
-
-    input_stream.readlines.each do |line|
-      line.strip!
-      line.gsub!(/\/\*.+\*\//, '')
-
-      next if line =~ /^\s*\/\/.+$/
-      next if line =~ /^\s*$/
-
-      valid_lines << line 
-    end
-
-    self.errors.add(:file, "is invalid format") unless valid_lines.shift.eql?("\"Phrases\"")
-    self.errors.add(:file, "is invalid format") unless valid_lines.shift.eql?("{")
-    self.errors.add(:file, "is invalid format") unless valid_lines.pop.eql?("}")
-
-
-    # TODO: Need some error handling here
-
-    phrase = nil
-    in_phrase = false
-
-    valid_lines.each do |line|
-      
-      if in_phrase
-        # bail out
-        next if line.eql?("{")
-
-        if line.eql?("}")
-          in_phrase = false
-          self.phrases << phrase
-          phrase = nil
-          next
-        end
-
-        #match = line.match(/^\s*\"([a-z0-9]{2,3}|\#format)\"\s+\"(.+)\"\s*$/)
-        match = line.match /^\s*"([_0-9a-z]{2,5}|\#format)"\s+"((?:[^"\\]|\\.)+)"/
-
-        next if match.nil?
-
-        key = match[1]
-        value = match[2]
-
-        if key.eql?("#format")
-          phrase.format = value
-        else
-          lang = Language.where(iso_code: key.downcase).first_or_create(name: key.downcase)
-
-          # Remove any existing translations in this language
-          existing_trans = phrase.translations.where(language: lang).first
-          if existing_trans
-            # if theres an existing one, deal with it
-
-            if existing_trans.user_id.eql?(self.user_id)
-              # It already exists, but is owned by the current user. just update
-              existing_trans.update_attribute(:text, value)
-              existing_trans.update_attribute(:imported, true)
-
-            elsif !existing_trans.text.eql?(value)
-              # It was created by another user (and the text is different)
-              # remove the existing one
-              existing_trans.destroy
-
-              # add it back
-              phrase.translations << phrase.translations.new( user_id: self.user_id, 
-                                                              language: lang, 
-                                                              text: value,
-                                                              imported: true)
-            end
-          else
-            # No existing translation found
-            phrase.translations << phrase.translations.new(user_id: self.user_id, language: lang, text: value, imported: true)
-          end
-        end
-        
-      else
-        in_phrase = true
-        phrase_match = line.match /\s*"((?:[^"\\]|\\.)+)"/
-
-        #phrase_name = line.gsub(/"/,'')
-        phrase_name = phrase_match[1]
-
-        phrase = self.phrases.where(name: phrase_name).first_or_initialize
-        
-        #phrase.translations = []
-      end
-    end
-  end
-=end
 
 
   def load_from_file(input_stream)
