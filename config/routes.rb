@@ -8,6 +8,7 @@ SourcemodTranslator::Application.routes.draw do
 
   resources :users, only: [:show, :index] do
     resources :sourcemod_plugins, only: [:index]
+    get 'leaders', action: :leaders, on: :collection, as: :leader
   end
 
   get 'languages', to: 'languages#index', as: 'languages'

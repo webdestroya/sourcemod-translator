@@ -14,7 +14,7 @@ class Ability
     # Can view the phrases
     can [:show, :index], Phrase
 
-    can [:index, :show], User
+    can [:index, :show, :leaders], User
 
     unless user.guest? || user.banned?
       can :create, SourcemodPlugin

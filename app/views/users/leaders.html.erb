@@ -1,0 +1,60 @@
+<% title "Leader Board" %>
+<h1>Leader Board</h1>
+<div class="leaderboard">
+<h3>User Leaders</h3>
+<div class="row">
+
+  <div class="span4">
+    <h4>Translations <small><%= Translation.web.count %></small></h4>
+    <ol class="leader-list">
+      <% @translation_leaders.each do |user| %>
+      <li>
+        <%= link_to user.name, user %>
+        <span><%= user.translation_count %></span> 
+      </li>
+      <% end %>
+    </ol>
+  </div>
+
+  <div class="span4">
+    <h4>Plugins <small><%= SourcemodPlugin.count %></small></h4>
+    <ol class="leader-list">
+      <% @plugin_leaders.each do |user| %>
+      <li>
+        <%= link_to user.name, user_sourcemod_plugins_path(user) %>
+        <span><%= user.plugin_count %></span>
+      </li>
+      <% end %>
+    </ol>
+  </div>
+
+</div>
+
+<h3>Language Leaders</h3>
+<div class="row">
+  <% Language.not_english.order("name ASC").each do |lang| %>
+  <div class="span3">
+    <h4><%= lang.name %>
+      <small><%= lang.web_translations.count %></small>
+    </h4>
+    <ol class="leader-list">
+      <% 3.times do |i| %>
+        <% if lang.leaders[i] %>
+        <li>
+          <%= link_to lang.leaders[i].name, lang.leaders[i] %>
+          <span><%= lang.leaders[i].translation_count %></span>
+        </li>
+        <% else %>
+        <li><em>None</em></li>
+        <% end %>
+      <% end %>
+    </ol>
+  </div>
+  <% end %>
+ 
+
+
+</div>
+
+
+</div>

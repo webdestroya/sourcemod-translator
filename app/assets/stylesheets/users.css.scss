@@ -1,3 +1,31 @@
 // Place all the styles related to the users controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.leaderboard {
+
+  h4 {
+    margin-top:0;
+    margin-bottom:4px;
+  }
+
+  h3 {
+    margin-bottom:5px;
+  }
+
+  ol.leader-list {
+    li {
+      strong {
+        width:32px;
+        display:inline-block;
+        text-align:right;
+        margin-right:4px;
+      }
+      span {
+        color:#999;
+      }
+    }
+  }
+
+
+} // leaderboard

@@ -34,7 +34,7 @@ class Phrase < ActiveRecord::Base
 
     # iterate the format pairs
     formats.each do |fmt|
-      match = fmt.strip.match /^{([0-9]+):([dixfsct])}$/
+      match = fmt.strip.match /^{([0-9]+):([A-Za-z])}$/
       if match
         pos = match[1].to_i
         fmt_class = match[2]

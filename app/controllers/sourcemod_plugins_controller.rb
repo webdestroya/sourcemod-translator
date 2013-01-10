@@ -186,9 +186,12 @@ class SourcemodPluginsController < ApplicationController
           z.puts "\t\"#{translation.phrase.name}\""
           z.puts "\t{"
           if language.english? && translation.phrase.format
+            translation.phrase.format_infos.has_description.each do |fmt|
+              z.puts "\t\t// #{fmt.position}: #{fmt.description}"
+            end
             z.puts "\t\t\"#format\"\t\"#{translation.phrase.format}\""
           end
-          z.puts "\t\t\"#{language.iso_code}\"\t\"#{translation.text}\""
+          z.puts "\t\t\"#{language.iso_code}\"\t\t\"#{translation.text}\""
           z.puts "\t}"
           z.puts ""
         end
