@@ -49,7 +49,15 @@
   <div class="control-group">
     <%= f.label Phrase.human_attribute_name(:format), :class => "control-label" %>
     <div class="controls">
-      <span class="form-line"><code><%= @phrase.format %></code></span>
+      <span class="form-line"><code><%= @phrase.format %></code>
+        <% if @phrase.format_infos.count > 0 %>
+        <ol class="format-info">
+          <% @phrase.format_infos.each do |fmt| %>
+          <li><strong><%= fmt.type %></strong> <%= fmt.description %></li>
+          <% end %>
+        </ol>
+        <% end %>
+      </span>
     </div>
   </div>
   <% end %>

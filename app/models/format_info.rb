@@ -13,9 +13,9 @@ class FormatInfo < ActiveRecord::Base
   def type
     case self.format_class
     when "c"
-      "Characters"
+      "Character"
     when "d"
-      "Digits"
+      "Digit"
     when "i"
       "Integer"
     when "f"

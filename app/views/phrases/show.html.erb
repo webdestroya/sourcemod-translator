@@ -24,7 +24,15 @@
 
   <% if @phrase.format %>
   <dt>Format</dt>
-  <dd><code><%= @phrase.format %></code></dd>
+  <dd><code><%= @phrase.format %></code>
+    <% if @phrase.format_infos.count > 0 %>
+    <ol class="format-info">
+      <% @phrase.format_infos.each do |fmt| %>
+      <li><strong><%= fmt.type %></strong> <%= fmt.description %></li>
+      <% end %>
+    </ol>
+    <% end %>
+  </dd>
   <% end %>
 
   <% if @phrase.english %>
@@ -40,7 +48,7 @@
 <% end %>
 </h3>
 <dl class="dl-horizontal translation-list">
-  <% @phrase.translations.each do |translation| %>
+  <% @phrase.translations.includes(:language).order("languages.name ASC").each do |translation| %>
   <dt><%= link_to translation.language.name, translation %> (<%= translation.language.iso_code %>)</dt>
   <dd><%= phrase_text translation.text %>
     <br/>
@@ -48,32 +56,3 @@
   </dd>
   <% end %>
 </dl>
-
-<%
-=begin
-%>
-<table class="table table-striped table-bordered table-condensed translation-list">
-<thead>
-<tr>
-  <th>Language</th>
-  <th>Text</th>
-  <th>&nbsp;</th>
-</tr>
-</thead>
-<tbody>
-  <% @phrase.translations.each do |translation| %>
-  <tr>
-    <td nowrap="nowrap"><%= link_to translation.language.name, translation %> (<%= translation.language.iso_code %>)</td>
-    <td><%= phrase_text translation.text %></td>
-    <td nowrap="nowrap">
-      <%= link_to "View", '#' %>
-      | <%= link_to "Delete", '#' %>
-
-    </td>
-  </tr>
-  <% end %>
-</tbody>
-</table>
-<%
-=end
-%>

@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
   has_many    :user_languages, dependent: :destroy
   has_many    :languages, through: :user_languages
 
+  has_many    :web_translations, -> {where imported: false}, :class_name => "Translation"
 
   validates_presence_of     :provider
   validates_presence_of     :uid
