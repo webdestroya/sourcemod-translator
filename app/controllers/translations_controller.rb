@@ -38,6 +38,9 @@ class TranslationsController < ApplicationController
 
     @languages = current_user.languages.where(["languages.id NOT IN (?)", finished_lang_ids]).order("LOWER(name) ASC")
 
+    if params[:plugin_id]
+      @plugin = SourcemodPlugin.find params[:plugin_id].to_i
+    end
 
     respond_to do |format|
       format.html # new.html.erb
@@ -59,7 +62,7 @@ class TranslationsController < ApplicationController
       if @translation.save
 
         redirect_path = phrase_path(@translation.phrase)
-        redirect_path = random_translations_path if params[:random]
+        redirect_path = random_translations_path(:plugin_id => params[:plugin_id]) if params[:random]
 
         format.html { redirect_to redirect_path, notice: 'Translation was successfully created.' }
       else
