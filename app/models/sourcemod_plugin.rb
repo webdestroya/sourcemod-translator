@@ -180,4 +180,13 @@ class SourcemodPlugin < ActiveRecord::Base
     end
   end
 
+  # This will update the values for attempted, completed, etc
+  def update_percentages
+    attempted = ((100.0*self.translations.count) / (self.phrases.count * self.languages.count)).round 2
+    completed = ((100.0*self.translations.count) / (self.phrases.count * Language.count)).round 2
+
+    self.update_column :attempted, attempted
+    self.update_column :completed, completed
+  end
+
 end

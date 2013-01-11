@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130109205128) do
+ActiveRecord::Schema.define(version: 20130110225911) do
 
   create_table "format_infos", force: true do |t|
     t.integer  "phrase_id",              null: false
@@ -56,6 +56,8 @@ ActiveRecord::Schema.define(version: 20130109205128) do
     t.integer  "phrases_count", default: 0, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.float    "completed"
+    t.float    "attempted"
   end
 
   add_index "sourcemod_plugins", ["user_id"], name: "index_sourcemod_plugins_on_user_id"
