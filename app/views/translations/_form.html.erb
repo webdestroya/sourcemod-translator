@@ -12,15 +12,15 @@
   <%= f.hidden_field :phrase_id %>
 
   <% if @translation.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@translation.errors.count, "error") %> prevented this translation from being saved:</h2>
+    <%= error_box do %>
+      <h4><%= pluralize(@translation.errors.count, "error") %> prevented this translation from being saved:</h4>
 
       <ul>
       <% @translation.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
       </ul>
-    </div>
+    <% end %>
   <% end %>
 
   <div class="control-group">

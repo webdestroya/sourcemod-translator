@@ -55,7 +55,14 @@ class TranslationsController < ApplicationController
   # POST /translations.json
   def create
     @translation = current_user.translations.new(translation_params)
+    @phrase = @translation.phrase
+    finished_lang_ids = @phrase.languages.pluck(:id)
 
+    @languages = current_user.languages.where(["languages.id NOT IN (?)", finished_lang_ids]).order("LOWER(name) ASC")
+
+    if params[:plugin_id]
+      @plugin = SourcemodPlugin.find params[:plugin_id].to_i
+    end
 
 
     respond_to do |format|
@@ -110,16 +117,16 @@ class TranslationsController < ApplicationController
       redirect_to languages_path and return
     end
 
-    phrase_search = Phrase.scoped
-    phrase_search = phrase_search.where(["phrases.id NOT IN (SELECT translations.phrase_id FROM translations WHERE translations.language_id IN (?))", langs])
-
+    # they only want randoms for a specific plugin
     if params[:plugin_id]
       @plugin = SourcemodPlugin.find params[:plugin_id].to_i
-      if @plugin
-        phrase_search = phrase_search.where(:sourcemod_plugin_id => @plugin.id)
-      end
     end
 
+    phrase_search = Phrase.scoped
+    phrase_search = phrase_search.needs_translation(current_user.languages)
+
+    phrase_search = phrase_search.plugin(@plugin) if @plugin
+    
     phrase_search = phrase_search.order("phrases.translations_count DESC")
     
     phrases = phrase_search.limit(100).pluck(:id)          

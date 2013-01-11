@@ -11,6 +11,17 @@ class Phrase < ActiveRecord::Base
 
   validates_uniqueness_of   :name, scope: :sourcemod_plugin_id
 
+  scope :plugin,  ->(plugin) {where(sourcemod_plugin_id: plugin.id)}
+
+  scope :needs_translation,  ->(languages) {
+    lang_ids = languages.collect{|l| l.id}
+    where([
+      "? <> (SELECT COUNT(DISTINCT translations.language_id) FROM translations WHERE translations.phrase_id = phrases.id AND translations.language_id IN (?))", 
+      lang_ids.size, 
+      lang_ids
+    ])
+  }
+
   # Retrieves the first english translation of this phrase
   def english
     return nil unless self.translations
