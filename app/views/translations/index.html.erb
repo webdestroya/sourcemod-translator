@@ -5,3 +5,9 @@
 </h1>
 
 <%= render @translations %>
+
+<% content_for :bottom_scripts do %>
+<script>
+$("strong[rel=tooltip]").tooltip();
+</script>
+<% end %>

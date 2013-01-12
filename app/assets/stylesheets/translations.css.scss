@@ -19,3 +19,15 @@ div.translation {
   border-bottom:1px solid #ccc;
   padding-bottom:5px;
 }
+
+span.fancy-text {
+  a[rel=tooltip] {
+    background-color:#eee;
+  }
+  div.tooltip {
+    font-family:sans-serif;
+  }
+  .colorized {
+    .color-green {color:green;}
+  }
+}
