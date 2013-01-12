@@ -5,11 +5,11 @@
 <div class="row">
 
   <div class="span4">
-    <h4>Translations <small><%= Translation.web.count %></small></h4>
+    <h4>Total Translations <small><%= Translation.web.count %></small></h4>
     <ol class="leader-list">
       <% @translation_leaders.each do |user| %>
       <li>
-        <%= link_to user.name, user %>
+        <%= link_to user.name, user_translations_path(user) %>
         <span><%= user.translation_count %></span> 
       </li>
       <% end %>
@@ -17,7 +17,7 @@
   </div>
 
   <div class="span4">
-    <h4>Plugins <small><%= SourcemodPlugin.count %></small></h4>
+    <h4>Total Plugins <small><%= SourcemodPlugin.count %></small></h4>
     <ol class="leader-list">
       <% @plugin_leaders.each do |user| %>
       <li>

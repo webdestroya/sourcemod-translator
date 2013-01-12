@@ -2,12 +2,13 @@ SourcemodTranslator::Application.routes.draw do
   
   resources :tags, only: [:index]
   
-  resources :translations, except: [:index] do
+  resources :translations do
     get 'random', :action => :random, :on => :collection
   end
 
   resources :users, only: [:show, :index] do
     resources :sourcemod_plugins, only: [:index]
+    resources :translations, only: [:index]
     get 'leaders', action: :leaders, on: :collection, as: :leader
   end
 

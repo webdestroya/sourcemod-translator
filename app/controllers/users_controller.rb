@@ -35,6 +35,18 @@ class UsersController < ApplicationController
                                .having("COUNT(translations.\"id\") > 0")
                                .order("translation_count DESC")
                                .limit(10)
+
+
+    # @recent_translators = User.select("users.*, COUNT(translations.id) AS translation_count")
+    #                           .joins("LEFT JOIN translations ON (translations.user_id=users.id)")
+    #                           .where(["translations.created_at > ?", 5.days.ago])
+    #                           .where(["translations.imported = ?", false])
+    #                           .group("users.id")
+    #                           .having("COUNT(translations.id) > 0")
+    #                           .order("translation_count DESC")
+    #                           .limit(10)
+
+
   end
 
 

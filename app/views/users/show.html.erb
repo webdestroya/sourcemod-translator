@@ -34,7 +34,11 @@
   </dd>
 
   <dt>Translations</dt>
-  <dd><%= pluralize @user.translations.web.count, "translation" %></dd>
+  <dd><%= pluralize @user.translations.web.count, "translation" %>
+    <% if @user.translations.web.count > 0 %>
+    (<%= link_to "view", user_translations_path(@user) %>)
+    <% end %>
+  </dd>
 
 </dl>
 

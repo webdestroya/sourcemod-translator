@@ -1,0 +1,20 @@
+<div class="translation">
+  <h5><%= link_to translation.phrase.name, translation.phrase %>
+    <small>
+      added 
+      <% unless @user %>
+      by <%= link_to translation.user.name, translation.user %>
+      <% end %>
+      <%= time_ago_in_words translation.created_at %> ago
+      (<%= link_to "details", translation %>)
+    </small>
+  </h5>
+  <dl class="dl-horizontal">
+    <dt>en</dt>
+    <dd><%= phrase_text translation.phrase.english.text %></dd>
+
+    <dt><%= translation.language.iso_code %></dt>
+    <dd><%= phrase_text translation.text %></dd>
+  </dl>
+  
+</div>

@@ -16,6 +16,7 @@
  *= require sourcemod_plugins
  *= require phrases
  *= require users
+ *= require translations
  */
 
 body {

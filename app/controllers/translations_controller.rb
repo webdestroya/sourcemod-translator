@@ -11,7 +11,14 @@ class TranslationsController < ApplicationController
   # GET /translations
   # GET /translations.json
   def index
-    @translations = Translation.all
+    tran_search = Translation.web.includes(:language, :phrase)
+    if params[:user_id]
+      @user = User.find params[:user_id]
+      tran_search = tran_search.where(user_id: params[:user_id].to_i)
+    end
+    tran_search = tran_search.order("translations.created_at DESC")
+
+    @translations = tran_search.limit(50)
 
     respond_to do |format|
       format.html # index.html.erb
