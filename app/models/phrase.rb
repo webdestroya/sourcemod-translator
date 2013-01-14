@@ -1,4 +1,6 @@
 class Phrase < ActiveRecord::Base
+  #include ActiveModel::ForbiddenAttributesProtection
+
   belongs_to    :sourcemod_plugin, counter_cache: true
 
   has_many      :translations,  dependent: :destroy

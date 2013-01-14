@@ -1,4 +1,5 @@
 class Translation < ActiveRecord::Base
+  #include ActiveModel::ForbiddenAttributesProtection
 
   # TODO: After saving this translation, we should update the percentages on the sourcemod plugin?
 

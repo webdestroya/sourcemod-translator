@@ -16,7 +16,7 @@ SourcemodTranslator::Application.routes.draw do
   get 'languages/add/:language_id', to: 'languages#add', as: 'add_language'
   get 'languages/remove/:language_id', to: 'languages#remove', as: 'remove_language'
 
-  resources :phrases, only: [:show] do
+  resources :phrases, only: [:show, :destroy] do
     get 'translate', :action => :translate, :on => :member
     post 'translate', :action => :translate_submit, :on => :member
 

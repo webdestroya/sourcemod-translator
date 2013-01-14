@@ -46,8 +46,9 @@ describe SourcemodPlugin do
 
     sm = SourcemodPlugin.find(sm.id)
 
-    testfile = File.open("test/fixtures/test2.phrases.txt")
+    testfile = File.open("test/fixtures/gear_transfer.phrases.txt")
     sm.load_from_file(testfile)
+    puts sm.valid?
     sm.save!
 
     sm = SourcemodPlugin.find(sm.id)

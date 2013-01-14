@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   load_and_authorize_resource
 
-  before_action :set_user, only: [:show]
+  before_filter :set_user, only: [:show]
 
 
   def index

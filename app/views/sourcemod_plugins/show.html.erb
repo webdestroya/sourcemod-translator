@@ -36,7 +36,7 @@
   <dt><abbr title="This is the percentage of completed languages vs attempted languages">Attempted</abbr></dt>
   <dd><div class="progress"><div class="bar <%= 'bar-success' if @sourcemod_plugin.attempted==100.0 %>" style="width: <%= @sourcemod_plugin.attempted %>%;"></div></div></dd>
 
-  <% Language.all.order("name ASC").each do |lang| %>
+  <% Language.order("name ASC").each do |lang| %>
   <% completed = ((100.0*@sourcemod_plugin.translations.where(language_id: lang.id).count)/@sourcemod_plugin.phrases.count).round 2 %>
   <dt class="detailed" title="<%= completed %>%"><%= lang.name %> (<%= lang.iso_code %>)</dt>
   <dd class="detailed"><div class="progress"><div class="bar <%= 'bar-success' if completed==100.0 %>" style="width: <%= completed %>%;"></div></div>

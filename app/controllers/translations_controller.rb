@@ -6,7 +6,7 @@ class TranslationsController < ApplicationController
 
   load_and_authorize_resource
 
-  before_action :set_translation, only: [:show, :edit, :update, :destroy]
+  before_filter :set_translation, only: [:show, :edit, :update, :destroy]
 
   # GET /translations
   # GET /translations.json
@@ -41,7 +41,7 @@ class TranslationsController < ApplicationController
     @phrase = Phrase.find params[:phrase_id]
     @translation = @phrase.translations.new
 
-    finished_lang_ids = @phrase.languages.pluck(:id)
+    finished_lang_ids = @phrase.languages.collect{|o|o.id}
 
     @languages = current_user.languages.where(["languages.id NOT IN (?)", finished_lang_ids]).order("LOWER(name) ASC")
 
@@ -63,7 +63,7 @@ class TranslationsController < ApplicationController
   def create
     @translation = current_user.translations.new(translation_params)
     @phrase = @translation.phrase
-    finished_lang_ids = @phrase.languages.pluck(:id)
+    finished_lang_ids = @phrase.languages.collect{|o|o.id}
 
     @languages = current_user.languages.where(["languages.id NOT IN (?)", finished_lang_ids]).order("LOWER(name) ASC")
 
@@ -117,7 +117,7 @@ class TranslationsController < ApplicationController
       redirect_to sourcemod_plugins_path and return
     end
 
-    langs = current_user.languages.pluck(:id)
+    langs = current_user.languages.collect{|o|o.id}
 
     if langs.empty?
       flash[:error] = "You must add some languages!"
@@ -136,7 +136,7 @@ class TranslationsController < ApplicationController
     
     phrase_search = phrase_search.order("phrases.translations_count DESC")
     
-    phrases = phrase_search.limit(100).pluck(:id)          
+    phrases = phrase_search.limit(100).collect{|o|o.id}
 
     if phrases.size > 0
 

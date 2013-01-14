@@ -1,4 +1,5 @@
 class SourcemodPlugin < ActiveRecord::Base
+  #include ActiveModel::ForbiddenAttributesProtection
 
   # TODO: Add percent complete to DB
   # TODO: Add percent attempted to DB
@@ -62,13 +63,18 @@ class SourcemodPlugin < ActiveRecord::Base
       line.gsub! /^\/\/\s*([0-9]+)\s*[:]\s*(.+)/, "@\\1: \\2"
 
       next if line =~ /^\s*\/\/.+$/ # ignore comments
+      next if line =~ /^\s*\/\/$/ # ignore comments
     
       valid_lines << line 
     end
 
+    #puts valid_lines.join("\n")
+
     self.errors.add(:file, "is invalid format") unless valid_lines.shift.eql?("\"Phrases\"")
     self.errors.add(:file, "is invalid format") unless valid_lines.shift.eql?("{")
     self.errors.add(:file, "is invalid format") unless valid_lines.pop.eql?("}")
+
+    return false if self.errors.messages[:file]
 
 
     # TODO: Need some error handling here
@@ -118,7 +124,7 @@ class SourcemodPlugin < ActiveRecord::Base
           lang = Language.where(iso_code: key.downcase).first_or_create(name: key.downcase)
 
           # Remove any existing translations in this language
-          existing_trans = phrase.translations.where(language: lang).first
+          existing_trans = phrase.translations.where(language_id: lang.id).first
           if existing_trans
             # if theres an existing one, deal with it
 
@@ -134,13 +140,13 @@ class SourcemodPlugin < ActiveRecord::Base
 
               # add it back
               phrase.translations.new  user_id: self.user_id, 
-                                       language: lang, 
+                                       language_id: lang.id, 
                                        text: value,
                                        imported: true
             end
           else
             # No existing translation found
-            phrase.translations.new user_id: self.user_id, language: lang, text: value, imported: true
+            phrase.translations.new user_id: self.user_id, language_id: lang.id, text: value, imported: true
           end
         end
         
@@ -151,6 +157,8 @@ class SourcemodPlugin < ActiveRecord::Base
         format_infos = {}
       end
     end
+
+    true
   end # load_from_file2
 
   # This will change the owner of this plugin, and convert all translations

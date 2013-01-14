@@ -1,7 +1,7 @@
 class PhrasesController < ApplicationController
   load_and_authorize_resource
 
-  before_action :set_phrase, only: [:show, :edit, :update, :destroy, :translate, :translate_submit]
+  before_filter :set_phrase, only: [:show, :edit, :update, :destroy, :translate, :translate_submit]
 
   # GET /phrases
   # GET /phrases.json
@@ -74,7 +74,7 @@ class PhrasesController < ApplicationController
     @phrase.destroy
 
     respond_to do |format|
-      format.html { redirect_to phrases_url }
+      format.html { redirect_to @phrase.sourcemod_plugin }
       format.json { head :no_content }
     end
   end
@@ -90,7 +90,7 @@ class PhrasesController < ApplicationController
 
     # #@phrases = @sourcemod_plugin.phrases.where()
 
-    finished_lang_ids = @phrase.languages.pluck(:id)
+    finished_lang_ids = @phrase.languages.collect{|o|o.id}
 
     @languages = current_user.languages.where(["id NOT IN (?)", finished_lang_ids]).order("LOWER(name) ASC")
 

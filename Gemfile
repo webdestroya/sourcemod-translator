@@ -2,27 +2,24 @@ source 'https://rubygems.org'
 
 ruby "1.9.3"
 
-gem 'rails',     github: 'rails/rails'
-gem 'journey',   github: 'rails/journey'
-gem 'arel',      github: 'rails/arel'
-gem 'activerecord-deprecated_finders', github: 'rails/activerecord-deprecated_finders'
+gem 'rails', '3.2.11'
 
-gem 'rails-observers'
+# For rails4-like parameter security
+gem 'strong_parameters'
+#gem 'rails-observers'
 
 gem 'pg'
 
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'sprockets-rails', github: 'rails/sprockets-rails'
-  gem 'sass-rails',   github: 'rails/sass-rails'
-  gem 'coffee-rails', github: 'rails/coffee-rails'
-
-  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-  # gem 'therubyracer', platforms: :ruby
+  gem 'sass-rails',   '~> 3.2.3'
+  gem 'coffee-rails', '~> 3.2.1'
 
   gem 'uglifier', '>= 1.0.3'
-  #gem 'select2-rails'
+
+  # for Select2 assets
+  gem 'select2-rails'
 end
 
 
@@ -52,7 +49,6 @@ end
 # Synchronizes assets to S3
 gem 'asset_sync'
 
-
 # Running development
 gem 'foreman', :group => :development
 
@@ -69,6 +65,9 @@ gem "kaminari"
 
 # In memory caching system, used by geocoder (and probably other things)
 gem 'redis'
+
+# Used for the session store. No more cookie store
+gem 'redis-rails'
 
 # Better webserver
 gem 'unicorn'
@@ -90,5 +89,7 @@ gem 'rubyzip', :require => ["zip/zip"]
 gem "newrelic_rpm", "~> 3.5.5.540.dev", :group => :production
 
 # gem 'honeybadger'
+
+gem 'psych'
 
 #gem 'acts-as-taggable-on'

@@ -1,5 +1,5 @@
 class FormatInfosController < ApplicationController
-  before_action :set_format_info, only: [:show, :edit, :update, :destroy]
+  before_filter :set_format_info, only: [:show, :edit, :update, :destroy]
 
   # GET /format_infos
   # GET /format_infos.json

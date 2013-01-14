@@ -10,8 +10,8 @@ class Tag < ActiveRecord::Base
 
   scope :tokens,  ->(tokens) {where(name: Tag.tokenize(tokens))}
 
-  scope :used,    -> {where("tags.id IN (SELECT plugin_tags.tag_id FROM plugin_tags)")}
-  scope :unused,    -> {where("tags.id NOT IN (SELECT plugin_tags.tag_id FROM plugin_tags)")}
+  scope :used,    lambda {where("tags.id IN (SELECT plugin_tags.tag_id FROM plugin_tags)")}
+  scope :unused,  lambda {where("tags.id NOT IN (SELECT plugin_tags.tag_id FROM plugin_tags)")}
 
   def downcase_name
     self.name.downcase!

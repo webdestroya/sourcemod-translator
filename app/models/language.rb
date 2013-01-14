@@ -5,14 +5,14 @@ class Language < ActiveRecord::Base
   has_many  :user_languages, dependent: :destroy
   has_many  :users, through: :user_languages
 
-  has_many  :web_translations, -> {where imported: false}, :class_name => "Translation"
+  has_many  :web_translations, :conditions => "imported = 'f'", :class_name => "Translation"
 
   validates_presence_of   :iso_code
   validates_uniqueness_of :iso_code
 
   validates_presence_of   :name
 
-  scope :not_english,    -> {where(["languages.iso_code <> ?", "en"])}
+  scope :not_english,    lambda {where(["languages.iso_code <> ?", "en"])}
 
   def english?
     self.iso_code.eql?("en")

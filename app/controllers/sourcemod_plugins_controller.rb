@@ -6,7 +6,7 @@ class SourcemodPluginsController < ApplicationController
 
   load_and_authorize_resource
 
-  before_action :set_sourcemod_plugin, only: [:show, :edit, :update, :destroy, :upload, :upload_submit, :phrases_file_text, :download, :clean]
+  before_filter :set_sourcemod_plugin, only: [:show, :edit, :update, :destroy, :upload, :upload_submit, :phrases_file_text, :download, :clean]
 
   # GET /sourcemod_plugins
   # GET /sourcemod_plugins.json
@@ -111,6 +111,11 @@ class SourcemodPluginsController < ApplicationController
 
   def upload_submit
     authorize! :upload, @sourcemod_plugin
+
+    if params[:sourcemod_plugin].nil? || params[:sourcemod_plugin][:file].nil?
+      flash[:error] = "Sorry, there was a problem with your upload."
+      redirect_to upload_sourcemod_plugin_path(@sourcemod_plugin) and return
+    end
 
     ulfilename = params[:sourcemod_plugin][:file].original_filename
     #@sourcemod_plugin = current_user.sourcemod_plugins.find(params[:id])
