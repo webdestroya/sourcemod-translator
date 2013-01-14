@@ -38,3 +38,40 @@ ul.taglist {
     content: "";
   }
 }
+
+div.plugin-row {
+  
+  h4 {
+    margin:0;
+    padding:0;
+    padding-left:4px;
+    border-left:4px solid #fff;
+    margin-left:-8px;
+  }
+
+  ul.taglist {
+    margin-left:0;
+    display:inline-block;
+  }
+
+  .stats {
+    margin-left:15px;
+    font-size:90%;
+    dl {
+      margin-top:0;
+      margin-bottom:0;
+      dt {
+        width:90px;
+      }
+      dd {
+        margin-left:110px;
+      }
+    }
+  }
+
+  &:hover {
+    h4 {
+      border-left:4px solid #08C;
+    }
+  }
+}

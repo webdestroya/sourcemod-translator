@@ -12,6 +12,8 @@ class SourcemodPluginsController < ApplicationController
   # GET /sourcemod_plugins.json
   def index
 
+    @sourcemod_plugin = SourcemodPlugin.new
+
     search = SourcemodPlugin.scoped
 
     if params[:user_id]

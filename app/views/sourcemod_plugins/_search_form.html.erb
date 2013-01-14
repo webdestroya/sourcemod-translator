@@ -1,0 +1,16 @@
+<%= form_for @sourcemod_plugin, :method => :get, :html => {:class => "form-stacked"} do |f| %>
+
+<div class="clearfix">
+  <label>Name</label>
+  <%= f.text_field :name, :label => false %>
+  <br/>
+</div>
+
+<div class="clearfix">
+  <label>Tags</label>
+  <%= f.text_field :tag_list, :label => false %>
+  <br/>
+</div>
+
+
+<% end %>

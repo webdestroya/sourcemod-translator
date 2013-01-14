@@ -1,0 +1,40 @@
+<div class="row plugin-row">
+  <div class="span5">
+    <h4><%= link_to sourcemod_plugin.name, sourcemod_plugin %></h4>
+
+    <p>
+      created by <%= link_to sourcemod_plugin.user.name, sourcemod_plugin.user %>
+    </p>
+
+    
+    <% if sourcemod_plugin.tags.count > 0 %>
+      <strong>Tags:</strong>
+      <ul class="taglist">
+        <% sourcemod_plugin.tags.order("tags.name ASC").each do |tag| %>
+        <li><%= link_to tag.name, tagged_sourcemod_plugins_path(tag.name) %></li>
+        <% end %>
+      </ul>
+    <% end %>
+
+  </div>
+
+  <div class="span3 stats">
+    <dl class="dl-horizontal">
+      <dt>Phrases</dt>
+      <dd><%= sourcemod_plugin.phrases.count %></dd>
+
+      <dt>Attempted</dt>
+      <dd><%= sourcemod_plugin.attempted %>%</dd>
+
+      
+      <% if sourcemod_plugin.completed %>
+        <dt>Overall</dt>
+        <dd><%= sourcemod_plugin.completed %>%</dd>
+      <% end %>
+    </dl>
+  </div>
+
+</div>
+<div class="row">
+  <div class="span8"><hr /></div>
+</div>

@@ -36,5 +36,19 @@ Click on any plugin to start adding translations!
   </tbody>
 </table>
 
+<%
+=begin
+%>
+<div class="row">
+  <div class="span8">
+  <%= render @sourcemod_plugins %>
+  </div>
+  <div class="span4 search-form">
+    <%= render "search_form" %>
+  </div>
+</div>
+<%
+=end
+%>
 
 <p>Showing <%= pluralize @sourcemod_plugins.count, "plugin" %></p>
