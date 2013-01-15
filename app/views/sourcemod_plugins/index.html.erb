@@ -16,6 +16,9 @@
 Click on any plugin to start adding translations!
 <% end %>
 
+<%
+=begin
+%>
 <table class="table table-bordered table-striped table-condensed">
   <thead>
     <tr>
@@ -35,10 +38,11 @@ Click on any plugin to start adding translations!
     <% end %>
   </tbody>
 </table>
-
 <%
-=begin
+=end
 %>
+
+
 <div class="row">
   <div class="span8">
   <%= render @sourcemod_plugins %>
@@ -47,8 +51,6 @@ Click on any plugin to start adding translations!
     <%= render "search_form" %>
   </div>
 </div>
-<%
-=end
-%>
+
 
 <p>Showing <%= pluralize @sourcemod_plugins.count, "plugin" %></p>

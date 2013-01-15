@@ -4,3 +4,7 @@
 # Not sure why this thing keeps crawling the site
 user-agent: AhrefsBot
 disallow: /
+
+# Bots do not need to authenticate
+user-agent: *
+disallow: /auth/steam

@@ -10,3 +10,7 @@ $(document).ready ->
       tokenSeparators: [",", " "]
       width: "325px"
       minimumInputLength: 2
+
+  if $("#sourcemod_plugin_tag_ids").size() > 0
+    $("#sourcemod_plugin_tag_ids").select2
+      width: "220px"

@@ -201,6 +201,9 @@ GEM
       ffi (~> 1.0)
       multi_json (~> 1.0)
       rubyzip
+    simple_form (2.0.4)
+      actionpack (~> 3.0)
+      activemodel (~> 3.0)
     slop (3.3.3)
     sprockets (2.2.2)
       hike (~> 1.2)
@@ -262,6 +265,7 @@ DEPENDENCIES
   sass-rails (~> 3.2.3)
   select2-rails
   selenium-webdriver (= 2.20.0)
+  simple_form
   steam-condenser
   strong_parameters
   turn (= 0.8.2)

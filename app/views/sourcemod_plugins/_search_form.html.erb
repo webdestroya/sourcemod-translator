@@ -1,16 +1,15 @@
-<%= form_for @sourcemod_plugin, :method => :get, :html => {:class => "form-stacked"} do |f| %>
+<%= simple_form_for(@sourcemod_plugin, :method => :get, :html => {:class => 'form-stacked' }) do |f| %>
 
 <div class="clearfix">
   <label>Name</label>
-  <%= f.text_field :name, :label => false %>
-  <br/>
+  <%= f.input :name, :label => false %>
 </div>
 
 <div class="clearfix">
   <label>Tags</label>
-  <%= f.text_field :tag_list, :label => false %>
-  <br/>
+  <%= f.association :tags, :label => false, :input_html => {:multiple => "1"} %>
 </div>
 
+<%= f.submit "Filter" %>
 
 <% end %>

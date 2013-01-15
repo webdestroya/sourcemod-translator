@@ -88,6 +88,7 @@ gem 'rubyzip', :require => ["zip/zip"]
 # gem 'newrelic_rpm',  '3.5.5.alpha', :git => 'git://github.com/newrelic/rpm.git', :branch => 'dev'
 gem "newrelic_rpm", "~> 3.5.5.540.dev", :group => :production
 
+gem 'simple_form'
 # gem 'honeybadger'
 
 gem 'psych'
