@@ -11,6 +11,6 @@ $(document).ready ->
       width: "325px"
       minimumInputLength: 2
 
-  if $("#sourcemod_plugin_tag_ids").size() > 0
-    $("#sourcemod_plugin_tag_ids").select2
-      width: "220px"
+  if $(".search-form").size() > 0
+    $("#search_tags").select2
+      width: "265px"

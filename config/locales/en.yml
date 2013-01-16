@@ -20,14 +20,20 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  cancel: Cancel
+  cancel: "Cancel"
 
   menubar:
     browse_plugins: "Browse Plugins"
     add_plugin: "Add Plugin"
     my_plugins: "My Plugins"
     translate: "Translate!"
-    logout: Logout
+    logout: "Logout"
+
+  search:
+    submit: "Search"
+    filter:
+      user: "Plugin Owner"
+      tags: "Tags"
 
   activerecord:
     models:

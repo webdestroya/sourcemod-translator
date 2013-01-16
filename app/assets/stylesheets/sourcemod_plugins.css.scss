@@ -40,13 +40,19 @@ ul.taglist {
 }
 
 div.plugin-row {
-  
+  border-bottom:1px solid #EAEAEA;
   h4 {
     margin:0;
     padding:0;
     padding-left:4px;
     border-left:4px solid #fff;
     margin-left:-8px;
+    small {
+      display:none;
+    }
+    a {
+      color:#000;
+    }
   }
 
   ul.taglist {
@@ -72,6 +78,37 @@ div.plugin-row {
   &:hover {
     h4 {
       border-left:4px solid #08C;
+      a {
+        color:#08c;
+      }
+      small {
+        display:inline;
+      }
     }
+  }
+}
+
+div.search-form {
+  border-left: 1px solid #eee;
+  padding-left:20px;
+
+  font-size:95%;
+
+  h3 {
+    margin-top:0;
+    line-height:1em;
+  }
+
+  label {
+    font-weight:bold;
+    margin-bottom:0;
+  }
+
+  ul {
+    margin-top:0;
+  }
+
+  .search-field {
+    margin-bottom:10px;
   }
 }

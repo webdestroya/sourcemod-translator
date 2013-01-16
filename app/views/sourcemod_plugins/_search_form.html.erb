@@ -1,15 +1,30 @@
-<%= simple_form_for(@sourcemod_plugin, :method => :get, :html => {:class => 'form-stacked' }) do |f| %>
+<%= form_tag(sourcemod_plugins_path, :method => :get, :class => 'form-stacked') do |f| %>
 
-<div class="clearfix">
-  <label>Name</label>
-  <%= f.input :name, :label => false %>
+<h3>Search Filters</h3>
+
+<div class="search-field clearfix">
+  <label><%= t('search.filter.user') %></label>
+  <% if @user %>
+  <span><%= link_to @user.name, @user %></span>
+  <% else %>
+  <em>All users</em>
+  <% end %>
 </div>
 
-<div class="clearfix">
-  <label>Tags</label>
-  <%= f.association :tags, :label => false, :input_html => {:multiple => "1"} %>
+
+<div class="search-field clearfix">
+  <label><%= t('search.filter.tags') %></label>
+  <select id="search_tags" multiple>
+    <% Tag.used.order("LOWER(name) ASC").each do |tag| %>
+      <% if @tags && !@tags.empty? && @tags.include?(tag) %>
+      <option value="<%= tag.name %>" selected><%= tag.name %></option>
+      <% else %>
+      <option value="<%= tag.name %>"><%= tag.name %></option>
+      <% end %>
+    <% end %>
+  </select>
 </div>
 
-<%= f.submit "Filter" %>
+<%= submit_tag t('search.submit'), :class => "btn" %>
 
 <% end %>

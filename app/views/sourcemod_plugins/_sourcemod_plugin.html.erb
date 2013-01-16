@@ -1,9 +1,18 @@
+<div class="row"><div class="span8">
+
 <div class="row plugin-row">
-  <div class="span5">
-    <h4><%= link_to sourcemod_plugin.name, sourcemod_plugin %></h4>
+  <div class="span6">
+    <h4><%= link_to sourcemod_plugin.name, sourcemod_plugin %>
+      <% if can?(:create, Translation) && sourcemod_plugin.completed < 100.0 %>
+      <small>
+        (<%= link_to "translate!", random_translations_path(:plugin_id => sourcemod_plugin.id) %>)
+      </small>
+      <% end %>
+    </h4>
 
     <p>
       created by <%= link_to sourcemod_plugin.user.name, sourcemod_plugin.user %>
+      (<%= link_to "plugins", user_sourcemod_plugins_path(sourcemod_plugin.user) %>)
     </p>
 
     
@@ -18,7 +27,7 @@
 
   </div>
 
-  <div class="span3 stats">
+  <div class="span2 stats">
     <dl class="dl-horizontal">
       <dt>Phrases</dt>
       <dd><%= sourcemod_plugin.phrases.count %></dd>
@@ -35,6 +44,8 @@
   </div>
 
 </div>
-<div class="row">
+
+</div></div>
+<!-- <div class="row">
   <div class="span8"><hr /></div>
-</div>
+</div> -->
