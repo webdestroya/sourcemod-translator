@@ -2,6 +2,7 @@
 
 <h3>Search Filters</h3>
 
+<% if @user %>
 <div class="search-field clearfix">
   <label><%= t('search.filter.user') %></label>
   <% if @user %>
@@ -11,6 +12,7 @@
   <em>All users</em>
   <% end %>
 </div>
+<% end %>
 
 
 <div class="search-field clearfix">

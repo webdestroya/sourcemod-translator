@@ -132,7 +132,11 @@ class SourcemodPluginsController < ApplicationController
         if entry_name =~ /#{@sourcemod_plugin.filename}\.phrases\.txt$/i
 
           #puts "entry #{index} is #{entry.name}, size = #{entry.size}, compressed size = #{entry.compressed_size}"
-          phrase_count = phrase_count + @sourcemod_plugin.load_from_file(zf.get_input_stream(entry))
+          begin
+            phrase_count = phrase_count + @sourcemod_plugin.load_from_file(zf.get_input_stream(entry))
+          rescue
+            # error
+          end
         end
       end
 

@@ -67,7 +67,7 @@ class SourcemodPlugin < ActiveRecord::Base
 
     input_stream.readlines.each do |line|
       line.strip!
-      line.gsub! /\/\*.+\*\//, '' # strip single line block comments
+      line.gsub! /\/\*.+\*\//, "" # strip single line block comments
       next if line =~ /^\s*$/ # ignore blank lines
 
       # convert format description lines to special format
@@ -79,14 +79,9 @@ class SourcemodPlugin < ActiveRecord::Base
       valid_lines << line 
     end
 
-    #puts valid_lines.join("\n")
-
-    self.errors.add(:file, "is invalid format") unless valid_lines.shift.eql?("\"Phrases\"")
-    self.errors.add(:file, "is invalid format") unless valid_lines.shift.eql?("{")
-    self.errors.add(:file, "is invalid format") unless valid_lines.pop.eql?("}")
-
-    return -1 if self.errors.messages[:file]
-
+    return -1 unless valid_lines.shift =~ /\"Phrases\"/
+    return -1 unless valid_lines.shift =~ /\{/
+    return -1 unless valid_lines.pop =~ /\}/
 
     # TODO: Need some error handling here
 
@@ -207,8 +202,8 @@ class SourcemodPlugin < ActiveRecord::Base
     attempted = ((100.0*self.translations.count) / (self.phrases.count * self.languages.count)).round 2
     completed = ((100.0*self.translations.count) / (self.phrases.count * Language.count)).round 2
 
-    self.update_column :attempted, attempted
-    self.update_column :completed, completed
+    self.update_column :attempted, attempted unless attempted.nan?
+    self.update_column :completed, completed unless completed.nan?
   end
 
 end

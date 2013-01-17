@@ -95,4 +95,6 @@ gem 'psych'
 
 gem "jquery-fileupload-rails"
 
+# gem "iconv"
+
 #gem 'acts-as-taggable-on'
