@@ -12,40 +12,15 @@
   </h1>
 <% end %>
 
-<%= info_box do %>
-Click on any plugin to start adding translations!
-<% end %>
-
-<%
-=begin
-%>
-<table class="table table-bordered table-striped table-condensed">
-  <thead>
-    <tr>
-        <th>Name</th>
-        <th>Creator</th>
-        <th># Phrases</th>
-        <th>% Completed</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <%= content_tag_for(:tr, @sourcemod_plugins) do |sourcemod_plugin| %>
-        <td><%= link_to sourcemod_plugin.name, sourcemod_plugin %></td>
-        <td><%= link_to sourcemod_plugin.user.name, sourcemod_plugin.user %></td>
-        <td><%= sourcemod_plugin.phrases.count %></td>
-        <td><%= sourcemod_plugin.percent_completed %>%</td>
-    <% end %>
-  </tbody>
-</table>
-<%
-=end
-%>
-
-
 <div class="row">
   <div class="span8">
-  <%= render @sourcemod_plugins %>
+    <% if @sourcemod_plugins.size > 0 %>
+      <%= render @sourcemod_plugins %>
+    <% else %>
+      <%= info_box do %>
+      <strong>Whoops!</strong>, your search did not return any results!
+      <% end %>
+    <% end %>
   </div>
   <div class="span3 search-form">
     <%= render "search_form" %>

@@ -41,6 +41,12 @@ ul.taglist {
 
 div.plugin-row {
   border-bottom:1px solid #EAEAEA;
+  margin-left:0;
+  margin-top:10px;
+  padding-bottom:10px;
+  .span6 {
+    margin-left:0;
+  }
   h4 {
     margin:0;
     padding:0;
@@ -87,6 +93,14 @@ div.plugin-row {
     }
   }
 }
+div.plugin-row.no-phrases {
+  h4 {
+    a {
+      color:#B94A48;
+    }
+  }
+}
+
 
 div.search-form {
   border-left: 1px solid #eee;

@@ -7,6 +7,8 @@ class Translation < ActiveRecord::Base
   belongs_to  :phrase, counter_cache: true
   belongs_to  :user
 
+  delegate    :sourcemod_plugin, :to => :phrase, :allow_nil => true
+
   validates_presence_of     :user_id
   #validates_associated      :user
 

@@ -14,14 +14,14 @@ class SourcemodPluginsController < ApplicationController
 
     @sourcemod_plugin = SourcemodPlugin.new
 
-    search = SourcemodPlugin.scoped
+    search = SourcemodPlugin.includes(:user)
 
     if params[:user_id]
-      @user = User.find params[:user_id]
-      search = search.where(user_id: @user.id)
-
-      unless @user.eql?(current_user)
-        search = search.has_phrases
+      @user = User.find_by_id params[:user_id]
+      if @user
+        search = search.where(user_id: @user.id)
+    
+        search = search.has_phrases unless @user.eql?(current_user)
       end
     else
       search = search.has_phrases
@@ -119,7 +119,10 @@ class SourcemodPluginsController < ApplicationController
       redirect_to upload_sourcemod_plugin_path(@sourcemod_plugin) and return
     end
 
+
+
     ulfilename = params[:sourcemod_plugin][:file].original_filename
+    phrase_count = 0
     #@sourcemod_plugin = current_user.sourcemod_plugins.find(params[:id])
     if ulfilename =~ /\.zip$/i
 
@@ -129,18 +132,19 @@ class SourcemodPluginsController < ApplicationController
         if entry_name =~ /#{@sourcemod_plugin.filename}\.phrases\.txt$/i
 
           #puts "entry #{index} is #{entry.name}, size = #{entry.size}, compressed size = #{entry.compressed_size}"
-          @sourcemod_plugin.load_from_file zf.get_input_stream(entry)
+          phrase_count = phrase_count + @sourcemod_plugin.load_from_file(zf.get_input_stream(entry))
         end
       end
 
     elsif ulfilename =~ /\.txt$/i
-      @sourcemod_plugin.load_from_file File.open(params[:sourcemod_plugin][:file].tempfile)
+      phrase_count = @sourcemod_plugin.load_from_file File.open(params[:sourcemod_plugin][:file].tempfile)
     else
-      # error
+      render json: {status:"fail"}, status: :not_acceptable and return
     end
 
     respond_to do |format|
       if @sourcemod_plugin.save
+        format.json { render json: {phrases: phrase_count, status:"ok"}, status: :ok }
         format.html { redirect_to upload_sourcemod_plugin_path(@sourcemod_plugin), notice: 'Phrase file uploaded!' }
       else
         format.html { render action: "upload" }

@@ -17,6 +17,7 @@
  *= require phrases
  *= require users
  *= require translations
+ *= require jquery.fileupload-ui
  */
 
 body {

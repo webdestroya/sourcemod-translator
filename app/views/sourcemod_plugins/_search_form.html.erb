@@ -1,10 +1,11 @@
-<%= form_tag(sourcemod_plugins_path, :method => :get, :class => 'form-stacked') do |f| %>
+<%= form_tag(search_sourcemod_plugins_path, :method => :get, :class => 'form-stacked') do |f| %>
 
 <h3>Search Filters</h3>
 
 <div class="search-field clearfix">
   <label><%= t('search.filter.user') %></label>
   <% if @user %>
+  <%= hidden_field_tag :user_id, @user.id %>
   <span><%= link_to @user.name, @user %></span>
   <% else %>
   <em>All users</em>
@@ -14,15 +15,9 @@
 
 <div class="search-field clearfix">
   <label><%= t('search.filter.tags') %></label>
-  <select id="search_tags" multiple>
-    <% Tag.used.order("LOWER(name) ASC").each do |tag| %>
-      <% if @tags && !@tags.empty? && @tags.include?(tag) %>
-      <option value="<%= tag.name %>" selected><%= tag.name %></option>
-      <% else %>
-      <option value="<%= tag.name %>"><%= tag.name %></option>
-      <% end %>
-    <% end %>
-  </select>
+
+  <%= text_field_tag :tags, (@tags ? @tags.map(&:name).join(",") : ""), :data => {taglist: Tag.used.map(&:name).join(",")} %>
+
 </div>
 
 <%= submit_tag t('search.submit'), :class => "btn" %>

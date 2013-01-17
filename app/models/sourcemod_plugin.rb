@@ -33,21 +33,32 @@ class SourcemodPlugin < ActiveRecord::Base
   }
 
   def tag_list
-    self.tags.collect{|t|t.name}.join(",")
+    self.tags.map(&:name).join(",")
   end
 
   def tag_list=(tokens)
     self.tag_ids = Tag.ids_from_tokens(tokens)
   end
 
-  def percent_completed
-    @percent_completed ||= ((100.0*self.translations.count) / (self.phrases.count * Language.count)).round 2
+  # If nil, return zero
+  def percent_complete
+    @percent_complete ||= ( (self.completed && !self.completed.nan?) ? self.completed : 0.0)
   end
 
+  def percent_attempt
+    @percent_attempt ||= ( (self.attempted && !self.attempted.nan?) ? self.attempted : 0.0)
+  end
+
+  # OLD
+  def percent_completed
+    @percent_completed ||= ((100.0*self.translations.size) / (self.phrases.size * Language.count)).round 2
+  end
+
+  # OLD
   # This is the percentage of attempted languages / completed languages
   # If there are NO translations for a language, we don't count that language 
   def attempted
-    @attempted ||= ((100.0*self.translations.count) / (self.phrases.count * self.languages.count)).round 2
+    @attempted ||= ((100.0*self.translations.size) / (self.phrases.size * self.languages.size)).round 2
   end
 
 
@@ -74,13 +85,15 @@ class SourcemodPlugin < ActiveRecord::Base
     self.errors.add(:file, "is invalid format") unless valid_lines.shift.eql?("{")
     self.errors.add(:file, "is invalid format") unless valid_lines.pop.eql?("}")
 
-    return false if self.errors.messages[:file]
+    return -1 if self.errors.messages[:file]
 
 
     # TODO: Need some error handling here
 
     phrase = nil
     format_infos = {}
+
+    phrase_count = 0
 
     valid_lines.each do |line|
       
@@ -93,6 +106,7 @@ class SourcemodPlugin < ActiveRecord::Base
         if line.eql?("}")
           self.phrases << phrase
           phrase = nil
+          phrase_count = phrase_count + 1
           next
         end
 
@@ -158,7 +172,7 @@ class SourcemodPlugin < ActiveRecord::Base
       end
     end
 
-    true
+    phrase_count
   end # load_from_file2
 
   # This will change the owner of this plugin, and convert all translations

@@ -14,3 +14,8 @@ $(document).ready ->
   if $(".search-form").size() > 0
     $("#search_tags").select2
       width: "265px"
+
+    $("#tags").select2
+      width: "265px"
+      tags: $("#tags").data("taglist").split(",")
+      tokenSeparators: [","," "]

@@ -93,4 +93,6 @@ gem 'simple_form'
 
 gem 'psych'
 
+gem "jquery-fileupload-rails"
+
 #gem 'acts-as-taggable-on'

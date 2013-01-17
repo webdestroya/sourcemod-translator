@@ -30,6 +30,8 @@ SourcemodTranslator::Application.routes.draw do
     get 'clean', :action => :clean, :on => :member
     get 'upload', :action => :upload, :on => :member
     post 'upload', :action => :upload_submit, :on => :member
+
+    get 'search', action: :index, on: :collection, as: :search
   end
 
   post 'auth/:provider/callback', to: 'sessions#create'
