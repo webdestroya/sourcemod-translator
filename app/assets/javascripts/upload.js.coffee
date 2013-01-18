@@ -6,6 +6,7 @@ $(document).ready ->
     paramName: "sourcemod_plugin[file]"
     acceptFileTypes: /(\.|\/)(txt|zip)$/i
     downloadTemplateId: false
+    limitConcurrentUploads: 1
     done: (e, data) ->
       context = data.context[0]
       result = data.result
@@ -17,5 +18,10 @@ $(document).ready ->
         $("td.start", context).text "Failure"
         $("div.progress", context).removeClass("progress-success").addClass("progress-danger")
       #console.log(data)
+      return
+    stop: (e, data) ->
+      $("#upload_finished").show()
+      $(".fileupload-progress .progress").removeClass("active progress-striped")
+      return
 
   return

@@ -5,48 +5,14 @@
   </h1>
 <% end %>
 
-
-<%= info_box do %>
-<p>
-  This can either be a single <code><%= @sourcemod_plugin.filename %>.phrases.txt</code>, or it can be a Zip archive containing all translations.
-</p>
-<p>Note: If you upload a Zip archive, only files named <code><%= @sourcemod_plugin.filename %>.phrases.txt</code> will be imported.</p>
+<div id="upload_finished" style="display:none;">
+<%= success_box do %>
+<strong>Upload Finished!</strong>
+<br/>
+The upload completed successfully. You can <%= link_to "return to your plugin", @sourcemod_plugin %> to view the changes.
 <% end %>
+</div>
 
-<%
-=begin
-%>
-<%= form_for(@sourcemod_plugin, :url => upload_sourcemod_plugin_path, :method => :post, :html => {:class => "form-horizontal"}) do |f| %>
-  <% if @sourcemod_plugin.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@sourcemod_plugin.errors.count, "error") %> prohibited this sourcemod_plugin from being saved:</h2>
-
-      <ul>
-      <% @sourcemod_plugin.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="control-group">
-    <%= f.label :file, :class => "control-label" %>
-    <div class="controls">
-      <%= f.file_field :file %>
-      <span class="help-inline">Only *.txt and *.zip are allowed.</span>
-    </div>
-  </div>
-  
-  <div class="control-group">
-    <div class="controls">
-    <%= f.submit "Upload Phrase", :class => "btn btn-primary" %>
-    <%= link_to "Back to Plugin", @sourcemod_plugin, :class => "btn" %>
-    </div>
-  </div>
-<% end %>
-<%
-=end
-%>
 
 <%= form_tag upload_sourcemod_plugin_path(@sourcemod_plugin, "json"), 
       method: :post,
@@ -86,6 +52,13 @@
 <!-- The table listing the files available for upload/download -->
 <table role="presentation" class="table table-striped"><tbody class="files" data-toggle="modal-gallery" data-target="#modal-gallery"></tbody></table>
 
+<% end %>
+
+<%= info_box do %>
+<p>
+  This can either be a single <code><%= @sourcemod_plugin.filename %>.phrases.txt</code>, or it can be a Zip archive containing all translations.
+</p>
+<p>Note: If you upload a Zip archive, only files named <code><%= @sourcemod_plugin.filename %>.phrases.txt</code> will be imported.</p>
 <% end %>
 
 
