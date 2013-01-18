@@ -8,3 +8,4 @@ disallow: /
 # Bots do not need to authenticate
 user-agent: *
 disallow: /auth/steam
+disallow: /*.zip
