@@ -1,5 +1,5 @@
 PATH
-  remote: ~/Developer/omniauth-alliedmodders
+  remote: ~/Developer/omniauth-allied_modders
   specs:
     omniauth-allied_modders (0.0.1)
       omniauth (~> 1.0)
