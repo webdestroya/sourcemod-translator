@@ -59,7 +59,7 @@ gem "cancan"
 gem 'omniauth'
 gem 'omniauth-openid'
 gem 'omniauth-steam'
-gem 'omniauth-allied_modders', :path => "~/Developer/omniauth-allied_modders"
+gem 'omniauth-allied_modders'
 
 # For nice pagination (railscasts-254)
 gem "kaminari"
