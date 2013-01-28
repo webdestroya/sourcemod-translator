@@ -17,7 +17,7 @@
       Are you bilingual? Do you enjoy helping others in the community?
       You can help internationalize plugins by adding translations for phrases.
     </p>
-    <p><%= link_to(image_tag("sits_large_noborder.png"), get_started_path) unless current_user %></p>
+    <p><%= link_to("Get Started!", get_started_path, :class => "btn") unless current_user %></p>
   </div>
   <div class="span4">
     <h2>Developers</h2>
@@ -25,13 +25,13 @@
       Want to support multiple languages in your plugin, but only know English?
       Upload your plugin and let others add translations!
     </p>
-    <p><%= link_to(image_tag("sits_large_noborder.png"), get_started_path) unless current_user %></p>
+    <p><%= link_to("Get Started!", get_started_path, :class => "btn") unless current_user %></p>
   </div>
   <div class="span4">
-    <h2>Login with STEAM</h2>
+    <h2>No Registration</h2>
     <p>
-      Connect using your Steam account. We never see your password, and you never have to remember another username!
+      Connect using your Steam account, or use your AlliedModders account. We never see your password, and you never have to remember another username!
     </p>
-    <p><%= link_to(image_tag("sits_large_noborder.png"), get_started_path) unless current_user %></p>
+    <p><%= link_to("Get Started!", get_started_path, :class => "btn") unless current_user %></p>
   </div>
 </div>

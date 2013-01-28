@@ -102,7 +102,6 @@ ActiveRecord::Schema.define(:version => 20130124184131) do
     t.boolean  "banned",     :default => false, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "email"
     t.string   "avatar_url"
   end
 

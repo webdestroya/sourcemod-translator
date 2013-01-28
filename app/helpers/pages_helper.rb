@@ -4,7 +4,7 @@ module PagesHelper
     if current_user
       sourcemod_plugins_path
     else
-      "/auth/steam"
+      providers_path
     end
   end
 

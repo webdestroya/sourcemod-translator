@@ -36,6 +36,8 @@ SourcemodTranslator::Application.routes.draw do
 
   match 'auth/:provider/callback', to: 'sessions#create', via: [:get, :post]
   get 'auth/failure', to: redirect('/')
+
+  get 'providers', to: 'sessions#index', as: 'providers'
   get 'login', to: 'sessions#new', as: 'login'
   get 'logout', to: 'sessions#destroy', as: 'logout'
 

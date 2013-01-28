@@ -6,6 +6,7 @@ user-agent: AhrefsBot
 disallow: /
 
 # Bots do not need to authenticate
+# No downloads
 user-agent: *
 disallow: /auth/steam
 disallow: /*.zip

@@ -5,13 +5,24 @@
   </h1>
 <% end %>
 
+
 <dl class="dl-horizontal">
 
   <dt>Joined</dt>
   <dd><%= @user.created_at %></dd>
 
+  <% if @user.provider.eql?("steam") %>
   <dt>Steam Profile</dt>
   <dd><%= link_to "http://steamcommunity.com/profiles/#{@user.uid}", "http://steamcommunity.com/profiles/#{@user.uid}", :target => '_blank' %></dd>
+  <% elsif @user.provider.eql?("allied_modders") %>
+  <dt>Forum Profile</dt>
+  <dd><%= link_to "https://forums.alliedmods.net/member.php?u=#{@user.uid}", "https://forums.alliedmods.net/member.php?u=#{@user.uid}", :target => '_blank' %></dd>
+  <% end %>
+
+  <% if @user.avatar_url %>
+  <dt>Avatar</dt>
+  <dd><%= image_tag @user.avatar_url, :class => "img-polaroid" %></dd>
+  <% end %>
 
 
   <dt>Languages</dt>

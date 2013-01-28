@@ -1,0 +1,20 @@
+<% title "Providers" %>
+<h1>Log In Providers</h1>
+
+<p>Click on the provider listed below that you wish to login with.</p>
+
+<ul class="thumbnails providers">
+  <li class="span3">
+    <div class="thumbnail">
+      <h3 title="Steam"><%= link_to image_tag("sits_large_noborder.png"), "/auth/steam" %></h3>
+      <p>Login using your Steam community account.</p>
+    </div>
+  </li>
+  <li class="span3">
+    <div class="thumbnail">
+      
+      <h3 title="AlliedModders"><%= link_to image_tag("lwam_large_noborder.png"), "/auth/allied_modders" %></h3>
+      <p>Login using your alliedmodders.net forum account.</p>
+    </div>
+  </li>
+</ul>
