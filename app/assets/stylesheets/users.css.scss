@@ -38,3 +38,48 @@ ul.providers {
     }
   }
 }
+
+div.user-flair {
+  width:185px;
+  height:32px;
+  margin-top:0;
+  padding:2px;
+
+  h4 {
+    font-size:100%;
+    margin:0;
+    line-height:1em;
+    height:1.2em;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+    a {
+      color: inherit;
+      &:hover {
+        color: #08c;
+        text-decoration: none;
+      }
+    }
+  }
+  p {
+    margin:0;
+    line-height:1em;
+    height:1em;
+    strong {
+      margin-right:1ex;
+    }
+    span {
+      color:#666;
+    }
+  }
+  a.pull-left {
+    width:32px;
+    height:32px;
+    overflow:hidden;
+    margin-right:5px;
+  }
+}
+div.user-flair.gray {
+  background-color: #F7F7F9;
+  border: 1px solid #E1E1E8;
+}

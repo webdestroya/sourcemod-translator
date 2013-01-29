@@ -21,4 +21,18 @@ task :formats => :environment do
 end
 
 
+desc "Get avatars"
+task :avatars => :environment do
+  User.where("avatar_url IS NULL").where(:provider => "steam").each do |user|
+    begin
+      steamid = SteamId.new user.uid.to_i
+      puts "#{user.name} => #{steamid.icon_url}"
+      user.update_column(:avatar_url, steamid.icon_url) unless steamid.icon_url.blank?
+    rescue Exception => error
+      puts "#{user.name} FAILED #{error}"
+    end
+  end
+end
+
+
 end
