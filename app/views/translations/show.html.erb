@@ -1,6 +1,6 @@
-<% title "View Translation" %>
+<% title "View Translation - #{@translation.language.iso_code}:#{@translation.phrase.name}" %>
 <% content_for :page_heading do %>
-  <h1>View Translation
+  <h1><%= t('translations.view_translation') %>
     <small>&quot;<%= @translation.phrase.name %>&quot;</small>
   </h1>
 <% end %>
@@ -48,6 +48,11 @@
 
   <dt>Translated Text</dt>
   <dd><%= phrase_text @translation.text %></dd>
+
+  <dt class="ingame-preview">In-Game Preview</dt>
+  <dd class="ingame-preview"><%= fancy_text @translation %>
+<small class="muted">(This shows how the phrase will appear in game. Format placeholders will be filled in by the plugin in-game.)</small>
+  </dd>
 
 </dl>
 

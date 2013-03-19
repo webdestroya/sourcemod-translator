@@ -2,16 +2,17 @@ module TranslationsHelper
 
   def fancy_text(translation)
     text = translation.text
+
     if translation.phrase.format
       if translation.phrase.format_infos.count > 0
         translation.phrase.format_infos.each do |fmt|
-          text.gsub!(/(\{#{fmt.position}\})/, "<strong rel=\"tooltip\" title=\"TEST\">\\1</strong>")
+          text = text.gsub(/(\{(#{fmt.position})\})/, "<em rel=\"tooltip\" title=\"#{fmt.type}\">{\\2:#{fmt.format_class}}</em>")
         end
-      else
-        
-        text.gsub!(/(\%[dixfsct])/, "<strong>\\1</strong>")
       end
     end
+
+    text = text.gsub(/(\%[dixfsctN])/, "<em>\\1</em>")
+    text = text.gsub(/(\%\.?[0-9]+[fd])/, "<em>\\1</em>")
 
 
     text = colorize_translation(text)
@@ -20,7 +21,7 @@ module TranslationsHelper
   end
 
   def colorize_translation(text)
-    text.gsub! /(?:{([a-z]+)})/, "</span><span class=\"color-\\1\">{\\1}"
+    text = text.gsub /(?:{([a-z]+)})/, "</span><span class=\"color-\\1\" title=\"{\\1}\">"
     "<span class=\"colorized\"><span>#{text}</span></span>"
   end
 

@@ -29,5 +29,24 @@ span.fancy-text {
   }
   .colorized {
     // See colors.css.scss for color definitions
+    font-family:Verdana,Tahoma,sans-serif;
+    font-size: 14px;
+    //font-weight:bold;
+  }
+  em {
+    font-style: normal;
+    //font-weight:normal;
+    cursor: help;
+  }
+  em:hover {
+    border-bottom: 2px solid #000;
+  }
+}
+
+dd.ingame-preview,
+dt.ingame-preview {
+  margin-top:10px;
+  small {
+    display:block;
   }
 }

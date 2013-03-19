@@ -16,4 +16,8 @@
 //= require select2
 //= require bootstrap
 //
+//= require site
+//
 //= require sourcemod_plugins
+//= require translations
+//

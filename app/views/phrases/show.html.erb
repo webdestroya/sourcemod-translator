@@ -38,6 +38,10 @@
   <% if @phrase.english %>
   <dt>English</dt>
   <dd><%= phrase_text @phrase.english.text %></dd>
+
+    <dt>English (formatted)</dt>
+    <dd><%= fancy_text @phrase.english %></dd>
+
   <% end %>
 
 </dl>
@@ -50,9 +54,10 @@
 <dl class="dl-horizontal translation-list">
   <% @phrase.translations.includes(:language).order("languages.name ASC").each do |translation| %>
   <dt><%= link_to translation.language.name, translation %> (<%= translation.language.iso_code %>)</dt>
-  <dd><%= phrase_text translation.text %>
+  <dd>
+    <%= phrase_text translation.text %>
     <br/>
-
   </dd>
   <% end %>
 </dl>
+

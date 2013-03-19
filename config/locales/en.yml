@@ -42,3 +42,9 @@ en:
     attributes:
       sourcemod_plugin:
         tag_list: Tags
+
+  translations:
+    view_translation: View Translation
+
+  
+
