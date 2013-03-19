@@ -17,6 +17,7 @@
  *= require phrases
  *= require users
  *= require translations
+ *= require colors
  *= require jquery.fileupload-ui
  */
 
