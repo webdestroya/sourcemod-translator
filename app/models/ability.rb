@@ -30,7 +30,7 @@ class Ability
 
       # Only the owner can manage a translation
       can :manage, Translation, user_id: user.id
-      can [:delete], Translation, sourcemod_plugin: {user_id: user.id}
+      can :destroy, Translation, sourcemod_plugin: {user_id: user.id}
 
     end
 
