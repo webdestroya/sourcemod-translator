@@ -99,6 +99,10 @@ gem 'psych'
 
 gem "jquery-fileupload-rails"
 
+gem 'tempodb'
+
 # gem "iconv"
 
 #gem 'acts-as-taggable-on'
+
+# gem 'action_cost', '0.0.1'

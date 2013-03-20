@@ -46,5 +46,12 @@ SourcemodTranslator::Application.routes.draw do
   get 'contact', to: 'pages#contact', as: 'contact'
   get 'changelog', to: 'pages#changelog', as: 'changelog'
 
+  get 'metrics_update', to: 'pages#metrics_update', as: 'metrics_update', format: :json
+
+  # namespace :action_cost do
+  #   get '/' => 'dashboards#index'
+  #   match '/ca/:ca' => 'dashboards#ca', :as => 'ca', :constraints => { :ca => /.*/ }
+  # end
+
   root :to => 'pages#index'
 end

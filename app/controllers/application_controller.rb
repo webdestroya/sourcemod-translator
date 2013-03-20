@@ -7,6 +7,12 @@ class ApplicationController < ActionController::Base
     redirect_to root_url, :alert => "Sorry, you don't have access to do that"
   end
 
+  helper_method :tempodb
+
+  def tempodb
+    @tempodb ||= TempoDB::Client.new(ENV['TEMPODB_API_KEY'], ENV['TEMPODB_API_SECRET'])
+  end
+
 
   private
 
