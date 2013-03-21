@@ -1,57 +1,57 @@
-<% title "View Translation - #{@translation.language.iso_code}:#{@translation.phrase.name}" %>
+<% title "#{t('.title')} - #{@translation.language.iso_code}:#{@translation.phrase.name}" %>
 <% content_for :page_heading do %>
-  <h1><%= t('translations.view_translation') %>
+  <h1><%= t('.title') %>
     <small>&quot;<%= @translation.phrase.name %>&quot;</small>
   </h1>
 <% end %>
 
-<%= link_to 'Back to phrase', @translation.phrase %>
+<%= link_to t('.back_to_phrase'), @translation.phrase %>
 
-<h3>Phrase Information</h3>
+<h3><%=t 'headings.phrase_info' %></h3>
 
 <dl class="dl-horizontal">
-  <dt>Phrase Name</dt>
+  <dt><%= Phrase.human_attribute_name(:name) %></dt>
   <dd><%= @translation.phrase.name %></dd>
 
   <% if @translation.phrase.format %>
-  <dt>Format</dt>
+  <dt><%= Phrase.human_attribute_name(:format) %></dt>
   <dd><code><%= @translation.phrase.format %></code></dd>
   <% end %>
 
   
-  <dt>English</dt>
+  <dt><%= Phrase.human_attribute_name(:english) %></dt>
   <dd>
     <% if @translation.phrase.english %>
     <%= phrase_text @translation.phrase.english.text %>
     <% else %>
-    <em>None</em>
+    <em><%=t '.none' %></em>
     <% end %>
   </dd>
   
 
 </dl>
 
-<h3>Translation Information</h3>
+<h3><%=t 'headings.translation_info' %></h3>
 <dl class="dl-horizontal">
-  <dt>Added By</dt>
+  <dt><%= Translation.human_attribute_name(:user) %></dt>
   <dd><%= link_to @translation.user.name, @translation.user %>
     <% if @translation.imported? %>
-    <em>(imported)</em>
+    <em><%=t '.imported' %></em>
     <% end %>
   </dd>
 
-  <dt>Date Created</dt>
+  <dt><%= Translation.human_attribute_name(:created_at) %></dt>
   <dd><%= @translation.created_at %></dd>
 
-  <dt>Language</dt>
+  <dt><%= Language.model_name.human %></dt>
   <dd><%= @translation.language.name %> (<%= @translation.language.iso_code %>)</dd>
 
-  <dt>Translated Text</dt>
+  <dt><%= Translation.human_attribute_name(:text) %></dt>
   <dd><%= phrase_text @translation.text %></dd>
 
-  <dt class="ingame-preview">In-Game Preview</dt>
+  <dt class="ingame-preview"><%= Translation.human_attribute_name(:ingame_preview) %></dt>
   <dd class="ingame-preview"><%= fancy_text @translation %>
-<small class="muted">(This shows how the phrase will appear in game. Format placeholders will be filled in by the plugin in-game.)</small>
+    <small class="muted"><%=t '.preview_info' %></small>
   </dd>
 
 </dl>
@@ -59,17 +59,15 @@
 <% if @translation.user.eql?(current_user) %>
 
   <%= info_box do %>
-  <p>This is your translation. You may to remove your translation at any time if you would like. (You can always add a better one later)</p>
-  <%= link_to 'Delete Translation', @translation, method: :delete, data: { confirm: 'Are you sure you want to remove this translation?' }, :class => "btn btn-danger" %>
-
+  <p><%=t '.delete.creator' %></p>
+  <%= link_to t('.delete.button'), @translation, method: :delete, data: { confirm: t('.delete.confirm') }, :class => "btn btn-danger" %>
   <% end %>
 
 <% elsif @translation.phrase.sourcemod_plugin.user.eql?(current_user) %>
 
   <%= info_box do %>
-  <p>You are the owner of this plugin. If you do not like this translation, you may delete it at any time.</p>
-  <%= link_to 'Delete Translation', @translation, method: :delete, data: { confirm: 'Are you sure you want to remove this translation?' }, :class => "btn btn-danger" %>
-
+  <p><%=t '.delete.plugin_owner' %></p>
+  <%= link_to t('.delete.button'), @translation, method: :delete, data: { confirm: t('.delete.confirm') }, :class => "btn btn-danger" %>
   <% end %>
 
 <% else %>

@@ -1,14 +1,14 @@
-<% title "Plugins" %>
+<% title SourcemodPlugin.model_name.human.pluralize %>
 <% content_for :page_heading do %>
-  <h1>Plugins
+  <h1><%= SourcemodPlugin.model_name.human.pluralize %>
+    <small>
     <% if @user %>
-    <small>by <%= @user.name %></small>
+      <%=t '.title_filter.user_html', user: @user.name %>
     <% end %>
     <% if @tags && !@tags.empty? %>
-    <small>
-      tagged as <em><%= @tags.join(", ") %></em>
-    </small>
+      <%=t '.title_filter.tagged_html', tags: @tags.join(', ') %>
     <% end %>
+    </small>
   </h1>
 <% end %>
 
@@ -18,12 +18,40 @@
       <%= render @sourcemod_plugins %>
     <% else %>
       <%= info_box do %>
-      <strong>Whoops!</strong>, your search did not return any results!
+        <%=t '.no_results_html' %>
       <% end %>
     <% end %>
   </div>
   <div class="span3 search-form">
-    <%= render "search_form" %>
+    <!-- search form -->
+    <%= form_tag(search_sourcemod_plugins_path, :method => :get, :class => 'form-stacked') do |f| %>
+
+    <h3><%=t '.filter.title' %></h3>
+
+    <% if @user %>
+    <div class="search-field clearfix">
+      <label><%=t '.filter.user' %></label>
+      <% if @user %>
+      <%= hidden_field_tag :user_id, @user.id %>
+      <span><%= link_to @user.name, @user %></span>
+      <% else %>
+      <em>All users</em>
+      <% end %>
+    </div>
+    <% end %>
+
+
+    <div class="search-field clearfix">
+      <label><%= t('.filter.tags') %></label>
+
+      <%= text_field_tag :tags, (@tags ? @tags.map(&:name).join(",") : ""), :data => {taglist: Tag.used.map(&:name).join(",")} %>
+
+    </div>
+
+    <%= submit_tag t('.submit'), :class => "btn" %>
+
+    <% end %>
+    <!-- / search form -->
   </div>
 </div>
 

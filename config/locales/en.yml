@@ -21,6 +21,7 @@
 
 en:
   cancel: "Cancel"
+  add: "add"
 
   menubar:
     browse_plugins: "Browse Plugins"
@@ -29,22 +30,57 @@ en:
     translate: "Translate!"
     logout: "Logout"
 
-  search:
-    submit: "Search"
-    filter:
-      user: "Plugin Owner"
-      tags: "Tags"
+  headings:
+    translation_info: "Translation Information"
+    phrase_info: "Phrase Information"
+
+  phrases:
+    show:
+      title: "View Phrase"
+      no_english: "This phrase doesn't seem to exist in English. Do want to delete it?"
+      delete: 
+        confirm: 'Are you sure? This will remove all translations as well.'
+        button: "Delete Phrase"
+
+  sourcemod_plugins:
+    index:
+      filter:
+        title: Search Filters
+        user: Plugin Owner
+        tags: Tags
+      submit: Search
+      no_results_html: "<strong>Whoops!</strong>, your search did not return any results!"
+      title_filter:
+        user_html: "by %{user}"
+        tagged_html: "tagged as <em>%{tags}</em>"
+
+  translations:
+    show:
+      title: View Translation
+      back_to_phrase: "Back to phrase"
+      none: None
+      imported: "(imported)"
+      preview_info: "(This shows how the phrase will appear in game. Format placeholders will be filled in by the plugin in-game.)"
+      delete:
+        button: "Delete Translation"
+        confirm: "Are you sure you want to remove this translation?"
+        creator: "This is your translation. You may to remove your translation at any time if you would like. (You can always add a better one later)"
+        plugin_owner: "You are the owner of this plugin. If you do not like this translation, you may delete it at any time."
 
   activerecord:
     models:
       sourcemod_plugin: Plugin
       tag: Tag
+      language: Language
+      translation: Translation
+      user: User
+      phrase: Phrase
     attributes:
       sourcemod_plugin:
         tag_list: Tags
-
-  translations:
-    view_translation: View Translation
-
-  
-
+      phrase:
+        english: English
+      translation:
+        ingame_preview: "In-game Preview"
+        user: Added By
+        created_at: Date Created

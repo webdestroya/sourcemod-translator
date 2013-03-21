@@ -1,6 +1,6 @@
-<% title "View Phrase" %>
+<% title "#{t('.title')} - #{@phrase.name}" %>
 <% content_for :page_heading do %>
-  <h1>View Phrase
+  <h1><%=t ".title" %>
     <small>&quot;<%= @phrase.name %>&quot;</small>
   </h1>
 <% end %>
@@ -8,22 +8,22 @@
 
 <% if @phrase.english.nil? && can?(:manage, @phrase) %>
   <%= error_box do %>
-  <p>This phrase doesn't seem to exist in English. Do want to delete it?</p>
-  <%= link_to 'Delete Phrase', @phrase, method: :delete, 
-    data: { confirm: 'Are you sure? This will remove all translations as well.' }, :class => "btn btn-danger" %>
+  <p><%=t ".no_english" %></p>
+  <%= link_to t('.delete.button'), @phrase, method: :delete, 
+    data: { confirm: t('.delete.confirm') }, :class => "btn btn-danger" %>
   <% end %>
 <% end %>
 
-<h3>Phrase Information</h3>
+<h3><%=t "headings.phrase_info" %></h3>
 <dl>
-  <dt>Plugin Name</dt>
+  <dt><%= SourcemodPlugin.model_name.human %></dt>
   <dd><%= link_to @phrase.sourcemod_plugin.name, @phrase.sourcemod_plugin %></dd>
 
-  <dt>Phrase Name</dt>
+  <dt><%= Phrase.human_attribute_name(:name) %></dt>
   <dd><%= @phrase.name %></dd>
 
   <% if @phrase.format %>
-  <dt>Format</dt>
+  <dt><%= Phrase.human_attribute_name(:format) %></dt>
   <dd><code><%= @phrase.format %></code>
     <% if @phrase.format_infos.count > 0 %>
     <ol class="format-info">
@@ -36,19 +36,19 @@
   <% end %>
 
   <% if @phrase.english %>
-  <dt>English</dt>
+  <dt><%= Phrase.human_attribute_name(:english) %></dt>
   <dd><%= phrase_text @phrase.english.text %></dd>
 
-    <dt>English (formatted)</dt>
+    <dt><%= Phrase.human_attribute_name(:english) %> (<%= Translation.human_attribute_name(:ingame_preview) %>)</dt>
     <dd><%= fancy_text @phrase.english %></dd>
 
   <% end %>
 
 </dl>
 
-<h3>Translations
+<h3><%= Translation.model_name.human.pluralize %>
 <% if can? :create, Translation %>
-<small>(<%= link_to "add", new_phrase_translation_path(@phrase) %>)</small>
+<small>(<%= link_to t("add"), new_phrase_translation_path(@phrase) %>)</small>
 <% end %>
 </h3>
 <dl class="dl-horizontal translation-list">
