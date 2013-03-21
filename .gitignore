@@ -17,3 +17,7 @@
 .env
 /redistogo_dump.json
 /doc/TODO.md
+.localeapp
+.DS_Store
+
+/.DS_Store

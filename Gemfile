@@ -95,6 +95,12 @@ end
 # Improving query performance
 gem 'bullet', :group => :development
 
+# For locale stuff
+group :development do
+  gem 'i18n-spec'
+  gem 'localeapp'
+end
+
 
 # For reading/writing ZIP archives
 gem 'rubyzip', :require => ["zip/zip"]
