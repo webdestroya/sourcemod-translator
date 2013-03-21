@@ -1,5 +1,5 @@
 # number of workers
-worker_processes 2
+worker_processes ENV['UNICORN_WORKERS'].to_i
 
 # bailout after
 timeout 30
