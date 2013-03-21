@@ -15,3 +15,5 @@
 /log/*.log
 /tmp
 .env
+/redistogo_dump.json
+/doc/TODO.md
