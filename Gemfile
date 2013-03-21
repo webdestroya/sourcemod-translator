@@ -23,6 +23,12 @@ group :assets do
 
   # for Select2 assets
   gem 'select2-rails'
+
+  # Raphael
+  gem 'raphaeljs-rails'
+
+  # For charting
+  gem 'morris-rails', github: 'dgilperez/morris-rails'
 end
 
 
@@ -80,29 +86,27 @@ gem 'unicorn'
 gem "steam-condenser", :require => ["steam-condenser/community"]
 
 
-# group :development do
-#   gem "better_errors"
-#   gem "binding_of_caller"
-# end
+# Better error display in development
+group :development do
+  gem "better_errors"
+  gem "binding_of_caller"
+end
 
+# For reading/writing ZIP archives
 gem 'rubyzip', :require => ["zip/zip"]
 
-#gem 'newrelic_rpm', :group => :production
-#gem 'newrelic_rpm'
-# gem 'newrelic_rpm',  '3.5.5.alpha', :git => 'git://github.com/newrelic/rpm.git', :branch => 'dev'
+# Performance metrics 
 gem "newrelic_rpm", "~> 3.5.5.540.dev", :group => :production
 
+# Pretty form display
 gem 'simple_form'
-# gem 'honeybadger'
+
 
 gem 'psych'
 
+# jQuery file uploader assets
 gem "jquery-fileupload-rails"
 
+# Time series service
 gem 'tempodb'
 
-# gem "iconv"
-
-#gem 'acts-as-taggable-on'
-
-# gem 'action_cost', '0.0.1'

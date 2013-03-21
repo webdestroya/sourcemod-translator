@@ -1,3 +1,10 @@
+GIT
+  remote: git://github.com/dgilperez/morris-rails.git
+  revision: 04e0670a7dfb17b65f9525f0c08a4044dd6107f7
+  specs:
+    morris-rails (0.4.1)
+      railties (>= 3.1, < 4.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -33,6 +40,10 @@ GEM
     asset_sync (0.5.3)
       activemodel
       fog
+    better_errors (0.3.2)
+      coderay (>= 1.0.0)
+      erubis (>= 2.7.0)
+    binding_of_caller (0.6.8)
     builder (3.0.4)
     bzip2-ruby (0.2.7)
     cancan (1.6.8)
@@ -176,6 +187,7 @@ GEM
       thor (>= 0.14.6, < 2.0)
     raindrops (0.10.0)
     rake (10.0.3)
+    raphaeljs-rails (1.0.1)
     rdoc (3.12.2)
       json (~> 1.4)
     redis (3.0.2)
@@ -266,6 +278,8 @@ PLATFORMS
 
 DEPENDENCIES
   asset_sync
+  better_errors
+  binding_of_caller
   cancan
   capybara (= 1.1.2)
   coffee-rails (~> 3.2.1)
@@ -277,6 +291,7 @@ DEPENDENCIES
   jquery-rails
   json (>= 1.7.7)
   kaminari
+  morris-rails!
   newrelic_rpm (~> 3.5.5.540.dev)
   omniauth
   omniauth-allied_modders
@@ -286,6 +301,7 @@ DEPENDENCIES
   psych
   rack (~> 1.4.5)
   rails (= 3.2.12)
+  raphaeljs-rails
   redis
   redis-rails
   rspec (= 2.8.0)
