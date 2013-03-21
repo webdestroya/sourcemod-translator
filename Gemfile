@@ -92,6 +92,10 @@ group :development do
   gem "binding_of_caller"
 end
 
+# Improving query performance
+gem 'bullet', :group => :development
+
+
 # For reading/writing ZIP archives
 gem 'rubyzip', :require => ["zip/zip"]
 
