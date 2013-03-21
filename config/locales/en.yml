@@ -23,6 +23,8 @@ en:
   cancel: "Cancel"
   add: "add"
 
+
+
   menubar:
     browse_plugins: "Browse Plugins"
     add_plugin: "Add Plugin"
@@ -34,6 +36,10 @@ en:
     translation_info: "Translation Information"
     phrase_info: "Phrase Information"
 
+  pages:
+    index:
+      get_started: 'Get Started!'
+
   phrases:
     show:
       title: "View Phrase"
@@ -43,6 +49,22 @@ en:
         button: "Delete Phrase"
 
   sourcemod_plugins:
+    show:
+      no_phrases: "Whoops, it appears the developer of this plugin has not yet added any phrases to translate."
+      no_english: "The phrases above highlighted in red do not have an English translation."
+      delete_info: "If you want to delete these phrases, then click on them and follow the prompt on the next page. Alternatively, you may click the button below to clear all phrases."
+      progress:
+        detailed: detailed
+        title: Translation Progress
+        overall_info: "The percentage of completed languages vs the total available languages"
+        attempted_info: "This is the percentage of completed languages vs attempted languages"
+      export:
+        title: Export
+        single: Single File
+        zip: Multi-File Zip
+      translate: "Translate this plugin!"
+    new:
+      title: Add New Plugin
     index:
       filter:
         title: Search Filters
@@ -78,6 +100,8 @@ en:
     attributes:
       sourcemod_plugin:
         tag_list: Tags
+        attempted: Attempted
+        overall: Overall
       phrase:
         english: English
       translation:
