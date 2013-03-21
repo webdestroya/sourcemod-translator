@@ -46,7 +46,13 @@ SourcemodTranslator::Application.routes.draw do
   get 'contact', to: 'pages#contact', as: 'contact'
   get 'changelog', to: 'pages#changelog', as: 'changelog'
 
-  get 'metrics_update', to: 'pages#metrics_update', as: 'metrics_update', format: :json
+  scope 'metrics' do
+    get '', to: 'metrics#index', as: :metrics, format: :html
+    get 'update', to: 'metrics#update', as: :metrics_update, format: :json
+    get 'translations', to: 'metrics#translations', as: :metrics_translations, format: :json
+    get 'plugins', to: 'metrics#plugins', as: :metrics_plugins, format: :json
+    get 'users', to: 'metrics#users', as: :metrics_users, format: :json
+  end
 
   # namespace :action_cost do
   #   get '/' => 'dashboards#index'

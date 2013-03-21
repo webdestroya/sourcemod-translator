@@ -1,0 +1,9 @@
+<% content_for :bottom_scripts do %>
+  <%= javascript_include_tag "metrics_graphing" %>
+  <%= javascript_include_tag "metrics" %>
+<% end %>
+<% content_for :header_stylesheets do %>
+  <%= stylesheet_link_tag "metrics_graphing" %>
+  <%= stylesheet_link_tag "metrics" %>
+<% end %>
+<%= render :file => 'layouts/application' %>
