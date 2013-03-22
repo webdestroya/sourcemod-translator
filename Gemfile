@@ -29,6 +29,9 @@ group :assets do
 
   # For charting
   gem 'morris-rails', github: 'dgilperez/morris-rails'
+
+  # Font Awesome
+  gem "font-awesome-rails"
 end
 
 
@@ -97,7 +100,6 @@ gem 'bullet', :group => :development
 
 # For locale stuff
 group :development do
-  gem 'i18n-spec'
   gem 'localeapp'
 end
 
@@ -120,3 +122,5 @@ gem "jquery-fileupload-rails"
 # Time series service
 gem 'tempodb'
 
+# Elastic Search
+gem 'tire'
