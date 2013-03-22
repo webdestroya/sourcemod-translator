@@ -1,5 +1,7 @@
 class SourcemodPlugin < ActiveRecord::Base
   #include ActiveModel::ForbiddenAttributesProtection
+  include Tire::Model::Search
+  include Tire::Model::Callbacks
 
   # TODO: Add percent complete to DB
   # TODO: Add percent attempted to DB
@@ -31,6 +33,24 @@ class SourcemodPlugin < ActiveRecord::Base
       Tag.tokens(tags).collect{|t|t.id}
     ])
   }
+
+  tire do
+    settings :analyzer => {
+              :name_analyzer => {
+                "tokenizer" => "lowercase",
+                "type" => "snowball"
+              }
+            }
+    mapping do
+      indexes :id,            :index => :not_analyzed
+      indexes :name,          :analyzer => "snowball", :boost => 100
+      indexes :filename,      :analyzer => "keyword"
+      indexes :user_id,       :index => :not_analyzed
+      indexes :tag,           :analyzer => "keyword", :boost => 100 # use singular form
+      #indexes :language,      :index => :not_analyzed #:analyzer => "keyword" # use singular
+    end
+  end
+
 
   def tag_list
     self.tags.map(&:name).join(",")
@@ -204,6 +224,36 @@ class SourcemodPlugin < ActiveRecord::Base
 
     self.update_column :attempted, attempted unless attempted.nan?
     self.update_column :completed, completed unless completed.nan?
+  end
+
+
+  def to_indexed_json
+    {
+      name: self.name,
+      filename: self.filename,
+      id: self.id,
+      user_id: self.user_id,
+      tag: self.tags.map(&:name),
+      #language: self.languages.map(&:iso_code)
+    }.to_json
+  end
+
+  def to_search_result(hit)
+    {
+      id: self.id,
+      name: self.name,
+      user: {
+        id: self.user_id,
+        name: self.user.name,
+      },
+      tags: self.tags.map(&:name),
+      phrase_count: self.phrases.size,
+      attempted: self.percent_attempt,
+      overall: self.percent_complete,
+      search: {
+        score: hit['_score'] || 0
+      }
+    }
   end
 
 end

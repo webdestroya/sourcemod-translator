@@ -32,6 +32,8 @@ SourcemodTranslator::Application.routes.draw do
     post 'upload', :action => :upload_submit, :on => :member
 
     get 'search', action: :index, on: :collection, as: :search
+
+    get 'elasticsearch', action: :elasticsearch, on: :collection, as: :elasticsearch, format: :json
   end
 
   match 'auth/:provider/callback', to: 'sessions#create', via: [:get, :post]

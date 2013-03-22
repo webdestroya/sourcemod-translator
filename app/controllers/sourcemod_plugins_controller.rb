@@ -14,27 +14,37 @@ class SourcemodPluginsController < ApplicationController
 
     @sourcemod_plugin = SourcemodPlugin.new
 
-    search = SourcemodPlugin.includes(:user)
+    @use_elastic = false
 
-    if params[:user_id]
-      @user = User.find_by_id params[:user_id]
-      if @user
-        search = search.where(user_id: @user.id)
-    
-        search = search.has_phrases unless @user.eql?(current_user)
+    if params[:q]
+      @use_elastic = true
+      @query = params[:q]
+    elsif params[:user_id] || params[:tags]
+
+      search = SourcemodPlugin.includes(:user)
+
+      if params[:user_id]
+        @user = User.find_by_id params[:user_id]
+        if @user
+          search = search.where(user_id: @user.id)
+      
+          search = search.has_phrases unless @user.eql?(current_user)
+        end
+      else
+        search = search.has_phrases
       end
+
+      if params[:tags]
+        search = search.tagged(params[:tags])
+        @tags = Tag.tokens params[:tags]
+      end
+
+      search = search.order("LOWER(sourcemod_plugins.name) ASC")
+
+      @sourcemod_plugins = search
     else
-      search = search.has_phrases
+      # dunno
     end
-
-    if params[:tags]
-      search = search.tagged(params[:tags])
-      @tags = Tag.tokens params[:tags]
-    end
-
-    search = search.order("LOWER(sourcemod_plugins.name) ASC")
-
-    @sourcemod_plugins = search
 
     respond_to do |format|
       format.html # index.html.erb
@@ -232,6 +242,32 @@ class SourcemodPluginsController < ApplicationController
         format.html { redirect_to @sourcemod_plugin, notice: 'Error!' }
       end
     end
+  end
+
+  def elasticsearch
+
+    q = params[:q]
+    from = params[:from] || 0
+
+    results = SourcemodPlugin.tire.search :load => {:include => "user"} do
+      query { string q }
+      size 10
+      from from
+    end
+
+    response = {
+      time: results.time,
+      max_score: results.max_score,
+      total: results.total,
+      size: results.size,
+      hits: [],
+    }
+
+    results.each_with_hit do |plugin, hit|
+      response[:hits] << plugin.to_search_result(hit)
+    end
+
+    render :json => response
   end
 
   private
