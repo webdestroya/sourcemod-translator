@@ -29,8 +29,8 @@ Metrics.loadTranslationsGraph = ->
         element: 'translations_chart'
         data: data.metrics
         xkey: 'd'
-        ykeys: ['w','i']
-        labels: ["Web", "Imported"]
+        ykeys: ['w']
+        labels: ["Web"]
         hideHover: true
         continuousLine: true
   return

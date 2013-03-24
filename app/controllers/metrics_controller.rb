@@ -19,9 +19,9 @@ class MetricsController < ApplicationController
       metrics[format_time(point.ts)].merge!({w: point.value})
     end
 
-    readkey("translations_imported").each do |point|
-      metrics[format_time(point.ts)].merge!({i: point.value})
-    end
+    # readkey("translations_imported").each do |point|
+    #   metrics[format_time(point.ts)].merge!({i: point.value})
+    # end
 
     metrics.each_pair do |k,v|
       resp[:metrics] << v.merge({d: k})
@@ -118,11 +118,12 @@ class MetricsController < ApplicationController
   private 
 
   def readkey(key)
-    tempodb.read_key(key, 1.year.ago, Time.now.utc, :interval => "1hour").data
+    tempodb.read_key(key, 1.year.ago, Time.now.utc, :interval => "1day").data
   end
 
   def format_time(ts)
-    ts.strftime "%Y-%m-%d %H:00"
+    # ts.strftime "%Y-%m-%d %H:00"
+    ts.strftime "%Y-%m-%d"
   end
 
   def tempodb
