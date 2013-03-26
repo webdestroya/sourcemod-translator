@@ -19,3 +19,9 @@ $(document).ready ->
       width: "265px"
       tags: $("#tags").data("taglist").split(",")
       tokenSeparators: [","," "]
+
+    $(".search-form .clear-user").click (event) ->
+      event.preventDefault()
+      $("#user_id").val("")
+      $(".search-form form").submit()
+      return

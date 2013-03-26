@@ -28,25 +28,46 @@
 
     <h3><%=t '.filter.title' %></h3>
 
-    <% if @user %>
+    <div class="search-field clearfix">
+      <label><%= t('.filter.name') %></label>
+      <%= text_field_tag :name, @sourcemod_plugin.name %>
+    </div>
+
+    
     <div class="search-field clearfix">
       <label><%=t '.filter.user' %></label>
       <% if @user %>
-      <%= hidden_field_tag :user_id, @user.id %>
-      <span><%= link_to @user.name, @user %></span>
+        <%= hidden_field_tag :user_id, @user.id %>
+        <span><%= link_to @user.name, @user %> <small>(<a href="#" class="clear-user">clear</a>)</small></span>
       <% else %>
-      <em>All users</em>
+        <em>All users</em>
       <% end %>
     </div>
-    <% end %>
-
+    
 
     <div class="search-field clearfix">
       <label><%= t('.filter.tags') %></label>
-
-      <%= text_field_tag :tags, (@tags ? @tags.map(&:name).join(",") : ""), :data => {taglist: Tag.used.map(&:name).join(",")} %>
-
+      <%= text_field_tag :tags, (@tags ? @tags.map(&:name).join(",") : ""), 
+          :data => {taglist: Tag.used.map(&:name).join(",")} %>
     </div>
+
+
+
+
+    <div class="control-group search-field clearfix">
+      <label>% Attempted</label>
+      <%= text_field_tag :attempted_min, params[:attempted_min], :class => "span1", :placeholder => "min" %> 
+      to 
+      <%= text_field_tag :attempted_max, params[:attempted_max], :class => "span1", :placeholder => "max" %>
+    </div>
+
+    <div class="control-group search-field clearfix">
+      <label>% Overall</label>
+      <%= text_field_tag :overall_min, params[:overall_min], :class => "span1", :placeholder => "min" %> 
+      to 
+      <%= text_field_tag :overall_max, params[:overall_max], :class => "span1", :placeholder => "max" %>
+    </div>
+
 
     <%= submit_tag t('.submit'), :class => "btn" %>
 
@@ -57,3 +78,4 @@
 
 
 <p>Showing <%= pluralize @sourcemod_plugins.count, "plugin" %></p>
+

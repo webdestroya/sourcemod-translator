@@ -227,6 +227,7 @@ class SourcemodPlugin < ActiveRecord::Base
   end
 
 
+  # TODO: Include a list of languages that need translations still
   def to_indexed_json
     {
       name: self.name,

@@ -14,37 +14,65 @@ class SourcemodPluginsController < ApplicationController
 
     @sourcemod_plugin = SourcemodPlugin.new
 
-    @use_elastic = false
+    @sourcemod_plugin.name = params[:name] || ''
 
-    if params[:q]
-      @use_elastic = true
-      @query = params[:q]
-    elsif params[:user_id] || params[:tags]
+    search = SourcemodPlugin.includes(:user)
 
-      search = SourcemodPlugin.includes(:user)
 
-      if params[:user_id]
-        @user = User.find_by_id params[:user_id]
-        if @user
-          search = search.where(user_id: @user.id)
-      
-          search = search.has_phrases unless @user.eql?(current_user)
-        end
-      else
-        search = search.has_phrases
-      end
-
-      if params[:tags]
-        search = search.tagged(params[:tags])
-        @tags = Tag.tokens params[:tags]
-      end
-
-      search = search.order("LOWER(sourcemod_plugins.name) ASC")
-
-      @sourcemod_plugins = search
-    else
-      # dunno
+    unless @sourcemod_plugin.name.empty?
+      search = search.where(["sourcemod_plugins.name ILIKE ?", "%#{@sourcemod_plugin.name}%"])
     end
+
+    if !params[:user_id].blank?
+      @user = User.find_by_id params[:user_id]
+      if @user
+        search = search.where(user_id: @user.id)
+    
+        search = search.has_phrases unless @user.eql?(current_user)
+      end
+    else
+      search = search.has_phrases
+    end
+
+    if !params[:tags].blank?
+      search = search.tagged(params[:tags])
+      @tags = Tag.tokens params[:tags]
+    end
+
+    if !params[:attempted_min].blank?
+      params[:attempted_min] = params[:attempted_min].to_i
+      search = search.where(["sourcemod_plugins.attempted >= ?", params[:attempted_min].to_i])
+    end
+
+    if !params[:attempted_max].blank?
+      params[:attempted_max] = params[:attempted_max].to_i
+      search = search.where(["sourcemod_plugins.attempted <= ?", params[:attempted_max].to_i])
+    end
+
+    if !params[:overall_min].blank?
+      params[:overall_min] = params[:overall_min].to_i
+      search = search.where(["sourcemod_plugins.completed >= ?", params[:overall_min].to_i])
+    end
+
+    if !params[:overall_max].blank?
+      params[:overall_max] = params[:overall_max].to_i
+      search = search.where(["sourcemod_plugins.completed <= ?", params[:overall_max].to_i])
+    end
+
+    search = search.order("sourcemod_plugins.attempted, LOWER(sourcemod_plugins.name) ASC")
+
+    @sourcemod_plugins = search
+
+    # @users = []
+    # User.where("id IN (SELECT user_id FROM sourcemod_plugins)")
+    # .select("id, name")
+    # .order("LOWER(name) ASC")
+    # .each do |user|
+    #   @users << {
+    #     id: user.id.to_s,
+    #     text: user.name
+    #   }
+    # end
 
     respond_to do |format|
       format.html # index.html.erb

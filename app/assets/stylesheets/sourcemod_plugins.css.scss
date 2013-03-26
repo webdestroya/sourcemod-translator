@@ -124,5 +124,8 @@ div.search-form {
 
   .search-field {
     margin-bottom:10px;
+    input {
+      margin-bottom: 0;
+    }
   }
 }
