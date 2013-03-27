@@ -96,7 +96,7 @@ group :development do
 end
 
 # Improving query performance
-gem 'bullet', :group => :development
+# gem 'bullet', :group => :development
 
 # For locale stuff
 group :development do

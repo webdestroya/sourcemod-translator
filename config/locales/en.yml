@@ -70,6 +70,7 @@ en:
         title: Search Filters
         user: Plugin Owner
         tags: Tags
+        name: Name
       submit: Search
       no_results_html: "<strong>Whoops!</strong>, your search did not return any results!"
       title_filter:

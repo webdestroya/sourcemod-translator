@@ -9,4 +9,4 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-SourcemodTranslator::Application.config.secret_token = 'eb22e7d982f3f5afb4598cd72e225414bbec84e0f54a6cf3ddf0ebd0cacc86c4ed716066ea074a028c6be1c3dc0a487ad4338a6d0214f49116d8f13331692d9d'
+SourcemodTranslator::Application.config.secret_token = ENV['SECRET_TOKEN']

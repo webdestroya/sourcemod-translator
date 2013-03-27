@@ -19,7 +19,7 @@ class SourcemodPluginsController < ApplicationController
     search = SourcemodPlugin.includes(:user)
 
 
-    unless @sourcemod_plugin.name.empty?
+    if !@sourcemod_plugin.name.blank?
       search = search.where(["sourcemod_plugins.name ILIKE ?", "%#{@sourcemod_plugin.name}%"])
     end
 
@@ -106,8 +106,6 @@ class SourcemodPluginsController < ApplicationController
   def create
 
     @sourcemod_plugin = current_user.sourcemod_plugins.new(sourcemod_plugin_params)
-
-    #puts @sourcemod_plugin.tag_list.inspect
 
     respond_to do |format|
       if @sourcemod_plugin.save
@@ -278,7 +276,13 @@ class SourcemodPluginsController < ApplicationController
     from = params[:from] || 0
 
     results = SourcemodPlugin.tire.search :load => {:include => "user"} do
-      query { string q }
+      query do
+        boolean do
+          should { string q }
+          should { term :tag, q, :boost => 10.0 }
+          should { prefix :name, q, :boost => 1.0 }
+        end
+      end
       size 10
       from from
     end
@@ -296,6 +300,16 @@ class SourcemodPluginsController < ApplicationController
     end
 
     render :json => response
+  end
+
+
+  def participation_graph
+    graph = {
+      all: (0..52).map{|i|rand(1000)},
+      owner: (0..52).map{0}
+    }
+
+    render :json => graph
   end
 
   private

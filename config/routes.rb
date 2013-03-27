@@ -34,6 +34,8 @@ SourcemodTranslator::Application.routes.draw do
     get 'search', action: :index, on: :collection, as: :search
 
     get 'elasticsearch', action: :elasticsearch, on: :collection, as: :elasticsearch, format: :json
+
+    get 'graphs/participation', action: :participation_graph, on: :member, format: :json
   end
 
   match 'auth/:provider/callback', to: 'sessions#create', via: [:get, :post]
@@ -55,11 +57,6 @@ SourcemodTranslator::Application.routes.draw do
     get 'plugins', to: 'metrics#plugins', as: :metrics_plugins, format: :json
     get 'users', to: 'metrics#users', as: :metrics_users, format: :json
   end
-
-  # namespace :action_cost do
-  #   get '/' => 'dashboards#index'
-  #   match '/ca/:ca' => 'dashboards#ca', :as => 'ca', :constraints => { :ca => /.*/ }
-  # end
 
   root :to => 'pages#index'
 end

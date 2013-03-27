@@ -79,3 +79,6 @@
 
 <p>Showing <%= pluralize @sourcemod_plugins.count, "plugin" %></p>
 
+<% content_for :bottom_scripts do %>
+<%= javascript_include_tag "graphs/participation" %>
+<% end %>

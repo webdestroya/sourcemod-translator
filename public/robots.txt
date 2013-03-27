@@ -9,4 +9,5 @@ disallow: /
 # No downloads
 user-agent: *
 disallow: /auth/steam
+disallow: /auth/allied_modders
 disallow: /*.zip
