@@ -6,6 +6,12 @@
   </h1>
 <% end %>
 
+
+<ul class="nav nav-pills pull-right">
+  <li class="active"><%= link_to "Plugin Details", @sourcemod_plugin %></li>
+  <li><%= link_to "Statistics", stats_sourcemod_plugin_path(@sourcemod_plugin) %></li>
+</ul>
+
 <% if @sourcemod_plugin.user.eql?(current_user) %>
   <%= info_box do %>
   <p>This is your plugin. You can perform the actions below if you want.</p>

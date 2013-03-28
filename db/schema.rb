@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130124184131) do
+ActiveRecord::Schema.define(:version => 20130328224436) do
 
   create_table "format_infos", :force => true do |t|
     t.integer  "phrase_id",                 :null => false
@@ -42,6 +42,16 @@ ActiveRecord::Schema.define(:version => 20130124184131) do
 
   add_index "phrases", ["sourcemod_plugin_id", "name"], :name => "index_phrases_on_sourcemod_plugin_id_and_name", :unique => true
 
+  create_table "plugin_stats", :force => true do |t|
+    t.integer  "sourcemod_plugin_id", :null => false
+    t.text     "participation"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+    t.text     "contributers"
+  end
+
+  add_index "plugin_stats", ["sourcemod_plugin_id"], :name => "index_plugin_stats_on_sourcemod_plugin_id", :unique => true
+
   create_table "plugin_tags", :force => true do |t|
     t.integer "sourcemod_plugin_id", :null => false
     t.integer "tag_id",              :null => false
@@ -50,14 +60,15 @@ ActiveRecord::Schema.define(:version => 20130124184131) do
   add_index "plugin_tags", ["tag_id", "sourcemod_plugin_id"], :name => "index_plugin_tags_on_tag_id_and_sourcemod_plugin_id", :unique => true
 
   create_table "sourcemod_plugins", :force => true do |t|
-    t.integer  "user_id",                      :null => false
-    t.string   "name",                         :null => false
-    t.string   "filename",                     :null => false
-    t.integer  "phrases_count", :default => 0, :null => false
+    t.integer  "user_id",                               :null => false
+    t.string   "name",                                  :null => false
+    t.string   "filename",                              :null => false
+    t.integer  "phrases_count",          :default => 0, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.float    "completed"
     t.float    "attempted"
+    t.integer  "web_translations_count"
   end
 
   add_index "sourcemod_plugins", ["user_id"], :name => "index_sourcemod_plugins_on_user_id"

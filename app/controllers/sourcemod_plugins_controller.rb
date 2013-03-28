@@ -6,7 +6,11 @@ class SourcemodPluginsController < ApplicationController
 
   load_and_authorize_resource
 
-  before_filter :set_sourcemod_plugin, only: [:show, :edit, :update, :destroy, :upload, :upload_submit, :phrases_file_text, :download, :clean]
+  before_filter :set_sourcemod_plugin, only: [:show, :edit, :update, :destroy, :upload, 
+                                              :upload_submit, :phrases_file_text, 
+                                              :download, :clean, :participation_graph,
+                                              :stats
+                                             ]
 
   # GET /sourcemod_plugins
   # GET /sourcemod_plugins.json
@@ -270,46 +274,27 @@ class SourcemodPluginsController < ApplicationController
     end
   end
 
-  def elasticsearch
-
-    q = params[:q]
-    from = params[:from] || 0
-
-    results = SourcemodPlugin.tire.search :load => {:include => "user"} do
-      query do
-        boolean do
-          should { string q }
-          should { term :tag, q, :boost => 10.0 }
-          should { prefix :name, q, :boost => 1.0 }
-        end
-      end
-      size 10
-      from from
-    end
-
-    response = {
-      time: results.time,
-      max_score: results.max_score,
-      total: results.total,
-      size: results.size,
-      hits: [],
-    }
-
-    results.each_with_hit do |plugin, hit|
-      response[:hits] << plugin.to_search_result(hit)
-    end
-
-    render :json => response
+  def participation_graph
+    graph = PluginStat.get_statistic(@sourcemod_plugin, :participation, false)
+    render :json => graph
   end
 
+  def stats
 
-  def participation_graph
-    graph = {
-      all: (0..52).map{|i|rand(1000)},
-      owner: (0..52).map{0}
-    }
+    @top_contributers = []
+    @sourcemod_plugin.translations.web
+    .select("translations.user_id, count(*) as trans_count")
+    .group("translations.user_id")
+    .order("trans_count DESC")
+    .limit(10)
+    .each do |contrib|
+      @top_contributers << {
+        user: User.find(contrib.user_id.to_i), 
+        translations: contrib.trans_count.to_i,
+        percent: 100.0*(contrib.trans_count.to_f / @sourcemod_plugin.translations_count.to_f)
+      }
+    end
 
-    render :json => graph
   end
 
   private

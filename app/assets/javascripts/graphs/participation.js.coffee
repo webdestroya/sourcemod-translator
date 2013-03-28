@@ -19,11 +19,8 @@ class ParticipationGraph
       @canvas.scale h,h
 
     c = @el.data("color-all")
-    g = @el.data("color-owner")
 
     @colors.all = c if c != null
-    @colors.owner = g if g != null
-
 
     @barMaxHeight = @el.height()
     @barWidth = (@el.width()-52)/52
@@ -41,7 +38,7 @@ class ParticipationGraph
 
   setData: (@data) ->
     
-    unless @data?.owner? && @data?.all?
+    unless @data?.all?
       @data = null
     @scale = @getScale(@data)
     return
@@ -72,7 +69,6 @@ class ParticipationGraph
     return if @data==null
 
     @drawCommits @data.all, @colors.all
-    @drawCommits @data.owner, @colors.owner
     return
 
   drawCommits: (data,color) ->

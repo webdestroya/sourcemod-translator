@@ -27,4 +27,8 @@ class Translation < ActiveRecord::Base
 
   scope :language,  ->(language) {where(language_id: language.id)}
 
+
+  # TODO: after_create -> update "web_translations_count" on plugin?
+
+
 end

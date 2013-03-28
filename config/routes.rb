@@ -28,12 +28,13 @@ SourcemodTranslator::Application.routes.draw do
     get 'download/:filename', :action => :download, :on => :member, :constraints => { :filename => /.+/ }, :as => :download
     get 'export', :action => :export, :on => :member
     get 'clean', :action => :clean, :on => :member
+    get 'stats', :action => :stats, :on => :member
     get 'upload', :action => :upload, :on => :member
     post 'upload', :action => :upload_submit, :on => :member
 
     get 'search', action: :index, on: :collection, as: :search
 
-    get 'elasticsearch', action: :elasticsearch, on: :collection, as: :elasticsearch, format: :json
+    # get 'elasticsearch', action: :elasticsearch, on: :collection, as: :elasticsearch, format: :json
 
     get 'graphs/participation', action: :participation_graph, on: :member, format: :json
   end

@@ -127,3 +127,34 @@ div.search-form {
     }
   }
 }
+
+
+.plugin-stats-page {
+
+  h3 {margin-bottom: 0;}
+
+  .participation-graph {
+    canvas {
+      border:1px solid #eaeaea;
+    }
+  }
+
+  .top-contributers {
+    dl {
+      margin-top:0;
+    }
+    dt {
+      width:250px;
+    }
+    dd {
+      margin-left:270px;
+      width:900px;
+      .progress {
+        margin-bottom:5px;
+        width:550px;
+      }
+    }
+  }
+
+
+}

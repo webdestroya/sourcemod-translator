@@ -32,6 +32,8 @@ group :assets do
 
   # Font Awesome
   gem "font-awesome-rails"
+
+  gem "graphael-rails"
 end
 
 
@@ -123,4 +125,4 @@ gem "jquery-fileupload-rails"
 gem 'tempodb'
 
 # Elastic Search
-gem 'tire'
+# gem 'tire'

@@ -52,7 +52,9 @@
     </div>
 
 
-
+<%
+=begin
+%>
 
     <div class="control-group search-field clearfix">
       <label>% Attempted</label>
@@ -68,6 +70,9 @@
       <%= text_field_tag :overall_max, params[:overall_max], :class => "span1", :placeholder => "max" %>
     </div>
 
+<%
+=end
+%>
 
     <%= submit_tag t('.submit'), :class => "btn" %>
 

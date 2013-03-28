@@ -1,7 +1,7 @@
 class SourcemodPlugin < ActiveRecord::Base
   #include ActiveModel::ForbiddenAttributesProtection
-  include Tire::Model::Search
-  include Tire::Model::Callbacks
+  # include Tire::Model::Search
+  # include Tire::Model::Callbacks
 
   # TODO: Add percent complete to DB
   # TODO: Add percent attempted to DB
@@ -15,8 +15,12 @@ class SourcemodPlugin < ActiveRecord::Base
   has_many      :translations,  through: :phrases
   has_many      :languages,  through: :translations, :uniq => true
 
+  has_many      :web_translations
+
   has_many      :plugin_tags, dependent: :destroy
   has_many      :tags, through: :plugin_tags
+
+  has_one       :plugin_stat,   dependent: :destroy
   
   validates_presence_of   :user_id
   validates_presence_of   :name
@@ -34,22 +38,22 @@ class SourcemodPlugin < ActiveRecord::Base
     ])
   }
 
-  tire do
-    settings :analyzer => {
-              :name_analyzer => {
-                "tokenizer" => "lowercase",
-                "type" => "snowball"
-              }
-            }
-    mapping do
-      indexes :id,            :index => :not_analyzed
-      indexes :name,          :analyzer => "snowball", :boost => 100
-      indexes :filename,      :analyzer => "keyword"
-      indexes :user_id,       :index => :not_analyzed
-      indexes :tag,           :analyzer => "keyword", :boost => 100 # use singular form
-      #indexes :language,      :index => :not_analyzed #:analyzer => "keyword" # use singular
-    end
-  end
+  # tire do
+  #   settings :analyzer => {
+  #             :name_analyzer => {
+  #               "tokenizer" => "lowercase",
+  #               "type" => "snowball"
+  #             }
+  #           }
+  #   mapping do
+  #     indexes :id,            :index => :not_analyzed
+  #     indexes :name,          :analyzer => "snowball", :boost => 100
+  #     indexes :filename,      :analyzer => "keyword"
+  #     indexes :user_id,       :index => :not_analyzed
+  #     indexes :tag,           :analyzer => "keyword", :boost => 100 # use singular form
+  #     #indexes :language,      :index => :not_analyzed #:analyzer => "keyword" # use singular
+  #   end
+  # end
 
 
   def tag_list
@@ -255,6 +259,18 @@ class SourcemodPlugin < ActiveRecord::Base
         score: hit['_score'] || 0
       }
     }
+  end
+
+  def stats
+    PluginStat.where(:sourcemod_plugin_id => self.id).first_or_create
+  end
+
+  def translations_count
+    if self.web_translations_count.nil?
+      self.web_translations_count = self.translations.web.count
+      self.update_column :web_translations_count, self.web_translations_count
+    end
+    self.web_translations_count
   end
 
 end

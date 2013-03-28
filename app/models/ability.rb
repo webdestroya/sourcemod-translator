@@ -9,7 +9,7 @@ class Ability
 
     # Everyone can make a new translation
     can [:index, :show], Translation
-    can [:index, :show, :export, :download, :participation_graph], SourcemodPlugin
+    can [:index, :show, :export, :download, :participation_graph, :stats], SourcemodPlugin
 
     # Can view the phrases
     can [:show, :index], Phrase

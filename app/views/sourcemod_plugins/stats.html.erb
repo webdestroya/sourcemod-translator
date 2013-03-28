@@ -1,0 +1,53 @@
+
+<% title "Plugin - #{@sourcemod_plugin.name}" %>
+<% content_for :page_heading do %>
+  <h1><%= @sourcemod_plugin.name %>
+    <small>by <%= @sourcemod_plugin.user.name %></small>
+  </h1>
+<% end %>
+
+
+<ul class="nav nav-pills pull-right">
+  <li><%= link_to "Plugin Details", @sourcemod_plugin %></li>
+  <li class="active"><%= link_to "Statistics", stats_sourcemod_plugin_path(@sourcemod_plugin) %></li>
+</ul>
+
+<h2>Plugin Statistics</h2>
+
+<div class="plugin-stats-page">
+
+<div class="participation-graph">
+<h3>Activity</h3>
+<% if @sourcemod_plugin.translations_count > 0 %>
+<div id="plugin_activity_graph" data-source="<%= graphs_participation_sourcemod_plugin_path(@sourcemod_plugin) %>" style="height:200px"></div>
+
+<span class="help-inline">This shows the number of translations added each week over the course of the year.</span>
+<% else %>
+<span class="help-inline">No translations have been added to this plugin yet.</span>
+<% end %>
+</div>
+
+
+
+<div class="top-contributers">
+<h3>Top Contributers</h3>
+<% if @top_contributers.size > 0 %>
+<dl class="dl-horizontal">
+<% @top_contributers.each do |contrib| %>
+<dt title="<%= pluralize contrib[:translations], "translation" %>"><%= link_to contrib[:user].name, contrib[:user] %></dt>
+<dd><div class="progress"><div class="bar" style="width: <%= contrib[:percent] %>%;"></div></div></dd>
+<% end %>
+</dl>
+<% else %>
+<span class="help-inline">No users have contributed to this plugin yet.</span>
+<% end %>
+</div>
+
+
+</div>
+
+
+<% content_for :bottom_scripts do %>
+<%= javascript_include_tag "plugin_stats" %>
+<%#= javascript_include_tag "graphs/participation" %>
+<% end %>
