@@ -16,7 +16,7 @@ class Tag < ActiveRecord::Base
   default_scope order('LOWER(tags.name) ASC')
 
   def downcase_name
-    self.name.downcase!
+    self.name = self.name.downcase.gsub(/[^-a-z0-9]/, '')
   end
 
   def to_s
