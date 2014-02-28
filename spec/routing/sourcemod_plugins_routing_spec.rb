@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe SourcemodPluginsController do
+describe SourcemodPluginsController, pending: true do
   describe "routing" do
 
     it "routes to #index" do

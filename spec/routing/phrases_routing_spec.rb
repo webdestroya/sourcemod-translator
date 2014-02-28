@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe PhrasesController do
+describe PhrasesController, pending: true do
   describe "routing" do
 
     it "routes to #index" do

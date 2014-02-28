@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe TagsController do
+describe TagsController, pending: true do
 
   describe "GET 'search'" do
     it "returns http success" do

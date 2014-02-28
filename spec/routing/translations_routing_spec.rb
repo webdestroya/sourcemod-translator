@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe TranslationsController do
+describe TranslationsController, pending: true do
   describe "routing" do
 
     it "routes to #index" do

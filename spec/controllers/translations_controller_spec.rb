@@ -18,7 +18,7 @@ require 'spec_helper'
 # Message expectations are only used when there is no simpler way to specify
 # that an instance is receiving a specific message.
 
-describe TranslationsController do
+describe TranslationsController, pending: true do
 
   # This should return the minimal set of attributes required to create a valid
   # Translation. As you add validations to Translation, be sure to

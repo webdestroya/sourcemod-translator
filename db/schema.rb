@@ -18,8 +18,8 @@ ActiveRecord::Schema.define(:version => 20130328224436) do
     t.integer  "position",                  :null => false
     t.string   "format_class", :limit => 3, :null => false
     t.string   "description"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
   end
 
   add_index "format_infos", ["phrase_id", "position"], :name => "index_format_infos_on_phrase_id_and_position", :unique => true
@@ -36,8 +36,8 @@ ActiveRecord::Schema.define(:version => 20130328224436) do
     t.string   "name",                               :null => false
     t.string   "format"
     t.integer  "translations_count",  :default => 0, :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
   end
 
   add_index "phrases", ["sourcemod_plugin_id", "name"], :name => "index_phrases_on_sourcemod_plugin_id_and_name", :unique => true
@@ -64,8 +64,8 @@ ActiveRecord::Schema.define(:version => 20130328224436) do
     t.string   "name",                                  :null => false
     t.string   "filename",                              :null => false
     t.integer  "phrases_count",          :default => 0, :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
     t.float    "completed"
     t.float    "attempted"
     t.integer  "web_translations_count"
@@ -86,8 +86,8 @@ ActiveRecord::Schema.define(:version => 20130328224436) do
     t.string   "text",                                       :null => false
     t.integer  "votes_count",             :default => 0,     :null => false
     t.integer  "translation_flags_count", :default => 0,     :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                 :null => false
+    t.datetime "updated_at",                                 :null => false
     t.boolean  "imported",                :default => false
   end
 
@@ -97,8 +97,8 @@ ActiveRecord::Schema.define(:version => 20130328224436) do
   create_table "user_languages", :force => true do |t|
     t.integer  "user_id",     :null => false
     t.integer  "language_id", :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   add_index "user_languages", ["user_id"], :name => "index_user_languages_on_user_id"
@@ -111,8 +111,8 @@ ActiveRecord::Schema.define(:version => 20130328224436) do
     t.boolean  "admin",      :default => false, :null => false
     t.boolean  "moderator",  :default => false, :null => false
     t.boolean  "banned",     :default => false, :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
     t.string   "avatar_url"
   end
 

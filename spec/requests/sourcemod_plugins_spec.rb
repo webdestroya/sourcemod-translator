@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "SourcemodPlugins" do
+describe "SourcemodPlugins", pending: true do
   describe "GET /sourcemod_plugins" do
     it "works! (now write some real specs)" do
       # Run the generator again with the --webrat flag if you want to use webrat methods/matchers
