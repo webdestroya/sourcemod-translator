@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby "1.9.3"
 
-gem 'rails', '3.2.12'
+gem 'rails', '3.2.19'
 gem 'rack', '~> 1.4.5'
 gem 'json', '>= 1.7.7'
 

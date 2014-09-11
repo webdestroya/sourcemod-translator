@@ -4,16 +4,16 @@
 "Phrases"
 {
     <% @sourcemod_plugin.phrases.each do |phrase| %>
-    "<%= phrase.name %>"
+    "<%=raw phrase.name %>"
     {
         <% if phrase.format %>
         <% phrase.format_infos.has_description.each do |fmt| %>
-        // <%= fmt.position %>: <%= fmt.description %>
+        // <%= fmt.position %>: <%=raw fmt.description %>
         <% end %>
         "#format"   "<%= phrase.format %>"
         <% end %>
         <% phrase.translations.each do |translation| %>
-        "<%= translation.language.iso_code %>"        "<%= translation.text %>"
+        "<%= translation.language.iso_code %>"        "<%=raw translation.text %>"
         <% end %>
     }
 
