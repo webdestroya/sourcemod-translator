@@ -1,12 +1,6 @@
-GIT
-  remote: git://github.com/dgilperez/morris-rails.git
-  revision: 04e0670a7dfb17b65f9525f0c08a4044dd6107f7
-  specs:
-    morris-rails (0.4.1)
-      railties (>= 3.1, < 4.1)
-
 GEM
   remote: https://rubygems.org/
+  remote: https://rails-assets.org/
   specs:
     actionmailer (3.2.19)
       actionpack (= 3.2.19)
@@ -197,6 +191,11 @@ GEM
       activesupport (= 3.2.19)
       bundler (~> 1.0)
       railties (= 3.2.19)
+    rails-assets-jquery (2.1.4)
+    rails-assets-morrisjs (0.4.1)
+      rails-assets-jquery (>= 1.7.2)
+      rails-assets-raphael (>= 2.0)
+    rails-assets-raphael (2.1.4)
     railties (3.2.19)
       actionpack (= 3.2.19)
       activesupport (= 3.2.19)
@@ -317,7 +316,6 @@ DEPENDENCIES
   json (>= 1.7.7)
   kaminari
   localeapp
-  morris-rails!
   omniauth
   omniauth-allied_modders
   omniauth-openid
@@ -326,6 +324,7 @@ DEPENDENCIES
   psych
   rack (~> 1.4.5)
   rails (~> 3.2.19)
+  rails-assets-morrisjs (= 0.4.1)!
   raphaeljs-rails
   redis
   redis-rails
