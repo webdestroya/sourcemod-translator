@@ -40,7 +40,7 @@ module SourcemodTranslator
     config.assets.enabled = true
 
     # Version of your assets, change this if you want to expire all your assets.
-    config.assets.version = '1.0'
+    config.assets.version = '1.1'
 
     # Enforce whitelist mode for mass assignment.
     # This will create an empty whitelist of attributes available for mass-assignment for all models
