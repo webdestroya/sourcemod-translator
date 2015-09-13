@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby "1.9.3"
 
-gem 'rails', '3.2.19'
+gem 'rails', '~> 3.2.19'
 gem 'rack', '~> 1.4.5'
 gem 'json', '>= 1.7.7'
 
@@ -40,6 +40,8 @@ end
 gem 'jquery-rails'
 
 gem "rspec-rails", :group => [:test, :development]
+gem 'dotenv-rails', '~> 0.11', :group => [:test, :development]
+
 group :test do
   gem "factory_girl_rails"
   gem "guard-rspec"
@@ -110,7 +112,7 @@ end
 gem 'rubyzip', :require => ["zip/zip"]
 
 # Performance metrics 
-gem "newrelic_rpm", "~> 3.5.5.540.dev", :group => :production
+# gem "newrelic_rpm", "~> 3.5.5.540.dev", :group => :production
 
 # Pretty form display
 gem 'simple_form'
@@ -121,8 +123,10 @@ gem 'psych'
 # jQuery file uploader assets
 gem "jquery-fileupload-rails"
 
-# Time series service
-gem 'tempodb'
-
 # Elastic Search
 # gem 'tire'
+
+# Metrics
+gem "skylight"
+
+gem 'rollbar', '~> 2.2.1'

@@ -7,7 +7,7 @@ development:
   adapter: postgresql
   username: rails
   password: rails99
-  database: sourcemod_translator_development
+  database: sourcemod_translator
   pool: 5
 
 # Warning: The database defined as "test" will be erased and

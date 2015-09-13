@@ -24,3 +24,5 @@
 /doc/gh_sparkline.js
 /tempodb.csv
 /lib/tasks/tempo.rake
+/heroku_dumps
+heroku_sync.sh

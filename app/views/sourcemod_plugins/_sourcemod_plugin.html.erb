@@ -16,10 +16,10 @@
     </p>
 
     
-    <% if sourcemod_plugin.tags.count > 0 %>
+    <% if sourcemod_plugin.tags.size > 0 %>
       <strong>Tags:</strong>
       <ul class="taglist">
-        <% sourcemod_plugin.tags.order("tags.name ASC").each do |tag| %>
+        <% sourcemod_plugin.tags.sort{|a,b| a.name <=> b.name}.each do |tag| %>
         <li><%= link_to tag.name, tagged_sourcemod_plugins_path(tag.name) %></li>
         <% end %>
       </ul>

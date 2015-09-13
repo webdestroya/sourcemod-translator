@@ -20,7 +20,7 @@ class SourcemodPluginsController < ApplicationController
 
     @sourcemod_plugin.name = params[:name] || ''
 
-    search = SourcemodPlugin.includes(:user)
+    search = SourcemodPlugin.includes(:user, :tags)
 
 
     if !@sourcemod_plugin.name.blank?

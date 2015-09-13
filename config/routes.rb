@@ -52,11 +52,11 @@ SourcemodTranslator::Application.routes.draw do
   get 'changelog', to: 'pages#changelog', as: 'changelog'
 
   scope 'metrics' do
-    get '', to: 'metrics#index', as: :metrics, format: :html
+    # get '', to: 'metrics#index', as: :metrics, format: :html
     get 'update', to: 'metrics#update', as: :metrics_update, format: :json
-    get 'translations', to: 'metrics#translations', as: :metrics_translations, format: :json
-    get 'plugins', to: 'metrics#plugins', as: :metrics_plugins, format: :json
-    get 'users', to: 'metrics#users', as: :metrics_users, format: :json
+    # get 'translations', to: 'metrics#translations', as: :metrics_translations, format: :json
+    # get 'plugins', to: 'metrics#plugins', as: :metrics_plugins, format: :json
+    # get 'users', to: 'metrics#users', as: :metrics_users, format: :json
   end
 
   root :to => 'pages#index'

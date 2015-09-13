@@ -1,5 +1,5 @@
 # number of workers
-worker_processes ENV['UNICORN_WORKERS'].to_i
+worker_processes ENV['WEB_CONCURRENCY'].to_i
 
 # bailout after
 timeout 30
