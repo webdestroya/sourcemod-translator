@@ -5,6 +5,9 @@
 user-agent: AhrefsBot
 disallow: /
 
+user-agent: BLEXBot
+Disallow: /
+
 # Bots do not need to authenticate
 # No downloads
 user-agent: *
