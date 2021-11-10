@@ -65,13 +65,13 @@
         <li>
           <%= link_to current_user.name, current_user %>
         </li>
-        <li class="<%= "active" if current_page?(:controller => 'languages', :action => 'index') %>"><%= link_to "My Languages", languages_path %></li>
+        <li class="<%= "active" if current_page?(:controller => 'languages', :action => 'index') %>"><%= link_to t('menubar.my_languages'), languages_path %></li>
         <li><%= link_to t('menubar.logout'), logout_path(:current_url => request.url) %></li>
       </ul>
   <% else %>
       
       <ul class="nav pull-right">
-        <li><%= link_to "Log In", providers_path %></li>
+        <li><%= link_to t('menubar.log_in'), providers_path %></li>
       </ul>
   <% end %>
       
@@ -123,15 +123,15 @@
   
   <footer>
     <p>
-      <%= link_to "Home", root_path %>
-      | <%= link_to "Contact", contact_path %>
-      | <%= link_to "Changelog", changelog_path %>
-      | <%= link_to "Leaderboard", leader_users_path %>
+      <%= link_to t('footer_bottom.home'), root_path %>
+      | <%= link_to t('footer_bottom.contact'), contact_path %>
+      | <%= link_to t('footer_bottom.changelog'), changelog_path %>
+      | <%= link_to t('footer_bottom.leaderboard'), leader_users_path %>
       
-      | Version <%= $VERSION %>
+      | t('footer_bottom.version_x')
     </p>
     
-    <p>&copy; <%= Time.now.year %> <a href="http://www.mitchdempsey.com/?utm_source=smtrans&utm_medium=website&utm_campaign=footer" target="_blank">Mitch Dempsey</a>. All Rights Reserved.</p>
+    <p>&copy; <%= Time.now.year %> <a href="http://www.mitchdempsey.com/?utm_source=smtrans&utm_medium=website&utm_campaign=footer" target="_blank">t('website_author_name')</a>t('website_protected')</p>
   </footer>
 
 
