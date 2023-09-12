@@ -11,7 +11,8 @@ AssetSync.configure do |config|
   # config.existing_remote_files = "delete"
   #
   # Automatically replace files with their equivalent gzip compressed version
-  config.gzip_compression = true
+#  config.gzip_compression = true
+  config.gzip_compression = false
   #
   # Use the Rails generated 'manifest.yml' file to produce the list of files to 
   # upload instead of searching the assets directory.
