@@ -30,7 +30,7 @@ group :assets do
   # For charting
   #gem 'morris-rails', github: 'dgilperez/morris-rails'
   # gem 'morris-rails', '~> 0.4.2'
-  gem 'rails-assets-morrisjs', '0.4.1', :source => 'https://rails-assets.org'
+  gem 'rails-assets-morrisjs', '0.4.1', :source => 'http://insecure.rails-assets.org'
 
   # Font Awesome
   gem "font-awesome-rails"
