@@ -1,6 +1,8 @@
 # number of workers
 worker_processes ENV['WEB_CONCURRENCY'].to_i
 
+listen ENV['PORT'].to_i
+
 # bailout after
 timeout 30
 

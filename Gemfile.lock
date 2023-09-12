@@ -1,6 +1,6 @@
 GEM
   remote: https://rubygems.org/
-  remote: https://rails-assets.org/
+  remote: http://insecure.rails-assets.org/
   specs:
     actionmailer (3.2.19)
       actionpack (= 3.2.19)
@@ -342,3 +342,9 @@ DEPENDENCIES
   turn (= 0.8.2)
   uglifier (>= 1.0.3)
   unicorn
+
+RUBY VERSION
+   ruby 1.9.3p551
+
+BUNDLED WITH
+   1.17.0
