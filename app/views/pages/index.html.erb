@@ -1,8 +1,8 @@
-<% title "About" %>
+<% title t('.about_title') %>
 
 <div class="hero-unit">
-  <h1>Welcome to SourceMod Translator!</h1>
-  <p>This application allows plugin developers to upload Phrase files from plugins, and other users can add translations for languages they are fluent in.
+  <h1>t('.welcome_to_smt')</h1>
+  <p>t('.welcome_to_smt_desc')
   </p>
   <p>
     <%= link_to t('.get_started'), get_started_path, :class => "btn btn-primary btn-large" %>
@@ -12,26 +12,19 @@
 
 <div class="row">
   <div class="span4">
-    <h2>Translators</h2>
-    <p>
-      Are you bilingual? Do you enjoy helping others in the community?
-      You can help internationalize plugins by adding translations for phrases.
+    <h2>t('.translators')</h2>
+    <p>t('.translators_desc')
     </p>
-    <p><%= link_to(t('.get_started'), get_started_path, :class => "btn") unless current_user %></p>
+    <p><%= link_to(t('.get_started_translators'), get_started_path, :class => "btn") unless current_user %></p>
   </div>
   <div class="span4">
-    <h2>Developers</h2>
-    <p>
-      Want to support multiple languages in your plugin, but only know English?
-      Upload your plugin and let others add translations!
-    </p>
-    <p><%= link_to(t('.get_started'), get_started_path, :class => "btn") unless current_user %></p>
+    <h2>t('.developers')</h2>
+    <p>t('.developers_desc')</p>
+    <p><%= link_to(t('.get_started_dev'), get_started_path, :class => "btn") unless current_user %></p>
   </div>
   <div class="span4">
-    <h2>No Registration</h2>
-    <p>
-      Connect using your Steam account, or use your AlliedModders account. We never see your password, and you never have to remember another username!
-    </p>
-    <p><%= link_to(t('.get_started'), get_started_path, :class => "btn") unless current_user %></p>
+    <h2>t('.no_registration')</h2>
+    <p>t('.no_registration_desc')</p>
+    <p><%= link_to(t('.get_started_not_registed'), get_started_path, :class => "btn") unless current_user %></p>
   </div>
 </div>

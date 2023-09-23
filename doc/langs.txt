@@ -32,4 +32,6 @@
   "zho"   "TChinese"    // Chinese (Traditional)
   "th"    "Thai"    // Thai
   "tr"    "Turkish"   // Turkish
+  "ua"	  "Ukrainian"  // Ukrainian
+  "vi"	  "Vietnamese"	// Vietnamese
 }

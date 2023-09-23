@@ -31,6 +31,18 @@ en:
     my_plugins: "My Plugins"
     translate: "Translate!"
     logout: "Logout"
+    my_languages: "My Languages"
+    log_in: "Log In"
+    
+  footer_bottom:
+    home: "Home"
+    contact: "Contact"
+    changelog: "Changelog"
+    leaderboard: "Leaderboard"
+    version_x: "Version <%= $VERSION %>"
+    
+    website_author_name: "Mitch Dempsey"
+    website_protected: ". All Rights Reserved."
 
   headings:
     translation_info: "Translation Information"
@@ -38,7 +50,27 @@ en:
 
   pages:
     index:
+      about_title: "About"
+      welcome_to_smt: "Welcome to SourceMod Translator!"
+      welcome_to_smt_desc: "This application allows plugin developers to upload Phrase files from plugins, and other users can add translations for languages they are fluent in."
       get_started: 'Get Started!'
+      translators: "Translators"
+      translators_desc: "
+      Are you bilingual? Do you enjoy helping others in the community?
+      You can help internationalize plugins by adding translations for phrases.
+    "
+      get_started_translators: 'Get Started!'
+      developers: "Developers"
+      developers_desc: "
+      Want to support multiple languages in your plugin, but only know English?
+      Upload your plugin and let others add translations!
+    "
+      get_started_dev: 'Get Started!'
+      no_registration: "No Registration"
+      no_registration_desc: "
+      Connect using your Steam account, or use your AlliedModders account. We never see your password, and you never have to remember another username!
+    "
+      get_started_not_registed: 'Get Started!'
 
   phrases:
     show:
